@@ -5,4 +5,3 @@ Frontend Setup
     - To run yarn: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted` in an **administrator** terminal
 - `yarn`
 - `yarn start`
-- `hello`
