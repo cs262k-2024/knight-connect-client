@@ -1,7 +1,21 @@
-Frontend Setup
-- `cd frontend`
-- Install `yarn`
-    - `npm i -g yarn`
-    - To run yarn: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted` in an **administrator** terminal
-- `yarn`
-- `yarn start`
+# Event Client Setup
+
+### Pre-requisites
+
+-   `node` and `npm` installed
+-   Install `yarn`
+    -   `npm i -g yarn`
+    -   `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted` in an **administrator** terminal
+
+### Run App
+
+-   Clone repo
+-   `yarn`
+-   `yarn start`
+
+# Contribution
+
+-   Create new branch (`your-name/branch-purpose`)
+-   Lint code: `yarn run lint --fix`
+-   Push code with meaningful commit messages
+-   Pull request

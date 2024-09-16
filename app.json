@@ -1,7 +1,7 @@
 {
     "expo": {
-        "name": "lab1-app",
-        "slug": "lab1-app",
+        "name": "event-client",
+        "slug": "event-client",
         "version": "1.0.0",
         "orientation": "portrait",
         "icon": "./assets/images/icon.png",
