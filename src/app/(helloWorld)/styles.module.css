@@ -1,0 +1,8 @@
+.container {
+    padding: 15px;
+}
+
+.container h1, h3{
+    font-weight: 100;
+    letter-spacing: 1px;
+}
