@@ -8,7 +8,7 @@ export default function NotFoundScreen() {
             <h1>This page doesn't exist</h1>
 
             <Link href="/" className={ classes.link }>
-                Go back home!
+                Take me back home
             </Link>
         </div>
     );

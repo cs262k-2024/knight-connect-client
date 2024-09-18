@@ -1,3 +1,7 @@
+/*
+    ESLint config for linter (maintain clean code)
+*/
+
 {
     "env": {
         "browser": true,
@@ -41,6 +45,7 @@
         "no-unmodified-loop-condition": "warn",
         "no-unreachable": "error",
         "no-unreachable-loop": "warn",
+        // ! All variables should be in use. If variable/variable use is WIP, prepend `_`
         "@typescript-eslint/no-unused-vars": [
             "warn",
             {
@@ -49,6 +54,7 @@
                 "caughtErrorsIgnorePattern": "^_"
             }
         ],
+        // ! Enforce camelCase naming convention
         "camelcase": [
             "warn",
             {
@@ -74,8 +80,7 @@
         "comma-dangle": ["error", "only-multiline"],
         "comma-spacing": "error",
         "eol-last": "error",
-        "jsx-quotes": ["error", "prefer-double"],
-        "semi": ["error", "always"],
+        // ! All quotes should be single quotes
         "quotes": [
             "error",
             "single",
@@ -83,8 +88,15 @@
                 "allowTemplateLiterals": true
             }
         ],
+        // ! Except inside JSX blocks. e.g <Component prop="value" />
+        "jsx-quotes": ["error", "prefer-double"],
+        // ! Semi-colons should always be included
+        "semi": ["error", "always"],
         "no-extra-semi": "error",
         "react/react-in-jsx-scope": "off",
+        // ! Contents in between curly braces should be spaced. e.g. { foo }
+        "object-curly-spacing": ["error", "always"],
+        // ! This includes props and code blocks in JSX
         "react/jsx-curly-spacing": [
             "error",
             {
@@ -104,7 +116,7 @@
                 "prop": "parens-new-line"
             }
         ],
-        "object-curly-spacing": ["error", "always"],
+        // ! React components should be defined by an explicit function declaration
         "react/function-component-definition": [
             "error",
             {

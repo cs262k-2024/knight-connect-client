@@ -1,3 +1,7 @@
+/*
+    TSConfig for TypeScript compiler
+*/
+
 {
     "compilerOptions": {
         "target": "es6",
@@ -19,7 +23,7 @@
         "moduleResolution": "node",
         "paths": {
             "*": ["./src/*.d.ts"],
-            "@/*": ["./src/*"]
+            "@/*": ["./src/*"] // Absolute path for simpler imports
         },
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
@@ -35,6 +39,5 @@
         "expo-env.d.ts",
         ".expo/types/**/*.ts"
     ],
-    "exclude": ["node_modules"],
-    "extends": "expo/tsconfig.base"
+    "exclude": ["node_modules"]
 }
