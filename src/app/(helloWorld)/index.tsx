@@ -1,15 +1,20 @@
-import { ScrollView } from 'react-native';
-
-import classes from './styles.module.css';
+import { Text, ScrollView, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export default function HelloWorld() {
     return (
-        <div className={ classes.container }>
+        <View style={styles.container}>
             <ScrollView>
-                <h1>Hello World!</h1>
+                <Text>Hello World!</Text>
 
-                <h3>- Keith's Favorite Team</h3>
+                <Text>- Keith's Favorite Team</Text>
             </ScrollView>
-        </div>
+        </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'white',
+    },
+});
