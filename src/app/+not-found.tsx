@@ -1,17 +1,44 @@
+import { StyleSheet, View, Text } from 'react-native';
+
 import { Link } from 'expo-router';
 
-import classes from './notFound.module.css';
+import globalStyles from '@/globals/globalStyles';
 
 export default function NotFoundScreen() {
     return (
-        <div className={ classes.container }>
-            <h1>This page doesn't exist</h1>
+        <View style={ styles.container }>
+            <Text style={ styles.containerHeader }>This page doesn't exist</Text>
 
-            <Link href="/" className={ classes.link }>
-                <p>
+            <Link href="/" style={ styles.link }>
+                <Text>
                     Take me back home
-                </p>
+                </Text>
             </Link>
-        </div>
+        </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        padding: 15,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'        
+    },
+    containerHeader: {
+        marginBottom: 16,
+        color: globalStyles.white,
+        fontSize: 32,
+        fontWeight: 100,
+        letterSpacing: 1
+    },
+    link: {
+        fontSize: 18,
+        fontWeight: 100,
+        color: globalStyles.white,
+        cursor: 'pointer',
+        textDecorationLine: 'underline',
+        lineHeight: 4,
+        textDecorationColor: 'rgb(88, 88, 88)'
+    }
+});

@@ -1,12 +1,14 @@
 import { Stack } from 'expo-router';
 
-export default function HelloWorldLayout() {
+import globalStyles from '@/globals/globalStyles';
+
+export default function HomeLayout() {
     return (
         <Stack
             screenOptions={
                 {
                     contentStyle: {
-                        backgroundColor: 'var(--black)'
+                        backgroundColor: globalStyles.black
                     }
                 }
             }
