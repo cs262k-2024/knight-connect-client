@@ -1,5 +1,5 @@
 # Event Client Setup
-This is the frontend application for the (KnightConnect)[https://github.com/cs262k-2024/knight-connect-project] App
+This is the frontend application for the [KnightConnect](https://github.com/cs262k-2024/knight-connect-project) App
 
 ### Pre-requisites
 
