@@ -29,14 +29,15 @@ export default function RootLayout() {
             screenOptions={
                 {
                     contentStyle: {
-                        backgroundColor: globalStyles.black
-                    }
+                        backgroundColor: globalStyles.white
+                    },
+                    headerShown: false
                 }
             }
         >
-            <Stack.Screen name="(home)" options={ { headerShown: false } } />
+            <Stack.Screen name="home" />
 
-            <Stack.Screen name="+not-found" options={ { headerShown: false } } />
+            <Stack.Screen name="+not-found" />
         </Stack>
     );
 }

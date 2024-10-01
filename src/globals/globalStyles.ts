@@ -1,6 +1,8 @@
 const globalStyles = {
-    white: '#e4e4e4',
-    black: '#202020'
+    white: '#FFFFFF',
+    black: '#202020',
+    gray: '#F5F5F5',
+    darkGray: '#bababa',
 };
 
 export default globalStyles;
