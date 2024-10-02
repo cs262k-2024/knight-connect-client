@@ -22,8 +22,7 @@ export default function Home() {
             contentContainerStyle={
                 {
                     alignItems: 'center',
-                    gap: 20,
-                    width: '100%'
+                    gap: 20
                 }
             }
         >

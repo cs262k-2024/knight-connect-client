@@ -10,10 +10,10 @@ export default function EventRecommendationContainer(props: EventRecommendationC
             display: 'flex',
             flexDirection: 'column',
             gap: 20,
-            width: '100%'
+            alignSelf: 'stretch'
         },
         headerContainer: {
-            display: 'flex',
+            flex: 1,
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
