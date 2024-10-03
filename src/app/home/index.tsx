@@ -6,7 +6,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 import Input from '@/components/input';
 import Button from '@/components/button';
-import EventRecommendationContainer from '@/components/eventRecommendation';
+import EventRecommendation from '@/components/eventRecommendation';
 
 import globalStyles from '@/globals/globalStyles';
 import { CATEGORIES } from '@/globals/constants';
@@ -71,8 +71,8 @@ export default function Home() {
             </View>
 
             <View style={ styles.recommendationsContentContainer }>
-                <EventRecommendationContainer title="Upcoming Events" />
-                <EventRecommendationContainer title="Recommended for You" />
+                <EventRecommendation title="Upcoming Events" />
+                <EventRecommendation title="Recommended for You" />
             </View>
         </ScrollView>
     );

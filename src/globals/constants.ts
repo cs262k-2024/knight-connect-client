@@ -4,3 +4,76 @@ export const CATEGORIES = [
     '🏫 Education',
     '🏈 Sports'
 ];
+
+export const EVENTS: CalvinEvent[] = [
+    {
+        name: 'Maroon & Gold Day',
+        date: new Date('2022-04-02'),
+        location: 'Calvin University',
+        description: 'Gold',
+        type: 'education'
+    },
+    {
+        name: 'Cornhole Tournament',
+        date: new Date('2022-04-02'),
+        location: 'Calvin University',
+        description: 'Gold',
+        type: 'sports'
+    },
+    {
+        name: 'Maroon & Gold Day',
+        date: new Date('2022-04-02'),
+        location: 'Calvin University',
+        description: 'Gold',
+        type: 'education'
+    },
+    {
+        name: 'Cornhole Tournament',
+        date: new Date('2022-04-02'),
+        location: 'Calvin University',
+        description: 'Gold',
+        type: 'sports'
+    },
+    {
+        name: 'Maroon & Gold Day',
+        date: new Date('2022-04-02'),
+        location: 'Calvin University',
+        description: 'Gold',
+        type: 'education'
+    },
+    {
+        name: 'Cornhole Tournament',
+        date: new Date('2022-04-02'),
+        location: 'Calvin University',
+        description: 'Gold',
+        type: 'sports'
+    },
+    {
+        name: 'Maroon & Gold Day',
+        date: new Date('2022-04-02'),
+        location: 'Calvin University',
+        description: 'Gold',
+        type: 'education'
+    },
+    {
+        name: 'Cornhole Tournament',
+        date: new Date('2022-04-02'),
+        location: 'Calvin University',
+        description: 'Gold',
+        type: 'sports'
+    },
+    {
+        name: 'Maroon & Gold Day',
+        date: new Date('2022-04-02'),
+        location: 'Calvin University',
+        description: 'Gold',
+        type: 'education'
+    },
+    {
+        name: 'Cornhole Tournament',
+        date: new Date('2022-04-02'),
+        location: 'Calvin University',
+        description: 'Gold',
+        type: 'sports'
+    },
+];

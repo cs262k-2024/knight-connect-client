@@ -5,7 +5,7 @@ import globalStyles from '@/globals/globalStyles';
 
 type ButtonProps = PropsWithChildren & {
     onPress: () => void;
-    style?: ViewStyle;
+    backgroundColor?: string;
 };
 
 export default function Button(props: ButtonProps) {
@@ -13,7 +13,7 @@ export default function Button(props: ButtonProps) {
         {
             buttonContainer: {
                 borderRadius: 5,
-                backgroundColor: globalStyles.white,
+                backgroundColor: props.backgroundColor? props.backgroundColor : globalStyles.white,
                 paddingLeft: 10,
                 paddingRight: 10,
                 paddingTop: 5,
