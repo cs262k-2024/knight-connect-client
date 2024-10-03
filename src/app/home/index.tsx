@@ -1,5 +1,4 @@
-import { useRef } from 'react';
-import { ScrollView, TextInput, View, Text } from 'react-native';
+import { ScrollView, View, Text } from 'react-native';
 
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -14,8 +13,6 @@ import { CATEGORIES } from '@/globals/constants';
 import styles from './styles';
 
 export default function Home() {
-    const searchRef = useRef<TextInput>();
-
     return (
         <ScrollView
             style={ styles.container }
@@ -29,20 +26,20 @@ export default function Home() {
             <View style={ styles.filtersContainer }>
                 <Input
                     placeholder="Search"
-                    frontIcon={
+                    frontIcon={ (
                         <EvilIcons
                             name="search"
                             size={ 24 }
                             color={ globalStyles.darkGray }
                         />
-                    }
-                    backIcon={
+                      ) }
+                    backIcon={ (
                         <Ionicons
                         name="options"
                         size={ 24 }
                         color={ globalStyles.black }
                         />
-                    }
+                      ) }
                 />
 
                 <ScrollView

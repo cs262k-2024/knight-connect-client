@@ -1,4 +1,4 @@
-import { LegacyRef, MutableRefObject, ReactElement, useState } from 'react';
+import { MutableRefObject, ReactElement, useState } from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
 
 import globalStyles from '@/globals/globalStyles';

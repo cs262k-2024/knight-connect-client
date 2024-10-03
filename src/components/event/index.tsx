@@ -41,7 +41,7 @@ export default function Event(props: EventProps) {
             style={
                 {
                     ...styles.container,
-                    width: props.eventCardType === 'price' && '95%'
+                    width: props.eventCardType === 'price' ? '95%' : 'auto'
                 }
             }
         >
