@@ -8,4 +8,5 @@ declare interface CalvinEvent {
     description: string;
     type: string;
     coverImage?: string;
+    price?: number;
 }

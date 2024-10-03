@@ -71,8 +71,8 @@ export default function Home() {
             </View>
 
             <View style={ styles.recommendationsContentContainer }>
-                <EventRecommendation title="Upcoming Events" />
-                <EventRecommendation title="Recommended for You" />
+                <EventRecommendation title="Upcoming Events" horizontalScroll={ true } />
+                <EventRecommendation title="Recommended for You" eventCardType="price" horizontalScroll={ false } />
             </View>
         </ScrollView>
     );

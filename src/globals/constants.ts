@@ -11,14 +11,15 @@ export const EVENTS: CalvinEvent[] = [
         date: new Date('2022-04-02'),
         location: 'Calvin University',
         description: 'Gold',
-        type: 'education'
+        type: 'education',
     },
     {
         name: 'Cornhole Tournament',
         date: new Date('2022-04-02'),
         location: 'Calvin University',
         description: 'Gold',
-        type: 'sports'
+        type: 'sports',
+        price: 15
     },
     {
         name: 'Maroon & Gold Day',

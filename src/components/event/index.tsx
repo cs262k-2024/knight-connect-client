@@ -5,11 +5,46 @@ import Button from '../button';
 
 import globalStyles from '@/globals/globalStyles';
 
-type EventProps = CalvinEvent;
+type EventProps = CalvinEvent & {
+    eventCardType?: string;
+};
 
 export default function Event(props: EventProps) {
+    function renderActionButton() {
+        let backgroundColor;
+
+        if(props.eventCardType === 'price')
+            backgroundColor = '#C7B0F173';
+        else
+            backgroundColor = globalStyles.lightBlue;
+
+        return (
+            <Button
+                onPress={ () => {} }
+                backgroundColor={ backgroundColor }
+            >
+                <Text
+                    style={
+                        {
+                            color: props.eventCardType === 'price' ? '#2C3E50' : globalStyles.white
+                        }
+                    }
+                >
+                    Join
+                </Text>
+            </Button>
+        );
+    }
+
     return (
-        <View style={ styles.container }>
+        <View
+            style={
+                {
+                    ...styles.container,
+                    width: props.eventCardType === 'price' && '95%'
+                }
+            }
+        >
             <View style={ styles.imageContainer }>
                 <Image
                     source={
@@ -34,17 +69,14 @@ export default function Event(props: EventProps) {
             <View style={ styles.infoContainer }>
                 <Text style={ styles.headerText }>{ props.name }</Text>
 
-                <View style={ styles.locationContainer }>
-                    <EvilIcons name="location" size={ 16 } color={ globalStyles.darkGray } />
+                <View style={ styles.joinLocContainer }>
+                    <View style={ styles.locationContainer }>
+                        <EvilIcons name="location" size={ 16 } color={ globalStyles.darkGray } />
 
-                    <Text style={ styles.locationText }>{ props.location.substring(0, 10) }...</Text>
+                        <Text style={ styles.locationText }>{ props.location.substring(0, 10) }...</Text>
+                    </View>
 
-                    <Button
-                        onPress={ () => {} }
-                        backgroundColor={ globalStyles.lightBlue }
-                    >
-                        Join
-                    </Button>
+                    { renderActionButton() }
                 </View>
             </View>
         </View>
@@ -53,17 +85,19 @@ export default function Event(props: EventProps) {
 
 const styles = StyleSheet.create({
     container: {
+        alignSelf: 'center',
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'space-between',
         gap: 10,
         borderRadius: 5,
         padding: 5,
         shadowColor: globalStyles.black,
-        shadowOpacity: 0.2,
+        shadowOpacity: 0.1,
         shadowRadius: 10,
         shadowOffset: {
             width: 0,
-            height: 0
+            height: 5
         }
     },
     imageContainer: {},
@@ -85,5 +119,11 @@ const styles = StyleSheet.create({
     locationText: {
         color: globalStyles.darkGray,
         fontSize: 12
+    },
+    joinLocContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 15,
+        alignItems: 'center'
     }
 });

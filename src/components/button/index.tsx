@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { StyleSheet, Pressable, ViewStyle } from 'react-native';
+import { StyleSheet, Pressable } from 'react-native';
 
 import globalStyles from '@/globals/globalStyles';
 

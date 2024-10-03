@@ -8,9 +8,41 @@ import globalStyles from '@/globals/globalStyles';
 
 type EventRecommendationProps = {
     title: string;
+    eventCardType?: string;
+    horizontalScroll?: boolean;
 };
 
 export default function EventRecommendation(props: EventRecommendationProps) {
+    const styles = StyleSheet.create({
+        container: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignSelf: 'stretch',
+            gap: 20
+        },
+        headerContainer: {
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+        },
+        headerText: {
+            fontSize: 16,
+            fontWeight: 'bold'
+        },
+        seeAllText: {
+            fontSize: 12,
+            color: globalStyles.lightBlue,
+            alignSelf: 'center',
+            textDecorationLine: 'underline'
+        },
+        cardContainer: {
+            display: 'flex',
+            flexDirection: props.horizontalScroll ? 'row' : 'column',
+            gap: 20
+        }
+    });
+    
     const [events, updateEvents] = useState<CalvinEvent[]>([]);
 
     useEffect(() => {
@@ -32,17 +64,16 @@ export default function EventRecommendation(props: EventRecommendationProps) {
                 <Text style={ styles.seeAllText }>See All</Text>
             </View>
             
-            <ScrollView
-                style={ styles.container }
-                contentContainerStyle={ styles.container }
-                horizontal={ true }
-            >
+            <ScrollView style={ styles.container } horizontal={ props.horizontalScroll }>
                 <View style={ styles.cardContainer }>
                     {
-                        events.map(
+                        events.filter(
+                            (_e, i) => props.horizontalScroll ? i < 8 : i < 3
+                        ).map(
                             (event, index) => (
                                 <Event
                                     key={ index }
+                                    eventCardType={ props.eventCardType }
                                     { ...event }
                                 />
                             )
@@ -53,32 +84,3 @@ export default function EventRecommendation(props: EventRecommendationProps) {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignSelf: 'stretch',
-        gap: 20
-    },
-    headerContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    headerText: {
-        fontSize: 16,
-        fontWeight: 'bold'
-    },
-    seeAllText: {
-        fontSize: 12,
-        color: globalStyles.lightBlue,
-        alignSelf: 'center'
-    },
-    cardContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        gap: 20
-    }
-});
