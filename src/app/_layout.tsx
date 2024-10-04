@@ -37,6 +37,8 @@ export default function RootLayout() {
         >
             <Stack.Screen name="home" />
 
+            <Stack.Screen name="login" />
+
             <Stack.Screen name="+not-found" />
         </Stack>
     );
