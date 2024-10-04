@@ -1,12 +1,11 @@
-import { StyleSheet, View, Text, ViewProps } from "react-native";
+import { StyleSheet, View, Text, StyleProp, ViewStyle } from 'react-native';
 
-import globalStyles from "@/globals/globalStyles";
-import { StyleProps } from "react-native-reanimated";
+import globalStyles from '@/globals/globalStyles';
 
 type DividerProps = {
     text: string;
     color?: string;
-    style?: StyleProps;
+    style?: StyleProp<ViewStyle>;
 };
 
 export default function Divider(props: DividerProps) {
@@ -32,11 +31,13 @@ export default function Divider(props: DividerProps) {
     });
 
     return (
-        <View style={props.style}>
-            <View style={styles.divider}>
-                <View style={styles.dividerLine} />
-                <Text style={styles.dividerText}>{props.text}</Text>
-                <View style={styles.dividerLine} />
+        <View style={ props.style }>
+            <View style={ styles.divider }>
+                <View style={ styles.dividerLine } />
+
+                <Text style={ styles.dividerText }>{ props.text }</Text>
+
+                <View style={ styles.dividerLine } />
             </View>
         </View>
     );
