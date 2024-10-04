@@ -18,25 +18,22 @@ export default function RootLayout() {
     });
 
     useEffect(() => {
-        if (loaded)
-            SplashScreen.hideAsync();
+        if (loaded) SplashScreen.hideAsync();
     }, [loaded]);
 
     if (!loaded) return null;
 
     return (
         <Stack
-            screenOptions={
-                {
-                    contentStyle: {
-                        backgroundColor: globalStyles.black
-                    }
-                }
-            }
+            screenOptions={{
+                contentStyle: {
+                    backgroundColor: globalStyles.black,
+                },
+            }}
         >
-            <Stack.Screen name="(home)" options={ { headerShown: false } } />
-
-            <Stack.Screen name="+not-found" options={ { headerShown: false } } />
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="+not-found" options={{ headerShown: false }} />
         </Stack>
     );
 }
