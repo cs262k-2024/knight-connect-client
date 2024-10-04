@@ -29,13 +29,15 @@ export default function RootLayout() {
             screenOptions={
                 {
                     contentStyle: {
-                        backgroundColor: globalStyles.white
+                        backgroundColor: globalStyles.white,
                     },
-                    headerShown: false
+                    headerShown: false,
                 }
             }
         >
             <Stack.Screen name="home" />
+
+            <Stack.Screen name="login" />
 
             <Stack.Screen name="+not-found" />
         </Stack>

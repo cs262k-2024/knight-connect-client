@@ -1,12 +1,15 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 import globalStyles from '@/globals/globalStyles';
+
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
         flexDirection: 'column',
-        padding: 20
+        paddingLeft: 20,
+        paddingRight: 20
     },
     filtersContainer: {
         padding: 10,
@@ -28,6 +31,23 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         gap: 20,
         width: '100%'
+    },
+    headerContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: width,
+        alignItems: 'center',
+        backgroundColor: globalStyles.white,
+        top: 0,
+        padding: 20,
+        shadowColor: globalStyles.black,
+        shadowOpacity: 0.1,
+        shadowOffset: {
+            height: 5,
+            width: 0
+        },
+        shadowRadius: 4
     }
 });
 

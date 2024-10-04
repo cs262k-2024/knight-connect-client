@@ -1,13 +1,11 @@
-import { MutableRefObject, ReactElement, useState } from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
+import { ReactElement, useState } from 'react';
+import { StyleSheet, View, TextInput, TextInputProps } from 'react-native';
 
 import globalStyles from '@/globals/globalStyles';
 
-type InputProps = {
-    placeholder: string;
+type InputProps = Omit<TextInputProps, 'style'> & {
     frontIcon?: ReactElement;
     backIcon?: ReactElement;
-    ref?: MutableRefObject<TextInput>;
 };
 
 export default function Input(props: InputProps) {
@@ -20,13 +18,15 @@ export default function Input(props: InputProps) {
             alignItems: 'center',
             gap: 16,
             paddingLeft: 10,
+            paddingRight: 10,
             borderRadius: 5,
             backgroundColor: globalStyles.white
         },
         input: {
             backgroundColor: 'none',
             borderRadius: 5,
-            padding: 10
+            padding: 10,
+            width: '100%',
         }
     });
 
@@ -36,13 +36,12 @@ export default function Input(props: InputProps) {
 
             <TextInput
                 style={ styles.input }
-                placeholder={ props.placeholder }
                 placeholderTextColor={
                     !isFocused ? globalStyles.darkGray : globalStyles.black
                 }
                 onFocus={ () => updateFocused(true) }
                 onBlur={ () => updateFocused(false) }
-                ref={ props.ref }
+                { ...props }
             />
 
             { props.backIcon }
