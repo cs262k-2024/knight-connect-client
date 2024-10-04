@@ -1,6 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 import globalStyles from '@/globals/globalStyles';
+
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
@@ -28,6 +30,16 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         gap: 20,
         width: '100%'
+    },
+    headerContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: width,
+        alignItems: 'center',
+        backgroundColor: globalStyles.white,
+        top: 0,
+        padding: 20,
     }
 });
 
