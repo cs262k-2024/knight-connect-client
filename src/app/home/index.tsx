@@ -11,6 +11,7 @@ import globalStyles from '@/globals/globalStyles';
 import { CATEGORIES } from '@/globals/constants';
 
 import styles from './styles';
+import { Link } from 'expo-router';
 
 export default function Home() {
     return (
@@ -23,6 +24,7 @@ export default function Home() {
                 }
             }
         >
+            <Link href="/login">Login!</Link>
             <View style={ styles.filtersContainer }>
                 <Input
                     placeholder="Search"
