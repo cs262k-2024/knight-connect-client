@@ -98,7 +98,9 @@ const styles = StyleSheet.create({
         shadowOffset: {
             width: 0,
             height: 5
-        }
+        },
+        elevation: 1,
+        backgroundColor: globalStyles.white,
     },
     imageContainer: {},
     headerText: {

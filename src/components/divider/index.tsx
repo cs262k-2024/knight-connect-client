@@ -23,7 +23,7 @@ export default function Divider(props: DividerProps) {
             alignSelf: 'center',
             paddingHorizontal: 5,
             color: props.color ? props.color : globalStyles.darkGray,
-            fontWeight: 100,
+            // fontWeight: 100,
             fontSize: 11,
             lineHeight: 16.5,
             userSelect: 'none',

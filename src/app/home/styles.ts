@@ -8,10 +8,11 @@ const styles = StyleSheet.create({
     container: {
         display: 'flex',
         flexDirection: 'column',
-        paddingLeft: 20,
-        paddingRight: 20
+        gap: 20,
+        backgroundColor: globalStyles.black,
     },
     filtersContainer: {
+        elevation: 1,
         padding: 10,
         shadowColor: globalStyles.black,
         shadowOpacity: 0.1,
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         gap: 16,
-        maxWidth: '90%'
+        width: width - 50
     },
     filterButtonText: {
         color: globalStyles.black
@@ -38,16 +39,19 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: width,
         alignItems: 'center',
-        backgroundColor: globalStyles.white,
+        backgroundColor: globalStyles.black,
         top: 0,
+        left: 0,
         padding: 20,
-        shadowColor: globalStyles.black,
+        shadowColor: globalStyles.lightBlue,
         shadowOpacity: 0.1,
         shadowOffset: {
             height: 5,
             width: 0
         },
-        shadowRadius: 4
+        shadowRadius: 4,
+        elevation: 10,
+        paddingTop: 60
     }
 });
 

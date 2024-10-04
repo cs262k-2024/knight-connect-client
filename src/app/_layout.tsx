@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Text } from 'react-native';
 
 import { useFonts } from 'expo-font';
 
@@ -15,6 +16,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
     const [loaded] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+        Cedarville: require('../assets/fonts/CedarvilleCursive-Regular.ttf'),
     });
 
     useEffect(() => {
@@ -29,7 +31,9 @@ export default function RootLayout() {
             screenOptions={
                 {
                     contentStyle: {
-                        backgroundColor: globalStyles.white,
+                        backgroundColor: globalStyles.black,
+                        paddingTop: 40,
+                        padding: 20
                     },
                     headerShown: false,
                 }

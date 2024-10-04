@@ -1,15 +1,7 @@
-import { Stack } from 'expo-router';
+import { Slot } from 'expo-router';
 
 export default function LoginLayout() {
     return (
-        <Stack
-            screenOptions={
-                {
-                    headerShown: false
-                }
-            }
-        >
-            <Stack.Screen name="index" />
-        </Stack>
+        <Slot />
     );
 }

@@ -6,11 +6,12 @@ const styles = StyleSheet.create({
     container: {
         display: 'flex',
         flexDirection: 'column',
-        padding: 20
+        // padding: 20,
+        backgroundColor: globalStyles.black,
     },
     welcome: {
-        color: globalStyles.black,
-        fontWeight: 700,
+        color: globalStyles.white,
+        fontWeight: 'bold',
         fontSize: 24,
         lineHeight: 36,
         textAlign: 'center',
@@ -18,7 +19,6 @@ const styles = StyleSheet.create({
     },
     credentials: {
         color: globalStyles.darkGray,
-        fontWeight: 400,
         fontSize: 14,
         lineHeight: 21,
         textAlign: 'center',
@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     },
     forgot: {
         color: globalStyles.darkGray,
-        fontWeight: 400,
         fontSize: 14,
         lineHeight: 21,
         textAlign: 'right',
@@ -40,12 +39,9 @@ const styles = StyleSheet.create({
     },
     loginText: {
         color: globalStyles.white,
-        fontWeight: 400,
         fontSize: 16,
         lineHeight: 24,
         textAlign: 'center',
-    },
-    divider: {
     },
     otherLogin: {
         flexDirection: 'row',
@@ -61,7 +57,6 @@ const styles = StyleSheet.create({
     },
     otherLoginText: {
         color: globalStyles.black,
-        fontWeight: 400,
         fontSize: 16,
         lineHeight: 24,
         textAlign: 'center',
@@ -74,7 +69,6 @@ const styles = StyleSheet.create({
     },
     signupText: {
         color: globalStyles.black,
-        fontWeight: 400,
         fontSize: 14,
         lineHeight: 20,
         textAlign: 'center',
@@ -82,7 +76,6 @@ const styles = StyleSheet.create({
     },
     signupLink: {
         color: globalStyles.lightBlue,
-        fontWeight: 400,
         fontSize: 14,
         lineHeight: 20,
         textAlign: 'center',
