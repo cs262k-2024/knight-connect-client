@@ -41,7 +41,7 @@ export default function Input(props: InputProps) {
                 }
                 onFocus={ () => updateFocused(true) }
                 onBlur={ () => updateFocused(false) }
-                {...props}
+                { ...props }
             />
 
             { props.backIcon }
