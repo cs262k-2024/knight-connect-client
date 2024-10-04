@@ -8,6 +8,9 @@ type InputProps = {
     frontIcon?: ReactElement;
     backIcon?: ReactElement;
     ref?: MutableRefObject<TextInput>;
+    onChangeText?: (e: string) => void;
+    value?: string;
+    secureTextEntry?: boolean;
 };
 
 export default function Input(props: InputProps) {
@@ -36,13 +39,13 @@ export default function Input(props: InputProps) {
 
             <TextInput
                 style={ styles.input }
-                placeholder={ props.placeholder }
                 placeholderTextColor={
                     !isFocused ? globalStyles.darkGray : globalStyles.black
                 }
                 onFocus={ () => updateFocused(true) }
                 onBlur={ () => updateFocused(false) }
                 ref={ props.ref }
+                {...props}
             />
 
             { props.backIcon }
