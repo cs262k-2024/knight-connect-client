@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     },
     forgot: {
         marginTop: 10,
-        color: globalStyles.black,
+        color: globalStyles.darkGray,
         fontWeight: 400,
         fontSize: 14,
         lineHeight: 21,
