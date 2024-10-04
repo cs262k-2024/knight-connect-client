@@ -12,6 +12,7 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 import Divider from '@/components/divider';
 import Input from '@/components/input';
+import Button from '@/components/button';
 
 import globalStyles from '@/globals/globalStyles';
 import styles from './styles';
@@ -70,17 +71,14 @@ export default function Login() {
                 }
             >
                 <Input
-                    // style={ styles.username }
                     value={ username }
                     onChangeText={ setUsername }
                     placeholder="Enter Username"
-                    // placeholderTextColor={ globalStyles.darkGray }
-                    // autoFocus={ true }
-                    // inputMode="email"
+                    autoFocus={ true }
+                    inputMode="email"
                 />
 
                 <Input
-                    // style={ styles.password }
                     value={ password }
                     onChangeText={ setPassword }
                     placeholder="Enter Password"
@@ -97,25 +95,34 @@ export default function Login() {
                     }
                 }
             >
-                <Pressable style={ styles.login } onPress={ login }>
+                <Button
+                    style={ styles.login }
+                    onPress={ login }
+                >
                     <Text style={ styles.loginText }>Login</Text>
-                </Pressable>
+                </Button>
             </View>
 
             
             <Divider style={ styles.divider } text="Or" />
             
-            <Pressable style={ styles.otherLogin } onPress={ loginFacebook }>
+            <Button
+                onPress={ loginFacebook }
+                style={ styles.otherLogin }
+            >
                 <FontAwesome5 name="facebook" size={ 24 } color={ globalStyles.lightBlue } />
 
                 <Text style={ styles.otherLoginText }>Login with Facebook</Text>
-            </Pressable>
+            </Button>
             
-            <Pressable style={ styles.otherLogin } onPress={ loginGoogle }>
+            <Button
+                style={ styles.otherLogin }
+                onPress={ loginGoogle }
+            >
                 <FontAwesome5 name="google" size={ 24 } color={ globalStyles.black } />
                 
                 <Text style={ styles.otherLoginText }>Login with Google</Text>
-            </Pressable>
+            </Button>
             
             <View style={ styles.signup }>
                 <Text style={ styles.signupText }>Don't have an account? </Text>

@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
     },
     login: {
         borderRadius: 10,
-        padding: 20,
+        paddingTop: 15,
+        paddingBottom: 15,
         backgroundColor: globalStyles.lightBlue,
     },
     loginText: {
@@ -53,8 +54,10 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 1,
         borderColor: globalStyles.darkGray,
-        padding: 20,
         gap: 10,
+        backgroundColor: 'none',
+        paddingTop: 15,
+        paddingBottom: 15
     },
     otherLoginText: {
         color: globalStyles.black,
