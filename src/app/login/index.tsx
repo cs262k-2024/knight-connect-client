@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { View, ScrollView, Text, Alert, Pressable, TextInput } from 'react-native';
+import {
+    View,
+    ScrollView,
+    Text,
+    Alert,
+    Pressable
+} from 'react-native';
+
+import { router } from 'expo-router';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 import Divider from '@/components/divider';
@@ -10,7 +18,7 @@ import styles from './styles';
 
 export default function Login() {
     const [username, setUsername] = useState('');
-    const [password, _setPassword] = useState('');
+    const [password, setPassword] = useState('');
 
     const forgotPassword = () => {
         Alert.alert('Forgot Password!');
@@ -33,34 +41,67 @@ export default function Login() {
     };
 
     return (
-        <ScrollView style={ styles.container }>
+        <ScrollView
+            style={ styles.container }
+            contentContainerStyle={
+                {
+                    gap: 10
+                }
+            }
+            stickyHeaderIndices={ [0] }
+        >
+            <Pressable
+                onPress={ () => router.navigate('/') }
+            >
+                <View>
+                    <FontAwesome5 name="long-arrow-alt-left" size={ 24 } color={ globalStyles.darkGray } />
+                </View>
+            </Pressable>
+
             <Text style={ styles.welcome }>Welcome Back!</Text>
-            <Text style={ styles.credentials }>Use Credentials to access your account</Text>
+            <Text style={ styles.credentials }>Please login to access your account</Text>
 
-            <TextInput
-                style={ styles.username }
-                value={ username }
-                onChangeText={ setUsername }
-                placeholder="Enter Username"
-                placeholderTextColor={ globalStyles.darkGray }
-                autoFocus={ true }
-                inputMode="email"
-            />
+            <View
+                style={
+                    {
+                        marginTop: 20,
+                        gap: 5
+                    }
+                }
+            >
+                <Input
+                    // style={ styles.username }
+                    value={ username }
+                    onChangeText={ setUsername }
+                    placeholder="Enter Username"
+                    // placeholderTextColor={ globalStyles.darkGray }
+                    // autoFocus={ true }
+                    // inputMode="email"
+                />
 
-            <Input
-                // style={ styles.password }
-                // value={ password }
-                // onChangeText={ setPassword }
-                placeholder="Enter Password"
-                // placeholderTextColor={ globalStyles.darkGray }
-                // secureTextEntry={ true }
-            />
+                <Input
+                    // style={ styles.password }
+                    value={ password }
+                    onChangeText={ setPassword }
+                    placeholder="Enter Password"
+                    secureTextEntry={ true }
+                />
+            </View>
 
             <Text style={ styles.forgot } onPress={ forgotPassword }>Forgot Password?</Text>
             
-            <Pressable style={ styles.login } onPress={ login }>
-                <Text style={ styles.loginText }>Login</Text>
-            </Pressable>
+            <View
+                style={
+                    {
+                        marginTop: 20
+                    }
+                }
+            >
+                <Pressable style={ styles.login } onPress={ login }>
+                    <Text style={ styles.loginText }>Login</Text>
+                </Pressable>
+            </View>
+
             
             <Divider style={ styles.divider } text="Or" />
             

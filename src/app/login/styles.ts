@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
         padding: 20
     },
     welcome: {
-        marginTop: 30,
         color: globalStyles.black,
         fontWeight: 700,
         fontSize: 24,
@@ -18,7 +17,6 @@ const styles = StyleSheet.create({
         userSelect: 'none',
     },
     credentials: {
-        marginTop: 10,
         color: globalStyles.darkGray,
         fontWeight: 400,
         fontSize: 14,
@@ -26,28 +24,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         userSelect: 'none',
     },
-    username: {
-        marginTop: 30,
-        paddingTop: 16,
-        paddingBottom: 16,
-        paddingLeft: 20,
-        paddingRight: 20,
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: globalStyles.darkGray,
-    },
-    password: {
-        marginTop: 20,
-        paddingTop: 16,
-        paddingBottom: 16,
-        paddingLeft: 20,
-        paddingRight: 20,
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: globalStyles.darkGray,
-    },
     forgot: {
-        marginTop: 10,
         color: globalStyles.darkGray,
         fontWeight: 400,
         fontSize: 14,
@@ -56,7 +33,6 @@ const styles = StyleSheet.create({
         userSelect: 'none',
     },
     login: {
-        marginTop: 30,
         borderRadius: 10,
         padding: 20,
         backgroundColor: globalStyles.lightBlue,
@@ -69,10 +45,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     divider: {
-        marginTop: 10,
     },
     otherLogin: {
-        marginTop: 10,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
@@ -90,7 +64,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     signup: {
-        marginTop: 60,
+        marginTop: 20,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
