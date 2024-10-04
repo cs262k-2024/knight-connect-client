@@ -1,4 +1,5 @@
 import { ScrollView, View, Text } from 'react-native';
+import { router } from 'expo-router';
 
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -11,7 +12,6 @@ import globalStyles from '@/globals/globalStyles';
 import { CATEGORIES } from '@/globals/constants';
 
 import styles from './styles';
-import { Link } from 'expo-router';
 
 export default function Home() {
     return (
@@ -23,8 +23,36 @@ export default function Home() {
                     gap: 20
                 }
             }
+            stickyHeaderIndices={ [0] }
         >
-            <Link href="/login">Login!</Link>
+            <View style={ styles.headerContainer }>
+                <Text
+                    style={
+                        {
+                            fontWeight: 'bold',
+                            letterSpacing: 1,
+                        }
+                    }
+                >
+                    KnightConnect
+                </Text>
+
+                <Button
+                    onPress={ () => router.navigate('/login') }
+                    backgroundColor={ globalStyles.lightBlue }
+                >
+                    <Text
+                        style={
+                            {
+                                color: globalStyles.white
+                            }
+                        }
+                    >
+                        Login
+                    </Text>
+                </Button>
+            </View>
+
             <View style={ styles.filtersContainer }>
                 <Input
                     placeholder="Search"
