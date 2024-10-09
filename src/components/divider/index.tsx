@@ -12,18 +12,18 @@ export default function Divider(props: DividerProps) {
     const styles = StyleSheet.create({
         divider: {
             flexDirection: 'row',
+            justifyContent: 'space-evenly'
         },
-        dividerLine: {
-            backgroundColor: props.color ? props.color : globalStyles.darkGray,
+        dividerLine: {	
+            backgroundColor: props.color ? props.color : globalStyles.veryDarkGray,
             height: 1,
-            flex: 1,
-            alignSelf: 'center'
+            width: '30%',
+            alignSelf: 'center',
         },
         dividerText: {
             alignSelf: 'center',
             paddingHorizontal: 5,
             color: props.color ? props.color : globalStyles.darkGray,
-            // fontWeight: 100,
             fontSize: 11,
             lineHeight: 16.5,
             userSelect: 'none',

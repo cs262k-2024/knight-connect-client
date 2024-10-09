@@ -1,12 +1,12 @@
-import { ScrollView, View, Text } from 'react-native';
+import { ScrollView, View, Text, Image } from 'react-native';
 import { router } from 'expo-router';
 
 import EvilIcons from '@expo/vector-icons/EvilIcons';
-import Ionicons from '@expo/vector-icons/Ionicons';
 
 import Input from '@/components/input';
 import Button from '@/components/button';
 import EventRecommendation from '@/components/eventRecommendation';
+import Logo from '@/components/texts/logo';
 
 import globalStyles from '@/globals/globalStyles';
 import { CATEGORIES } from '@/globals/constants';
@@ -17,43 +17,26 @@ export default function Home() {
     return (
         <ScrollView
             contentContainerStyle={ styles.container }
-            stickyHeaderIndices={ [0] }
         >
-            <>
-                <View style={ styles.headerContainer }>
-                    <Text
-                        style={
-                            {
-                                fontWeight: 'bold',
-                                letterSpacing: 1,
-                            }
-                        }
-                    >
-                        KnightConnect
-                    </Text>
+            <View style={ styles.headerContainer }>
+                <Logo fontSize={ 20 } />
 
-                    <Button
-                        onPress={ () => router.navigate('/login') }
-                        backgroundColor={ globalStyles.lightBlue }
-                    >
-                        <Text
-                            style={
-                                {
-                                    color: globalStyles.white
-                                }
-                            }
-                        >
-                            Login
-                        </Text>
-                    </Button>
-                </View>
-            </>
+                <Image
+                    source={
+                        {
+                            uri:
+                                'https://cdn.vectorstock.com/i/1000v/54/41/young-and-elegant-woman-avatar-profile-vector-9685441.jpg'
+                        }
+                    }
+                    width={ 50 }
+                    height={ 50 }
+                    borderRadius={ 100 }
+                />
+            </View>
 
             <View
                 style={
                     {
-                        paddingLeft: 20,
-                        paddingRight: 20,
                         gap: 20
                     }
                 }
@@ -68,13 +51,11 @@ export default function Home() {
                                 color={ globalStyles.darkGray }
                             />
                         ) }
-                        backIcon={ (
-                            <Ionicons
-                            name="options"
-                            size={ 24 }
-                            color={ globalStyles.black }
-                            />
-                        ) }
+                        containerStyle={
+                            {
+                                backgroundColor: globalStyles.veryDarkGray
+                            }
+                        }
                     />
 
                     <ScrollView
@@ -99,13 +80,26 @@ export default function Home() {
                                 )
                             )
                         }
+
+{
+                            CATEGORIES.map(
+                                (c, i) => (
+                                    <Button
+                                        key={ i }
+                                        onPress={ () => {} }
+                                    >
+                                        <Text style={ styles.filterButtonText }>{ c }</Text>
+                                    </Button>
+                                )
+                            )
+                        }
                     </ScrollView>
                 </View>
 
-                <View style={ styles.recommendationsContentContainer }>
+                {/* <View style={ styles.recommendationsContentContainer }>
                     <EventRecommendation title="Upcoming Events" horizontalScroll={ true } />
                     <EventRecommendation title="Recommended for You" eventCardType="price" horizontalScroll={ false } />
-                </View>
+                </View> */}
             </View>
         </ScrollView>
     );

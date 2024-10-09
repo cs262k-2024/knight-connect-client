@@ -7,7 +7,6 @@ type InputProps = Omit<TextInputProps, 'style'> & {
     containerStyle?: ViewStyle;
     inputStyle?: TextStyle;
     frontIcon?: ReactElement;
-    backIcon?: ReactElement;
 };
 
 export default function Input(props: InputProps) {
@@ -45,8 +44,6 @@ export default function Input(props: InputProps) {
                 onBlur={ () => updateFocused(false) }
                 { ...props }
             />
-
-            { props.backIcon }
         </View>
     );
 }

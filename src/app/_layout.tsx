@@ -15,8 +15,10 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
     const [loaded] = useFonts({
-        SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-        Cedarville: require('../assets/fonts/CedarvilleCursive-Regular.ttf'),
+        Fredoka: require('../assets/fonts/Fredoka-VariableFont.ttf'),
+        RobotoMono: require('../assets/fonts/RobotoMono-VariableFont.ttf'),
+        Playfair: require('../assets/fonts/PlayfairDisplay-VariableFont.ttf'),
+        PlayfairItalic: require('../assets/fonts/PlayfairDisplay-Italic-VariableFont.ttf'),
     });
 
     useEffect(() => {
