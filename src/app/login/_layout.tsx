@@ -1,7 +1,17 @@
+import { View } from 'react-native';
 import { Slot } from 'expo-router';
 
 export default function LoginLayout() {
     return (
-        <Slot />
+        <View
+            style={
+                {
+                    marginTop: 30,
+                    flex: 1
+                }
+            }
+        >
+            <Slot />
+        </View>
     );
 }

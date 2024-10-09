@@ -62,7 +62,8 @@ export default function Login({ action, updateAction }: { action: string, update
             <View
                 style={
                     {
-                        gap: 10
+                        gap: 10,
+                        width: '100%',
                     }
                 }
             >

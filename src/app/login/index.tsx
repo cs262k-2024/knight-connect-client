@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 
 import Divider from '@/components/divider';
 import Button from '@/components/button';
@@ -16,10 +16,10 @@ export default function LoginLanding() {
     return (
         <View
             style={
-                {
-                    gap: 60,
+                {   
                     alignItems: 'center',
                     justifyContent: 'center',
+                    gap: 60,
                     height: '100%'
                 }
             }
