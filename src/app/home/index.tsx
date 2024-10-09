@@ -1,5 +1,4 @@
 import { ScrollView, View, Text, Image } from 'react-native';
-import { router } from 'expo-router';
 
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 
