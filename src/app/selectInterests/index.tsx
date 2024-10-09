@@ -5,7 +5,6 @@ import styles from './styles';
 import Button from '@/components/button';
 import { router } from 'expo-router';
 import { CATEGORIES } from '@/globals/constants';
-import globalStyles from '@/globals/globalStyles';
 
 export default function selectInterests() {
     const [userInterests, setUserInterests] = useState<string[]>([]);

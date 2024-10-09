@@ -25,12 +25,12 @@ export default function RootLayout() {
 
     return (
         <Stack
-            screenOptions={{
+            screenOptions={ {
                 contentStyle: {
                     backgroundColor: globalStyles.white,
                 },
                 headerShown: false,
-            }}
+            } }
         >
             <Stack.Screen name="selectInterests" />
             <Stack.Screen name="home" />
