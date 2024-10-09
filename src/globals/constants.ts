@@ -2,7 +2,18 @@
 export const CATEGORIES = [
     '🎤 Music',
     '🏫 Education',
-    '🏈 Sports'
+    '🏈 Sports',
+    '🏘️ Residence Life',
+    '⛪️ Chapel',
+    '👫 Social Activities',
+    '🎨 Arts & Culture',
+    '🧬 Science & Tech',
+    '🗓️ Other',
+    '🩺 Health & Fitness',
+    '💼 Career & Business',
+    '🎮 Gaming',
+    '🎬 Film & Media',
+    '🍔 Food & Drink',
 ];
 
 export const EVENTS: CalvinEvent[] = [
@@ -19,62 +30,62 @@ export const EVENTS: CalvinEvent[] = [
         location: 'Calvin University',
         description: 'Gold',
         type: 'sports',
-        price: 15
+        price: 15,
     },
     {
         name: 'Maroon & Gold Day',
         date: new Date('2022-04-02'),
         location: 'Calvin University',
         description: 'Gold',
-        type: 'education'
+        type: 'education',
     },
     {
         name: 'Cornhole Tournament',
         date: new Date('2022-04-02'),
         location: 'Calvin University',
         description: 'Gold',
-        type: 'sports'
+        type: 'sports',
     },
     {
         name: 'Maroon & Gold Day',
         date: new Date('2022-04-02'),
         location: 'Calvin University',
         description: 'Gold',
-        type: 'education'
+        type: 'education',
     },
     {
         name: 'Cornhole Tournament',
         date: new Date('2022-04-02'),
         location: 'Calvin University',
         description: 'Gold',
-        type: 'sports'
+        type: 'sports',
     },
     {
         name: 'Maroon & Gold Day',
         date: new Date('2022-04-02'),
         location: 'Calvin University',
         description: 'Gold',
-        type: 'education'
+        type: 'education',
     },
     {
         name: 'Cornhole Tournament',
         date: new Date('2022-04-02'),
         location: 'Calvin University',
         description: 'Gold',
-        type: 'sports'
+        type: 'sports',
     },
     {
         name: 'Maroon & Gold Day',
         date: new Date('2022-04-02'),
         location: 'Calvin University',
         description: 'Gold',
-        type: 'education'
+        type: 'education',
     },
     {
         name: 'Cornhole Tournament',
         date: new Date('2022-04-02'),
         location: 'Calvin University',
         description: 'Gold',
-        type: 'sports'
+        type: 'sports',
     },
 ];

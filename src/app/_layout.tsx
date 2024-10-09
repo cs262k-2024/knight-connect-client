@@ -18,23 +18,21 @@ export default function RootLayout() {
     });
 
     useEffect(() => {
-        if (loaded)
-            SplashScreen.hideAsync();
+        if (loaded) SplashScreen.hideAsync();
     }, [loaded]);
 
     if (!loaded) return null;
 
     return (
         <Stack
-            screenOptions={
-                {
-                    contentStyle: {
-                        backgroundColor: globalStyles.white,
-                    },
-                    headerShown: false,
-                }
-            }
+            screenOptions={{
+                contentStyle: {
+                    backgroundColor: globalStyles.white,
+                },
+                headerShown: false,
+            }}
         >
+            <Stack.Screen name="selectInterests" />
             <Stack.Screen name="home" />
 
             <Stack.Screen name="login" />
