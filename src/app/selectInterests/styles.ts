@@ -2,6 +2,10 @@ import { StyleSheet } from 'react-native';
 import globalStyles from '@/globals/globalStyles';
 
 const styles = StyleSheet.create({
+    darkmode: {
+        backgroundColor: globalStyles.black,
+        height: '100%',
+    },
     container: {
         display: 'flex',
         flexDirection: 'column',
@@ -15,7 +19,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     headerText: {
-        color: globalStyles.black,
+        color: globalStyles.white,
         fontWeight: 'bold',
         fontSize: 34,
         lineHeight: 36,
@@ -39,6 +43,7 @@ const styles = StyleSheet.create({
     itemText: {
         borderRadius: 10,
         padding: 10,
+        color: globalStyles.gray,
     },
     itemSelectedContainer: {
         backgroundColor: '#62aeff',
