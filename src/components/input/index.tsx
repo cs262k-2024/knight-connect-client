@@ -28,6 +28,7 @@ export default function Input(props: InputProps) {
             borderRadius: 5,
             padding: 10,
             width: '100%',
+            color: globalStyles.white
         }, props.inputStyle)
     });
 
@@ -38,7 +39,7 @@ export default function Input(props: InputProps) {
             <TextInput
                 style={ styles.input }
                 placeholderTextColor={
-                    !isFocused ? globalStyles.darkGray : globalStyles.black
+                    !isFocused ? globalStyles.gray : globalStyles.black
                 }
                 onFocus={ () => updateFocused(true) }
                 onBlur={ () => updateFocused(false) }

@@ -1,11 +1,7 @@
-import { StyleSheet, Dimensions } from 'react-native';
-
-import globalStyles from '@/globals/globalStyles';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
-        display: 'flex',
-        flexDirection: 'column',
         gap: 50,
     },
     headerContainer: {
@@ -20,14 +16,11 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
     },
-    filterButtonText: {
-        // color: globalStyles.black
-    },
     recommendationsContentContainer: {
-        // display: 'flex',
-        // flexDirection: 'column',
-        // gap: 20,
-        // width: '100%'
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 20,
+        width: '100%'
     },
 });
 

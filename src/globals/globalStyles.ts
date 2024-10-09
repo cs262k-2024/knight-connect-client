@@ -9,7 +9,7 @@ const globalStyles = {
     maroon: '#891B2F',
     darkMaroon: '#661423',
     gold: '#EECC0A',
-    darkGold: '#615306'
+    darkGold: '#615306',
 };
 
 export default globalStyles;

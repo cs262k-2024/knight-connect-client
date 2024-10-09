@@ -28,7 +28,7 @@ export default function EventRecommendation(props: EventRecommendationProps) {
         },
         headerText: {
             fontSize: 16,
-            fontWeight: 'bold'
+            color: globalStyles.white,
         },
         seeAllText: {
             fontSize: 12,

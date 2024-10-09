@@ -25,7 +25,7 @@ export default function Home() {
                     source={
                         {
                             uri:
-                                'https://cdn.vectorstock.com/i/1000v/54/41/young-and-elegant-woman-avatar-profile-vector-9685441.jpg'
+                                'https://gratisography.com/wp-content/uploads/2024/01/gratisography-cyber-kitty-800x525.jpg'
                         }
                     }
                     width={ 50 }
@@ -48,7 +48,7 @@ export default function Home() {
                             <EvilIcons
                                 name="search"
                                 size={ 24 }
-                                color={ globalStyles.darkGray }
+                                color={ globalStyles.gray }
                             />
                         ) }
                         containerStyle={
@@ -75,20 +75,15 @@ export default function Home() {
                                         key={ i }
                                         onPress={ () => {} }
                                     >
-                                        <Text style={ styles.filterButtonText }>{ c }</Text>
-                                    </Button>
-                                )
-                            )
-                        }
-
-{
-                            CATEGORIES.map(
-                                (c, i) => (
-                                    <Button
-                                        key={ i }
-                                        onPress={ () => {} }
-                                    >
-                                        <Text style={ styles.filterButtonText }>{ c }</Text>
+                                        <Text
+                                            style={
+                                                {
+                                                    color: globalStyles.white
+                                                }
+                                            }
+                                        >
+                                            { c }
+                                        </Text>
                                     </Button>
                                 )
                             )
@@ -96,10 +91,10 @@ export default function Home() {
                     </ScrollView>
                 </View>
 
-                {/* <View style={ styles.recommendationsContentContainer }>
+                <View style={ styles.recommendationsContentContainer }>
                     <EventRecommendation title="Upcoming Events" horizontalScroll={ true } />
                     <EventRecommendation title="Recommended for You" eventCardType="price" horizontalScroll={ false } />
-                </View> */}
+                </View>
             </View>
         </ScrollView>
     );
