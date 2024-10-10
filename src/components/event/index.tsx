@@ -21,12 +21,17 @@ export default function Event(props: EventProps) {
         return (
             <Button
                 onPress={ () => {} }
-                backgroundColor={ backgroundColor }
+                style={
+                    {
+                        backgroundColor: backgroundColor,
+                        borderColor: backgroundColor,
+                    }
+                }
             >
                 <Text
                     style={
                         {
-                            color: props.eventCardType === 'price' ? '#2C3E50' : globalStyles.white
+                            color: globalStyles.white
                         }
                     }
                 >
@@ -71,7 +76,7 @@ export default function Event(props: EventProps) {
 
                 <View style={ styles.joinLocContainer }>
                     <View style={ styles.locationContainer }>
-                        <EvilIcons name="location" size={ 16 } color={ globalStyles.darkGray } />
+                        <EvilIcons name="location" size={ 16 } color={ globalStyles.gray } />
 
                         <Text style={ styles.locationText }>{ props.location.substring(0, 10) }...</Text>
                     </View>
@@ -92,18 +97,15 @@ const styles = StyleSheet.create({
         gap: 10,
         borderRadius: 5,
         padding: 5,
-        shadowColor: globalStyles.black,
-        shadowOpacity: 0.1,
-        shadowRadius: 10,
-        shadowOffset: {
-            width: 0,
-            height: 5
-        }
+        backgroundColor: 'transparent',
+        borderWidth: 1,
+        borderColor: globalStyles.darkGray
     },
     imageContainer: {},
     headerText: {
         fontSize: 16,
         fontWeight: 'bold',
+        color: globalStyles.white
     },
     infoContainer: {
         display: 'flex',
@@ -117,7 +119,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     locationText: {
-        color: globalStyles.darkGray,
+        color: globalStyles.gray,
         fontSize: 12
     },
     joinLocContainer: {

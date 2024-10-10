@@ -1,18 +1,19 @@
 import { ReactElement, useState } from 'react';
-import { StyleSheet, View, TextInput, TextInputProps } from 'react-native';
+import { StyleSheet, View, TextInput, TextInputProps, ViewStyle, TextStyle } from 'react-native';
 
 import globalStyles from '@/globals/globalStyles';
 
 type InputProps = Omit<TextInputProps, 'style'> & {
+    containerStyle?: ViewStyle;
+    inputStyle?: TextStyle;
     frontIcon?: ReactElement;
-    backIcon?: ReactElement;
 };
 
 export default function Input(props: InputProps) {
     const [isFocused, updateFocused] = useState(false);
 
     const styles = StyleSheet.create({
-        container: {
+        container: Object.assign({
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
@@ -21,13 +22,14 @@ export default function Input(props: InputProps) {
             paddingRight: 10,
             borderRadius: 5,
             backgroundColor: globalStyles.white
-        },
-        input: {
+        }, props.containerStyle),
+        input: Object.assign({
             backgroundColor: 'none',
             borderRadius: 5,
             padding: 10,
             width: '100%',
-        }
+            color: globalStyles.white
+        }, props.inputStyle)
     });
 
     return (
@@ -37,14 +39,12 @@ export default function Input(props: InputProps) {
             <TextInput
                 style={ styles.input }
                 placeholderTextColor={
-                    !isFocused ? globalStyles.darkGray : globalStyles.black
+                    !isFocused ? globalStyles.gray : globalStyles.black
                 }
                 onFocus={ () => updateFocused(true) }
                 onBlur={ () => updateFocused(false) }
                 { ...props }
             />
-
-            { props.backIcon }
         </View>
     );
 }
