@@ -29,12 +29,10 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         color: globalStyles.white,
         fontSize: 32,
-        fontWeight: 100,
         letterSpacing: 1
     },
     link: {
         fontSize: 18,
-        fontWeight: 100,
         color: globalStyles.white,
         cursor: 'pointer',
         textDecorationLine: 'underline',
