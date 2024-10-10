@@ -38,6 +38,21 @@ export default function Home() {
                 </Text>
 
                 <Button
+                    onPress={ () => router.navigate('/calendar') }
+                    backgroundColor={ globalStyles.lightBlue }
+                >
+                    <Text
+                        style={
+                            {
+                                color: globalStyles.white
+                            }
+                        }
+                    >
+                        Calendar
+                    </Text>
+                </Button>
+
+                <Button
                     onPress={ () => router.navigate('/login') }
                     backgroundColor={ globalStyles.lightBlue }
                 >
