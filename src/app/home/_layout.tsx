@@ -1,15 +1,17 @@
-import { Stack } from 'expo-router';
+import { Slot } from 'expo-router';
+import { View } from 'react-native';
 
 export default function HomeLayout() {
     return (
-        <Stack
-            screenOptions={
+        <View
+            style={
                 {
-                    headerShown: false
+                    marginTop: 30,
+                    flex: 1
                 }
             }
         >
-            <Stack.Screen name="index" />
-        </Stack>
+            <Slot />
+        </View>
     );
 }

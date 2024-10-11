@@ -1,30 +1,20 @@
-import { StyleSheet, Dimensions } from 'react-native';
-
-import globalStyles from '@/globals/globalStyles';
-
-const { width } = Dimensions.get('window');
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
+        gap: 50,
+    },
+    headerContainer: {
         display: 'flex',
-        flexDirection: 'column',
-        paddingLeft: 20,
-        paddingRight: 20
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     filtersContainer: {
-        padding: 10,
-        shadowColor: globalStyles.black,
-        shadowOpacity: 0.1,
-        shadowRadius: 30,
-        backgroundColor: globalStyles.gray,
-        borderRadius: 10,
+        gap: 16,
         display: 'flex',
         flexDirection: 'column',
-        gap: 16,
-        maxWidth: '90%'
-    },
-    filterButtonText: {
-        color: globalStyles.black
+        alignItems: 'center',
     },
     recommendationsContentContainer: {
         display: 'flex',
@@ -32,23 +22,6 @@ const styles = StyleSheet.create({
         gap: 20,
         width: '100%'
     },
-    headerContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: width,
-        alignItems: 'center',
-        backgroundColor: globalStyles.white,
-        top: 0,
-        padding: 20,
-        shadowColor: globalStyles.black,
-        shadowOpacity: 0.1,
-        shadowOffset: {
-            height: 5,
-            width: 0
-        },
-        shadowRadius: 4
-    }
 });
 
 export default styles;

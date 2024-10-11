@@ -14,11 +14,11 @@ type EventRecommendationProps = {
 
 export default function EventRecommendation(props: EventRecommendationProps) {
     const styles = StyleSheet.create({
+        // TODO: Put shadow on the right side and left side
         container: {
             display: 'flex',
-            flexDirection: 'column',
             alignSelf: 'stretch',
-            gap: 20
+            gap: 20,
         },
         headerContainer: {
             flex: 1,
@@ -28,7 +28,7 @@ export default function EventRecommendation(props: EventRecommendationProps) {
         },
         headerText: {
             fontSize: 16,
-            fontWeight: 'bold'
+            color: globalStyles.white,
         },
         seeAllText: {
             fontSize: 12,
@@ -39,7 +39,8 @@ export default function EventRecommendation(props: EventRecommendationProps) {
         cardContainer: {
             display: 'flex',
             flexDirection: props.horizontalScroll ? 'row' : 'column',
-            gap: 20
+            gap: 20,
+            paddingBottom: 5
         }
     });
     
