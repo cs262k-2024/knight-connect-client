@@ -57,7 +57,7 @@ export default function Event(props: EventProps) {
                             uri: (
                                 props.coverImage
                                     ? props.coverImage
-                                    : 'https://s3-alpha-sig.figma.com/img/70e5/961e/872eb20380cfdf0883dbdfd0f783568d?Expires=1728864000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Tb~R-6XLf2S8RRfUramGfN1DozfKDKwBBEMejnum0EaQ9yvKlXgoPlF4WRxl1IyHTB7o2NiyIL2one7cTkHvQziwo1otcl-Hzt6J1D4XhyDzZwq5tImKK~8nGzTtT85ig0Z1jLw3Lhn-9Zs4arwRGE9scp8XYEHwfuqIi2ebj3XHy0S0PeDD5rIwKlLGcu0vjA-lqc2PDf-mU0jl5fD4f67tjBz7POrO3wsBa1GEO-0~RVEYcqVCIoPil4C9yYUjDOnpS~vEOfgz-kImypuqNd8Dq5jWF3jeOqoUzbAdXcSFMxVbhBPAFDZBlRvv0TTLgJ2xcvyyORQh~OB3t4Jdsg__'
+                                    : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9FiSXn0_Suecx7cveYhokZe2Qx8qGu3Vwmw&s'
                             )
                         }
                     }
