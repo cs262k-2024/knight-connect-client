@@ -1,10 +1,13 @@
-import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { useState } from 'react';
+import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import styles from './styles';
-import Button from '@/components/button';
+
 import { router } from 'expo-router';
+
+import Button from '@/components/button';
+
 import { CATEGORIES } from '@/globals/constants';
+import styles from './styles';
 
 export default function selectInterests() {
     const [userInterests, setUserInterests] = useState<string[]>([]);
