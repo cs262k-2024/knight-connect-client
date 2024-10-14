@@ -7,25 +7,20 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 10,
         marginRight: 10,
-        marginTop: 17
+        marginTop: 17,
     },
     emptyDate: {
         height: 15,
         flex: 1,
-        paddingTop: 30
-    },
-    customDay: {
-        margin: 10,
-        fontSize: 24,
-        color: 'green'
+        paddingTop: 30,
     },
     dayItem: {
-        marginLeft: 34
+        marginLeft: 34,
     },
     text: {
         color: globalStyles.white,
-        fontSize: 15
-    }
+        fontSize: 15,
+    },
 });
 
 export default styles;
