@@ -52,7 +52,8 @@ export default function Home() {
                         ) }
                         containerStyle={
                             {
-                                backgroundColor: globalStyles.veryDarkGray
+                                backgroundColor: globalStyles.veryDarkGray,
+                                width: '100%'
                             }
                         }
                     />
