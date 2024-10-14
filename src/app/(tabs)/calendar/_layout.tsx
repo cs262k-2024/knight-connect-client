@@ -5,7 +5,7 @@ export default function CalendarLayout() {
         <Stack
             screenOptions={
                 {
-                    headerShown: false
+                    headerShown: false,
                 }
             }
         >
