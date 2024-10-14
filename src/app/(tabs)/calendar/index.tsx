@@ -47,27 +47,27 @@ export default function() {
         }
 
         return tempItems;
-    };
+    }
 
     const renderItem = (reservation: CalvinEvent) => {
         return (
             <TouchableOpacity
-                style={styles.item}
-                onPress={() => Alert.alert(reservation.name)}
+                style={ styles.item }
+                onPress={ () => Alert.alert(reservation.name) }
             >
-                <Text style={styles.text}>{reservation.name}</Text>
-                <Text style={styles.text}>{reservation.location}</Text>
+                <Text style={ styles.text }>{ reservation.name }</Text>
+                <Text style={ styles.text }>{ reservation.location }</Text>
 
-                <Text style={styles.text}>{reservation.description}</Text>
-                <Text style={styles.text}>{reservation.type}</Text>
+                <Text style={ styles.text }>{ reservation.description }</Text>
+                <Text style={ styles.text }>{ reservation.type }</Text>
             </TouchableOpacity>
         );
     };
 
     const renderEmptyDate = () => {
         return (
-            <View style={styles.emptyDate}>
-                <Text style={styles.text}>This is empty date!</Text>
+            <View style={ styles.emptyDate }>
+                <Text style={ styles.text }>This is empty date!</Text>
             </View>
         );
     };
@@ -81,21 +81,21 @@ export default function() {
 
     return (
         <NativeCalendar.Agenda
-            items={items}
+            items={ items }
             loadItemsForMonth={ (d: NativeCalendar.DateData) => setItems(loadItems(d)) }
-            selected={timeToString(Date.now())}
-            renderItem={renderItem}
-            renderEmptyDate={renderEmptyDate}
-            rowHasChanged={rowHasChanged}
-            showClosingKnob={true}
-            theme={{
+            selected={ timeToString(Date.now()) }
+            renderItem={ renderItem }
+            renderEmptyDate={ renderEmptyDate }
+            rowHasChanged={ rowHasChanged }
+            showClosingKnob={ true }
+            theme={ {
                 reservationsBackgroundColor: globalStyles.black,
                 calendarBackground: globalStyles.black,
                 agendaDayTextColor: globalStyles.gray,
                 agendaDayNumColor: globalStyles.maroon,
                 agendaTodayColor: globalStyles.gold,
                 agendaKnobColor: globalStyles.lightBlue,
-            }}
+            } }
         />
     );
 }

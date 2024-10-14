@@ -23,7 +23,7 @@ export default function TabLayout() {
                 options={
                     {
                         title: '',
-                        tabBarIcon: ({color}) => (
+                        tabBarIcon: ({ color }) => (
                             <AntDesign name="home" size={ 24 } color={ color } />
                         )
                     }
@@ -35,7 +35,7 @@ export default function TabLayout() {
                 options={
                     {
                         title: '',
-                        tabBarIcon: ({color}) => (
+                        tabBarIcon: ({ color }) => (
                             <AntDesign name="calendar" size={ 24 } color={ color } />
                         )
                     }

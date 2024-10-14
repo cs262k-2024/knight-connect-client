@@ -21,23 +21,20 @@ export default function RootLayout() {
     });
 
     useEffect(() => {
-        if (loaded)
-            SplashScreen.hideAsync();
+        if (loaded) SplashScreen.hideAsync();
     }, [loaded]);
 
     if (!loaded) return null;
 
     return (
         <Stack
-            screenOptions={
-                {
-                    contentStyle: {
-                        backgroundColor: globalStyles.black,
-                        paddingTop: 50,
-                    },
-                    headerShown: false,
-                }
-            }
+            screenOptions={ {
+                contentStyle: {
+                    backgroundColor: globalStyles.black,
+                    paddingTop: 50,
+                },
+                headerShown: false,
+            } }
         >
             <Stack.Screen name="(tabs)" options={ { headerShown: false } } />
             <Stack.Screen name="login" options={ { headerShown: false } } />
