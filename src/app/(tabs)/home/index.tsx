@@ -19,53 +19,53 @@ export default function Home() {
     const [fitler, updateFilter] = useState('');
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <View style={styles.headerContainer}>
-                <Logo fontSize={20} />
+        <ScrollView contentContainerStyle={ styles.container }>
+            <View style={ styles.headerContainer }>
+                <Logo fontSize={ 20 } />
 
                 <Image
-                    source={{
+                    source={ {
                         uri: 'https://gratisography.com/wp-content/uploads/2024/01/gratisography-cyber-kitty-800x525.jpg',
-                    }}
-                    width={50}
-                    height={50}
-                    borderRadius={100}
+                    } }
+                    width={ 50 }
+                    height={ 50 }
+                    borderRadius={ 100 }
                 />
             </View>
 
             <View
-                style={{
+                style={ {
                     gap: 20,
-                }}
+                } }
             >
-                <View style={styles.filtersContainer}>
+                <View style={ styles.filtersContainer }>
                     <Input
                         placeholder="Search"
-                        frontIcon={
+                        frontIcon={ (
                             <EvilIcons
                                 name="search"
-                                size={24}
-                                color={globalStyles.gray}
+                                size={ 24 }
+                                color={ globalStyles.gray }
                             />
-                        }
-                        containerStyle={{
+                          ) }
+                        containerStyle={ {
                             backgroundColor: globalStyles.veryDarkGray,
                             width: '100%',
-                        }}
-                        onChangeText={(e) => updateFilter(e)}
+                        } }
+                        onChangeText={ (e) => updateFilter(e) }
                     />
 
                     <ScrollView
-                        horizontal={true}
-                        contentContainerStyle={{
+                        horizontal={ true }
+                        contentContainerStyle={ {
                             display: 'flex',
                             flexDirection: 'row',
                             gap: 10,
-                        }}
+                        } }
                     >
-                        {CATEGORIES.map((c, i) => (
+                        { CATEGORIES.map((c, i) => (
                             <Button
-                                key={i}
+                                key={ i }
                                 onPress={
                                     () =>
                                         updateFilter(
@@ -74,21 +74,21 @@ export default function Home() {
                                 }
                             >
                                 <Text
-                                    style={{
+                                    style={ {
                                         color: globalStyles.white,
-                                    }}
+                                    } }
                                 >
-                                    {c}
+                                    { c }
                                 </Text>
                             </Button>
-                        ))}
+                        )) }
                     </ScrollView>
                 </View>
 
-                <View style={styles.recommendationsContentContainer}>
-                    {fitler.replaceAll(' ', '').length > 0 ? (
+                <View style={ styles.recommendationsContentContainer }>
+                    { fitler.replaceAll(' ', '').length > 0 ? (
                         <>
-                            {(function filterEvents() {
+                            { (function filterEvents() {
                                 const filteredEvents = EVENTS.filter(
                                     (e) =>
                                         e.name
@@ -103,37 +103,37 @@ export default function Home() {
                                         e.type
                                             .toLowerCase()
                                             .includes(fitler.toLowerCase()),
-                                ).map((e, i) => <Event key={i} {...e} />);
+                                ).map((e, i) => <Event key={ i } { ...e } />);
 
                                 if (filteredEvents.length === 0)
                                     return (
                                         <Text
-                                            style={{
+                                            style={ {
                                                 color: globalStyles.white,
                                                 fontSize: 16,
                                                 textAlign: 'center',
-                                            }}
+                                            } }
                                         >
                                             No events found...
                                         </Text>
                                     );
 
                                 return filteredEvents;
-                            })()}
+                            })() }
                         </>
                     ) : (
                         <>
                             <EventRecommendation
                                 title="Upcoming Events"
-                                horizontalScroll={true}
+                                horizontalScroll={ true }
                             />
                             <EventRecommendation
                                 title="Recommended for You"
                                 eventCardType="price"
-                                horizontalScroll={false}
+                                horizontalScroll={ false }
                             />
                         </>
-                    )}
+                    ) }
                 </View>
             </View>
         </ScrollView>
