@@ -14,72 +14,72 @@ import styles from './styles';
 
 export default function Home() {
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <View style={styles.headerContainer}>
-                <Logo fontSize={20} />
+        <ScrollView contentContainerStyle={ styles.container }>
+            <View style={ styles.headerContainer }>
+                <Logo fontSize={ 20 } />
 
                 <Image
-                    source={{
+                    source={ {
                         uri: 'https://gratisography.com/wp-content/uploads/2024/01/gratisography-cyber-kitty-800x525.jpg',
-                    }}
-                    width={50}
-                    height={50}
-                    borderRadius={100}
+                    } }
+                    width={ 50 }
+                    height={ 50 }
+                    borderRadius={ 100 }
                 />
             </View>
 
             <View
-                style={{
+                style={ {
                     gap: 20,
-                }}
+                } }
             >
-                <View style={styles.filtersContainer}>
+                <View style={ styles.filtersContainer }>
                     <Input
                         placeholder="Search"
-                        frontIcon={
+                        frontIcon={ (
                             <EvilIcons
                                 name="search"
-                                size={24}
-                                color={globalStyles.gray}
+                                size={ 24 }
+                                color={ globalStyles.gray }
                             />
-                        }
-                        containerStyle={{
+                          ) }
+                        containerStyle={ {
                             backgroundColor: globalStyles.veryDarkGray,
                             width: '100%',
-                        }}
+                        } }
                     />
 
                     <ScrollView
-                        horizontal={true}
-                        contentContainerStyle={{
+                        horizontal={ true }
+                        contentContainerStyle={ {
                             display: 'flex',
                             flexDirection: 'row',
                             gap: 10,
-                        }}
+                        } }
                     >
-                        {CATEGORIES.map((c, i) => (
-                            <Button key={i} onPress={() => {}}>
+                        { CATEGORIES.map((c, i) => (
+                            <Button key={ i } onPress={ () => {} }>
                                 <Text
-                                    style={{
+                                    style={ {
                                         color: globalStyles.white,
-                                    }}
+                                    } }
                                 >
-                                    {c}
+                                    { c }
                                 </Text>
                             </Button>
-                        ))}
+                        )) }
                     </ScrollView>
                 </View>
 
-                <View style={styles.recommendationsContentContainer}>
+                <View style={ styles.recommendationsContentContainer }>
                     <EventRecommendation
                         title="Upcoming Events"
-                        horizontalScroll={true}
+                        horizontalScroll={ true }
                     />
                     <EventRecommendation
                         title="Recommended for You"
                         eventCardType="price"
-                        horizontalScroll={false}
+                        horizontalScroll={ false }
                     />
                 </View>
             </View>
