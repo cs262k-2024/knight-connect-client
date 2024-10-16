@@ -31,16 +31,13 @@ export default function RootLayout() {
             screenOptions={ {
                 contentStyle: {
                     backgroundColor: globalStyles.black,
-                    paddingTop: 40,
-                    padding: 20,
+                    paddingTop: 50,
                 },
                 headerShown: false,
             } }
         >
-            <Stack.Screen name="selectInterests" />
-            <Stack.Screen name="home" />
-
-            <Stack.Screen name="login" />
+            <Stack.Screen name="(tabs)" options={ { headerShown: false } } />
+            <Stack.Screen name="login" options={ { headerShown: false } } />
 
             <Stack.Screen name="+not-found" />
         </Stack>
