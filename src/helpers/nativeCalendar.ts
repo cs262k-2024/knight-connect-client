@@ -42,7 +42,6 @@ async function addEventToCalendar(title: string, startDate: Date, endDate: Date,
 
     const defaultCalendarSource = await getDefaultCalendarSource();
     if (defaultCalendarSource === null) return false;
-    console.log(defaultCalendarSource);
 
     try {
         const calendarId = await Calendar.createCalendarAsync({
