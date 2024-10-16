@@ -63,8 +63,8 @@ async function registerForPushNotificationsAsync() {
 (async () => {
     try {
         await registerForPushNotificationsAsync();
-    } catch (e) {
-        console.log(`failed to register for push notifications: ${e}`);
+    }
+ catch (e) {
     }
 })();
 
