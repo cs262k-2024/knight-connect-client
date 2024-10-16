@@ -46,7 +46,7 @@ async function addEventToCalendar(title: string, startDate: Date, endDate: Date,
 
     try {
         const calendarId = await Calendar.createCalendarAsync({
-            title: 'Expo Calendar',
+            title: 'Knight Connect',
             color: 'blue',
             entityType: Calendar.EntityTypes.EVENT,
             sourceId: defaultCalendarSource.id,
