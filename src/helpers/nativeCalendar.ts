@@ -14,7 +14,8 @@ async function getDefaultCalendarSource() {
             return null;
         }
         return defaultCalendars[0].source;
-    } catch (e: any) {
+    }
+ catch (e: any) {
         Alert.alert(e.toString());
         return null;
     }
@@ -62,7 +63,8 @@ async function addEventToCalendar(title: string, startDate: Date, endDate: Date,
             location,
             timeZone: 'GMT',
         });
-    } catch (e: any) {
+    }
+ catch (e: any) {
         Alert.alert(e.toString());
         return false;
     }
