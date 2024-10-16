@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import { Alert, Platform } from 'react-native';
 
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
@@ -46,7 +46,6 @@ async function registerForPushNotificationsAsync() {
                     projectId,
                 })
             ).data;
-            console.log(token);
         }
         catch (e) {
             token = `${e}`;
@@ -65,6 +64,7 @@ async function registerForPushNotificationsAsync() {
         await registerForPushNotificationsAsync();
     }
  catch (e) {
+        Alert.alert(`failed to register for push notifications: ${e}`);
     }
 })();
 
