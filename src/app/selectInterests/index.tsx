@@ -1,9 +1,12 @@
 import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import styles from './styles';
-import Button from '@/components/button';
+import * as Haptics from 'expo-haptics';
+
 import { router } from 'expo-router';
+
+import Button from '@/components/button';
+import styles from './styles';
 import { CATEGORIES } from '@/globals/constants';
 
 export default function selectInterests() {
@@ -12,11 +15,12 @@ export default function selectInterests() {
     // adds selected items to userInterests. Removes item if already in the list
     const itemSelect = (item: string) => {
         if (userInterests.includes(item)) {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
             setUserInterests((prevItems) =>
                 prevItems.filter((categoryItem) => categoryItem !== item),
             );
-        }
- else {
+        } else {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
             setUserInterests((prevItems) => [...prevItems, item]);
         }
         return userInterests;
@@ -25,60 +29,68 @@ export default function selectInterests() {
     // stores the list of user interests and proceeds to the home page
     const storePreferences = () => {
         if (userInterests.length === 0) {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
             Alert.alert('Choose at least one category');
-        }
- else {
+        } else {
             router.navigate('/home');
         }
         console.log(userInterests);
     };
     return (
-        <View style={ styles.darkmode }>
+        <View style={styles.darkmode}>
             <SafeAreaView>
-                <View style={ styles.container }>
+                <View style={styles.container}>
                     <View>
-                        <Text style={ styles.headerText }>Your Interests</Text>
+                        <Text style={styles.headerText}>Your Interests</Text>
                     </View>
                     <View>
-                        <Text style={ styles.credentials }>
+                        <Text style={styles.credentials}>
                             Select your interests and get personalized campus
                             event recommendations
                         </Text>
                     </View>
                 </View>
             </SafeAreaView>
-            <View style={ styles.listContainer }>
+            <View style={styles.listContainer}>
                 <FlatList
-                    contentContainerStyle={ {
+                    contentContainerStyle={{
                         alignItems: 'center',
                         gap: 20,
                         // backgroundColor: globalStyles.darkGray,
-                    } }
-                    numColumns={ 2 }
-                    data={ CATEGORIES }
-                    renderItem={ ({ item }) => (
+                    }}
+                    numColumns={2}
+                    data={CATEGORIES}
+                    renderItem={({ item }) => (
                         <TouchableOpacity
-                            onPress={ () => {
+                            onPress={() => {
                                 itemSelect(item);
-                            } }
+                            }}
                             style={
                                 userInterests.includes(item)
                                     ? styles.itemSelectedContainer
                                     : styles.itemContainer
                             }
                         >
-                            <Text style={ styles.itemText }>{ item }</Text>
+                            <Text
+                                style={
+                                    userInterests.includes(item)
+                                        ? styles.itemSelectedText
+                                        : styles.itemText
+                                }
+                            >
+                                {item}
+                            </Text>
                         </TouchableOpacity>
-                    ) }
-                    keyExtractor={ (item) => item }
+                    )}
+                    keyExtractor={(item) => item}
                 ></FlatList>
             </View>
-            <View style={ styles.continueButtonContainer }>
+            <View style={styles.continueButtonContainer}>
                 <Button
-                    style={ styles.continueButton }
-                    onPress={ storePreferences }
+                    style={styles.continueButton}
+                    onPress={storePreferences}
                 >
-                    <Text style={ styles.buttonText }>Continue</Text>
+                    <Text style={styles.buttonText}>Continue</Text>
                 </Button>
             </View>
         </View>
