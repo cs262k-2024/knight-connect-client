@@ -9,14 +9,15 @@ const styles = StyleSheet.create({
     container: {
         display: 'flex',
         flexDirection: 'column',
-        padding: 20,
-        marginTop: 30,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
         gap: 10,
     },
     listContainer: {
         display: 'flex',
         flexDirection: 'column',
-        padding: 20,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
     },
     headerText: {
         color: globalStyles.white,
@@ -41,30 +42,31 @@ const styles = StyleSheet.create({
     },
 
     itemText: {
-        borderRadius: 10,
         padding: 10,
         color: globalStyles.gray,
+    },
+    itemSelectedText: {
+        padding: 10,
+        color: globalStyles.lightBlue,
     },
     itemSelectedContainer: {
         backgroundColor: '#62aeff',
         borderWidth: 2,
-        borderColor: globalStyles.lightBlue,
         borderRadius: 50,
+        borderColor: globalStyles.lightBlue,
         margin: 5,
     },
 
     continueButtonContainer: {
         display: 'flex',
-        paddingHorizontal: 30,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 30,
     },
     continueButton: {
         borderRadius: 50,
-        paddingTop: 15,
-        paddingBottom: 15,
-        width: '90%',
+        paddingVertical: 15,
+        width: '70%',
         backgroundColor: globalStyles.lightBlue,
     },
     buttonText: {
