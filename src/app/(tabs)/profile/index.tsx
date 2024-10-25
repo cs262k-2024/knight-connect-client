@@ -22,7 +22,7 @@ export default function UserProfile() {
                 </View>
                 <View>
                     <Text style={ styles.title }>Username</Text>
-                    <View style={ [styles.avatarSection, styles.center] }>
+                    <View style={ [styles.avatarContainer, styles.center] }>
                         <Icon
                             name="location"
                             size={ 14 }
