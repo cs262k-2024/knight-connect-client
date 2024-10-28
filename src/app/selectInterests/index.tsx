@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as Haptics from 'expo-haptics';
 
 import { router } from 'expo-router';
 
 import Button from '@/components/button';
-
 import { CATEGORIES } from '@/globals/constants';
 import styles from './styles';
 
@@ -15,11 +15,13 @@ export default function selectInterests() {
     // adds selected items to userInterests. Removes item if already in the list
     const itemSelect = (item: string) => {
         if (userInterests.includes(item)) {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
             setUserInterests((prevItems) =>
                 prevItems.filter((categoryItem) => categoryItem !== item),
             );
         }
  else {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
             setUserInterests((prevItems) => [...prevItems, item]);
         }
         return userInterests;
@@ -28,6 +30,7 @@ export default function selectInterests() {
     // stores the list of user interests and proceeds to the home page
     const storePreferences = () => {
         if (userInterests.length === 0) {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
             Alert.alert('Choose at least one category');
         }
  else {
@@ -70,7 +73,15 @@ export default function selectInterests() {
                                     : styles.itemContainer
                             }
                         >
-                            <Text style={ styles.itemText }>{ item }</Text>
+                            <Text
+                                style={
+                                    userInterests.includes(item)
+                                        ? styles.itemSelectedText
+                                        : styles.itemText
+                                }
+                            >
+                                { item }
+                            </Text>
                         </TouchableOpacity>
                     ) }
                     keyExtractor={ (item) => item }
