@@ -6,6 +6,7 @@ import EvilIcons from '@expo/vector-icons/EvilIcons';
 import Input from '@/components/input';
 import Button from '@/components/button';
 import Logo from '@/components/texts/logo';
+import Calendar from '@/components/calendar';
 
 import EventRecommendation from '@/components/eventRecommendation';
 import Event from '@/components/event';
@@ -17,6 +18,7 @@ import styles from './styles';
 
 export default function Home() {
     const [fitler, updateFilter] = useState('');
+    const [isCalendarVisible, toggleCalendar] = useState(false);
 
     return (
         <ScrollView contentContainerStyle={ styles.container }>
@@ -32,6 +34,24 @@ export default function Home() {
                     borderRadius={ 100 }
                 />
             </View>
+
+            // Calendar button
+            <Button
+                onPress={ () => toggleCalendar(true) }
+                style={ {
+                    backgroundColor: globalStyles.veryDarkGray,
+                    width: '100%',
+                    padding: 10,
+                    borderRadius: 10,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                } }
+            >
+                <Text style={ { color: globalStyles.white } }>
+                    Open Calendar
+                </Text>
+            </Button>
 
             <View
                 style={ {
@@ -136,6 +156,11 @@ export default function Home() {
                     ) }
                 </View>
             </View>
+
+            <View style={ styles.calendarContainer }>
+                { isCalendarVisible && <Calendar/> }
+            </View>
+
         </ScrollView>
     );
 }
