@@ -107,7 +107,7 @@ export default function Login({
             <Divider text="or" style={ { marginTop: 30 } } />
 
             <View style={ styles.signup }>
-                <Text style={ styles.signupText }>Don't have an account? </Text>
+                <Text style={ styles.signupText }>{ action === 'Login' ? 'Don\'t' : 'Already' } have an account? </Text>
                 <Text
                     style={ styles.signupLink }
                     onPress={ () =>
@@ -116,7 +116,7 @@ export default function Login({
                             : updateAction('Login')
                     }
                 >
-                    { action }.
+                    { action === 'Login' ? 'Sign Up' : 'Login' }.
                 </Text>
             </View>
         </View>
