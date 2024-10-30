@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ScrollView, View, Text, Image } from 'react-native';
+import { ScrollView, View, Text, Image, Modal } from 'react-native';
 
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 
@@ -35,7 +35,6 @@ export default function Home() {
                 />
             </View>
 
-            // Calendar button
             <Button
                 onPress={ () => toggleCalendar(true) }
                 style={ {
@@ -155,12 +154,30 @@ export default function Home() {
                         </>
                     ) }
                 </View>
-            </View>
 
-            <View style={ styles.calendarContainer }>
-                { isCalendarVisible && <Calendar/> }
+                <Modal
+                    visible={ isCalendarVisible }
+                    onRequestClose={ () => toggleCalendar(false) }
+                    animationType="slide"
+                    transparent={ true }
+                >
+                    <Calendar />
+                    {/* a close button */}
+                    <Button
+                        onPress={ () => toggleCalendar(false) }
+                        style={ {
+                            backgroundColor: globalStyles.veryDarkGray,
+                            width: '100%',
+                            padding: 10,
+                            borderRadius: 10,
+                        } }
+                    >
+                        <Text style={ { color: globalStyles.white } }>
+                            Close
+                        </Text>
+                    </Button>
+                </Modal>
             </View>
-
         </ScrollView>
     );
 }
