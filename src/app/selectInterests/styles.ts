@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     darkmode: {
         backgroundColor: globalStyles.black,
         height: '100%',
+        flex: 1,
     },
     container: {
         display: 'flex',
@@ -12,12 +13,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 10,
         gap: 10,
+        flexShrink: 0,
     },
     listContainer: {
         display: 'flex',
         flexDirection: 'column',
         paddingHorizontal: 20,
         paddingVertical: 10,
+        flex: 1,
     },
     headerText: {
         color: globalStyles.white,
@@ -62,6 +65,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 30,
+        flexShrink: 0,
     },
     continueButton: {
         borderRadius: 50,

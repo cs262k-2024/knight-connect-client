@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 
 import { router } from 'expo-router';
@@ -40,19 +39,17 @@ export default function selectInterests() {
     };
     return (
         <View style={ styles.darkmode }>
-            <SafeAreaView>
-                <View style={ styles.container }>
-                    <View>
-                        <Text style={ styles.headerText }>Your Interests</Text>
-                    </View>
-                    <View>
-                        <Text style={ styles.credentials }>
-                            Select your interests and get personalized campus
-                            event recommendations
-                        </Text>
-                    </View>
+            <View style={ styles.container }>
+                <View>
+                    <Text style={ styles.headerText }>Your Interests</Text>
                 </View>
-            </SafeAreaView>
+                <View>
+                    <Text style={ styles.credentials }>
+                        Select your interests and get personalized campus
+                        event recommendations
+                    </Text>
+                </View>
+            </View>
             <View style={ styles.listContainer }>
                 <FlatList
                     contentContainerStyle={ {
