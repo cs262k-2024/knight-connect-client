@@ -162,7 +162,7 @@ export default function Home() {
                     transparent={ true }
                 >
                     <Calendar />
-                    {/* a close button */}
+                    { /* a close button */ }
                     <Button
                         onPress={ () => toggleCalendar(false) }
                         style={ {
