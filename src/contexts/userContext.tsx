@@ -14,7 +14,7 @@ export default function UserContextProvider(props: PropsWithChildren) {
     const [user, updateUser] = useState<User | null>(null);
 
     return (
-        <UserContext.Provider value={{ user: user, updateUser: updateUser }}>
+        <UserContext.Provider value={ { user: user, updateUser: updateUser } }>
             { props.children }
         </UserContext.Provider>
     );
