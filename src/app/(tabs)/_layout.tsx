@@ -11,7 +11,7 @@ export default function TabLayout() {
                 tabBarStyle: {
                     padding: 10,
                     backgroundColor: globalStyles.black,
-                    // borderColor: globalStyles.darkGray,
+                    borderTopColor: globalStyles.darkGray,
                 },
                 tabBarActiveTintColor: globalStyles.gold,
                 tabBarInactiveTintColor: globalStyles.gray,
