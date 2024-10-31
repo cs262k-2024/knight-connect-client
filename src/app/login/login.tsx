@@ -52,7 +52,10 @@ export default function Login({
     const [password, updatePassword] = useState('');
 
     async function login() {
-        router.navigate('/selectInterests');
+        if(action === 'Login')
+            router.navigate('/home');
+        else
+            router.navigate('/selectInterests');
     }
 
     return (
