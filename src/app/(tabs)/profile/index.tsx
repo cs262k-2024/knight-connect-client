@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 
@@ -18,7 +18,13 @@ export default function UserProfile() {
 
     if(!user) return;
 
+    const [numInterests, setNumInterests] = useState(user.interests.length > 3 ? 3 : user.interests.length);
 
+    useEffect(() => {
+        if(!user) return;
+
+        setNumInterests(user.interests.length > 3 ? 3 : user.interests.length);
+    }, [user]);
 
     return (
         <ScrollView style={ styles.container }>
@@ -113,7 +119,7 @@ export default function UserProfile() {
                 </View>
 
                 <View style={ styles.row }>
-                    { user.interests.map((interest) => {
+                    { user.interests.slice(0, numInterests + 1).map(interest => {
                         return (
                             <View
                                 key={ interest }
@@ -125,6 +131,44 @@ export default function UserProfile() {
                             </View>
                         );
                     }) }
+
+                    {
+                        user.interests.length > 4 && (
+                            <TouchableOpacity
+                                    style={ [
+                                        styles.interestContainer,
+                                        {
+                                            backgroundColor: globalStyles.lightBlue,
+                                            borderColor: globalStyles.lightBlue,
+                                        },
+                                    ] }
+                                    onPress={ 
+                                        () => {
+                                            Haptics.impactAsync(
+                                                Haptics.ImpactFeedbackStyle.Soft,
+                                            );
+
+                                            if(numInterests < user.interests.length) setNumInterests(user.interests.length);
+                                            else setNumInterests(3);
+                                        } 
+                                    }
+                                >
+                                    <Text
+                                        style={ [
+                                            styles.interestText,
+                                            { color: globalStyles.white },
+                                        ] }
+                                    >
+                                        {
+                                            numInterests < user.interests.length
+                                                ? 'See all...'
+                                                : 'Show Less'
+                                        }
+                                    </Text>
+                                </TouchableOpacity>
+                        )
+                    }
+
                 </View>
             </View>
 
