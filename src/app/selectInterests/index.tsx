@@ -45,10 +45,14 @@ function SelectInterestsFooter({
 }
 
 export default function SelectInterests() {
-    const local = useLocalSearchParams<{ email: string }>();
-    const { updateUser } = useContext(UserContext);
+    const local = useLocalSearchParams<{ email: string; edit: string }>();
+    const { user, updateUser } = useContext(UserContext);
+    
+    const isEdit = local.edit === 'true';
+    
+    if(!user && isEdit) return;
 
-    const [userInterests, setUserInterests] = useState<string[]>([]);
+    const [userInterests, setUserInterests] = useState<string[]>(isEdit ? user?.interests! : []);
 
     // adds selected items to userInterests. Removes item if already in the list
     const itemSelect = (item: string) => {
@@ -68,17 +72,26 @@ export default function SelectInterests() {
 
     // stores the list of user interests and proceeds to the home page
     function storePreferences() {
-        updateUser({
-            interests: userInterests,
-            email: local.email,
-            username: 'John Doe',
-        });
+        if(isEdit && user) {
+            updateUser({
+                ...user,
+                interests: userInterests,
+            });
+
+            router.navigate('/profile');
+        }
+        else
+            updateUser({
+                interests: userInterests,
+                email: local.email,
+                username: 'John Doe',
+            });
 
         if (userInterests.length === 0) {
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
             Alert.alert('Choose at least one category');
         }
- else router.navigate('/home');
+        else router.navigate('/home');
     }
 
     return (

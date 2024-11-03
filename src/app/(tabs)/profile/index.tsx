@@ -70,7 +70,7 @@ export default function UserProfile() {
                 </View>
             </View>
 
-            <View style={ styles.Section }>
+            <View style={ styles.section }>
                 <Text style={ styles.sectionTitle }>About Me</Text>
                 
                 <Text style={ { fontSize: 16, color: globalStyles.gray } }>
@@ -79,22 +79,9 @@ export default function UserProfile() {
                 </Text>
             </View>
 
-            <View style={ styles.Section }>
-                <Text style={ styles.sectionTitle }>Your Interests ({ user.interests.length })</Text>
-                
-                <View style={ styles.row }>
-                    { user.interests.map((interest) => {
-                        return (
-                            <View
-                                key={ interest }
-                                style={ styles.interestContainer }
-                            >
-                                <Text style={ styles.interestText }>
-                                    { interest }
-                                </Text>
-                            </View>
-                        );
-                    }) }
+            <View style={ styles.section }>
+                <View style={ styles.selectInterestsHeader }>
+                    <Text style={ styles.sectionTitle }>Your Interests ({ user.interests.length })</Text>
 
                     <TouchableOpacity
                         style={ [
@@ -110,7 +97,7 @@ export default function UserProfile() {
                                     Haptics.ImpactFeedbackStyle.Soft,
                                 );
 
-                                router.navigate('/selectInterests/');
+                                router.navigate('/selectInterests?edit=true');
                             } 
                         }
                     >
@@ -124,9 +111,24 @@ export default function UserProfile() {
                         </Text>
                     </TouchableOpacity>
                 </View>
+
+                <View style={ styles.row }>
+                    { user.interests.map((interest) => {
+                        return (
+                            <View
+                                key={ interest }
+                                style={ styles.interestContainer }
+                            >
+                                <Text style={ styles.interestText }>
+                                    { interest }
+                                </Text>
+                            </View>
+                        );
+                    }) }
+                </View>
             </View>
 
-            <View style={ styles.Section }>
+            <View style={ styles.section }>
                 <Text style={ styles.sectionTitle }>Your Saved Events (5)</Text>
             </View>
         </ScrollView>

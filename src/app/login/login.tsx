@@ -62,7 +62,7 @@ export default function Login({
             updateUser({
                 username: 'John Doe',
                 email: email,
-                interests: ['Music', 'Sports', 'Food'],
+                interests: [],
             });
         }
  else router.navigate(`/selectInterests?email=${email}`);

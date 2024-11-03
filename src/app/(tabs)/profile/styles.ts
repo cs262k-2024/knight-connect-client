@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
     },
-    Section: {
+    section: {
         marginVertical: 25,
         paddingHorizontal: 20,
         gap: 5,
@@ -66,7 +66,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         marginBottom: 10,
+        marginTop: 10,
     },
+    selectInterestsHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    }
 });
 
 export default styles;
