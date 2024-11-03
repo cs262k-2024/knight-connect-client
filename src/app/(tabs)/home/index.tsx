@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { ScrollView, View, Text, Image } from 'react-native';
+import { ScrollView, View, Text, Image, Pressable } from 'react-native';
 
+import { router } from 'expo-router';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 
 import Input from '@/components/input';
@@ -23,14 +24,20 @@ export default function Home() {
             <View style={ styles.headerContainer }>
                 <Logo fontSize={ 20 } />
 
-                <Image
-                    source={ {
-                        uri: 'https://gratisography.com/wp-content/uploads/2024/01/gratisography-cyber-kitty-800x525.jpg',
-                    } }
-                    width={ 50 }
-                    height={ 50 }
-                    borderRadius={ 100 }
-                />
+                <Pressable
+                    onPress={
+                        () => router.navigate('/profile')
+                    }
+                >
+                    <Image
+                        source={ {
+                            uri: 'https://gratisography.com/wp-content/uploads/2024/01/gratisography-cyber-kitty-800x525.jpg',
+                        } }
+                        width={ 50 }
+                        height={ 50 }
+                        borderRadius={ 100 }
+                    />
+                </Pressable>
             </View>
 
             <View
