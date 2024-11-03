@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import * as Haptics from 'expo-haptics';
 
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
+
+import { UserContext } from '@/contexts/userContext';
 
 import Button from '@/components/button';
 import { CATEGORIES } from '@/globals/constants';
@@ -20,21 +22,22 @@ function SelectInterestsHeader() {
 
             <View>
                 <Text style={ styles.credentials }>
-                    Select your interests and get personalized campus
-                    event recommendations
+                    Select your interests and get personalized campus event
+                    recommendations
                 </Text>
             </View>
         </View>
     );
 }
 
-function SelectInterestsFooter({ storePreferences }: {storePreferences: () => void}) {
+function SelectInterestsFooter({
+    storePreferences,
+}: {
+    storePreferences: () => void;
+}) {
     return (
         <View style={ styles.continueButtonContainer }>
-            <Button
-                style={ styles.continueButton }
-                onPress={ storePreferences }
-            >
+            <Button style={ styles.continueButton } onPress={ storePreferences }>
                 <Text style={ styles.buttonText }>Continue</Text>
             </Button>
         </View>
@@ -42,6 +45,9 @@ function SelectInterestsFooter({ storePreferences }: {storePreferences: () => vo
 }
 
 export default function SelectInterests() {
+    const local = useLocalSearchParams<{ email: string }>();
+    const { updateUser } = useContext(UserContext);
+
     const [userInterests, setUserInterests] = useState<string[]>([]);
 
     // adds selected items to userInterests. Removes item if already in the list
@@ -56,26 +62,32 @@ export default function SelectInterests() {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
             setUserInterests((prevItems) => [...prevItems, item]);
         }
-        
+
         return userInterests;
     };
 
     // stores the list of user interests and proceeds to the home page
-    const storePreferences = () => {
+    function storePreferences() {
+        updateUser({
+            interests: userInterests,
+            email: local.email,
+            username: 'John Doe',
+        });
+
         if (userInterests.length === 0) {
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
             Alert.alert('Choose at least one category');
         }
-        else
-            router.navigate('/home');
-    };
+ else router.navigate('/home');
+    }
+
     return (
         <View style={ styles.darkMode }>
             <SafeAreaView style={ styles.listContainer }>
                 <FlatList
                     contentContainerStyle={ {
                         alignItems: 'center',
-                        gap: 20
+                        gap: 20,
                     } }
                     numColumns={ 2 }
                     data={ CATEGORIES }
@@ -103,7 +115,11 @@ export default function SelectInterests() {
                     ) }
                     keyExtractor={ (item) => item }
                     ListHeaderComponent={ SelectInterestsHeader }
-                    ListFooterComponent={ <SelectInterestsFooter storePreferences={ storePreferences } /> }
+                    ListFooterComponent={ (
+                        <SelectInterestsFooter
+                            storePreferences={ storePreferences }
+                        />
+                      ) }
                 />
             </SafeAreaView>
         </View>

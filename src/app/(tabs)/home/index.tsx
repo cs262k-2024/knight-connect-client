@@ -127,6 +127,7 @@ export default function Home() {
                                 title="Upcoming Events"
                                 horizontalScroll={ true }
                             />
+                            
                             <EventRecommendation
                                 title="Recommended for You"
                                 eventCardType="price"

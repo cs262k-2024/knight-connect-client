@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
 import { router } from 'expo-router';
@@ -8,6 +8,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import Button from '@/components/button';
 import Input from '@/components/input';
 import Divider from '@/components/divider';
+
+import { UserContext } from '@/contexts/userContext';
 
 import globalStyles from '@/globals/globalStyles';
 import loginStyles from './styles';
@@ -48,14 +50,22 @@ export default function Login({
     action: string;
     updateAction: (e: string) => void;
 }) {
+    const { updateUser } = useContext(UserContext);
+
     const [email, updateEmail] = useState('');
     const [password, updatePassword] = useState('');
 
     async function login() {
-        if(action === 'Login')
+        if (action === 'Login') {
             router.navigate('/home');
-        else
-            router.navigate('/selectInterests');
+
+            updateUser({
+                username: 'John Doe',
+                email: email,
+                interests: ['Music', 'Sports', 'Food'],
+            });
+        }
+ else router.navigate(`/selectInterests?email=${email}`);
     }
 
     return (
@@ -110,7 +120,9 @@ export default function Login({
             <Divider text="or" style={ { marginTop: 30 } } />
 
             <View style={ styles.signup }>
-                <Text style={ styles.signupText }>{ action === 'Login' ? 'Don\'t' : 'Already' } have an account? </Text>
+                <Text style={ styles.signupText }>
+                    { action === 'Login' ? 'Don\'t' : 'Already' } have an account?{ ' ' }
+                </Text>
                 <Text
                     style={ styles.signupLink }
                     onPress={ () =>

@@ -13,8 +13,7 @@ export default function TabLayout() {
                     backgroundColor: globalStyles.black,
                     borderTopColor: globalStyles.darkGray,
                 },
-                tabBarActiveTintColor
-                : globalStyles.gold,
+                tabBarActiveTintColor: globalStyles.gold,
                 tabBarInactiveTintColor: globalStyles.gray,
             } }
         >
@@ -37,6 +36,7 @@ export default function TabLayout() {
                     ),
                 } }
             />
+            
             <Tabs.Screen
                 name="profile"
                 options={ {

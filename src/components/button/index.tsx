@@ -11,16 +11,20 @@ type ButtonProps = PropsWithChildren & {
 
 export default function Button(props: ButtonProps) {
     const styles = StyleSheet.create({
-        buttonContainer: Object.assign({
-            borderRadius: 5,
-            backgroundColor: 'transparent',
-            paddingLeft: 20,
-            paddingRight: 20,
-            paddingTop: 15,
-            paddingBottom: 15,
-            borderWidth: 1,
-            borderColor: globalStyles.darkGray,
-        }, props.style, (props.disabled ? { opacity: 0.4 } : {})),
+        buttonContainer: Object.assign(
+            {
+                borderRadius: 5,
+                backgroundColor: 'transparent',
+                paddingLeft: 20,
+                paddingRight: 20,
+                paddingTop: 15,
+                paddingBottom: 15,
+                borderWidth: 1,
+                borderColor: globalStyles.darkGray,
+            },
+            props.style,
+            props.disabled ? { opacity: 0.4 } : {},
+        ),
     });
 
     return (

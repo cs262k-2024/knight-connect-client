@@ -1,13 +1,25 @@
+import { useContext } from 'react';
+
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import React from 'react';
-import styles from './styles';
+
 import { Avatar, Divider, Icon } from '@rneui/themed';
-import globalStyles from '@/globals/globalStyles';
-import { CATEGORIES } from '@/globals/constants';
+
 import * as Haptics from 'expo-haptics';
 
+import { UserContext } from '@/contexts/userContext';
+
+import globalStyles from '@/globals/globalStyles';
+
+import styles from './styles';
+import { router } from 'expo-router';
+
 export default function UserProfile() {
-    const userInterest = CATEGORIES.slice(0, 7);
+    const { user } = useContext(UserContext);
+
+    if(!user) return;
+
+
+
     return (
         <ScrollView style={ styles.container }>
             <View style={ styles.userInfoSection }>
@@ -20,8 +32,10 @@ export default function UserProfile() {
                         } }
                     />
                 </View>
+
                 <View>
-                    <Text style={ styles.title }>Username</Text>
+                    <Text style={ styles.title }>{ user.username }</Text>
+
                     <View style={ [styles.avatarContainer, styles.center] }>
                         <Icon
                             name="location"
@@ -29,37 +43,47 @@ export default function UserProfile() {
                             type="octicon"
                             color={ globalStyles.gray }
                         />
+
                         <Text style={ styles.caption }>Calvin University</Text>
                     </View>
                 </View>
             </View>
+
             <View style={ styles.userStatsSection }>
                 <View style={ [{ flexDirection: 'column' }, styles.center] }>
                     <Text style={ styles.caption }>Friends</Text>
                     <Text style={ styles.title }>24.5k</Text>
                 </View>
+                
                 <Divider orientation="vertical" />
+                
                 <View style={ [{ flexDirection: 'column' }, styles.center] }>
                     <Text style={ styles.caption }>Interests</Text>
-                    <Text style={ styles.title }>7</Text>
+                    <Text style={ styles.title }>{ user.interests.length }</Text>
                 </View>
+
                 <Divider orientation="vertical" />
+                
                 <View style={ [{ flexDirection: 'column' }, styles.center] }>
                     <Text style={ styles.caption }>Events</Text>
                     <Text style={ styles.title }>5</Text>
                 </View>
             </View>
+
             <View style={ styles.Section }>
                 <Text style={ styles.sectionTitle }>About Me</Text>
+                
                 <Text style={ { fontSize: 16, color: globalStyles.gray } }>
                     Hi this is a sample bio. New to Calvin. Looking for
                     connections.
                 </Text>
             </View>
+
             <View style={ styles.Section }>
-                <Text style={ styles.sectionTitle }>Your Interests (7)</Text>
+                <Text style={ styles.sectionTitle }>Your Interests ({ user.interests.length })</Text>
+                
                 <View style={ styles.row }>
-                    { userInterest.map((interest) => {
+                    { user.interests.map((interest) => {
                         return (
                             <View
                                 key={ interest }
@@ -71,6 +95,7 @@ export default function UserProfile() {
                             </View>
                         );
                     }) }
+
                     <TouchableOpacity
                         style={ [
                             styles.interestContainer,
@@ -79,11 +104,15 @@ export default function UserProfile() {
                                 borderColor: globalStyles.lightBlue,
                             },
                         ] }
-                        onPress={ () => {
-                            Haptics.impactAsync(
-                                Haptics.ImpactFeedbackStyle.Soft,
-                            );
-                        } }
+                        onPress={ 
+                            () => {
+                                Haptics.impactAsync(
+                                    Haptics.ImpactFeedbackStyle.Soft,
+                                );
+
+                                router.navigate('/selectInterests/');
+                            } 
+                        }
                     >
                         <Text
                             style={ [
@@ -91,11 +120,12 @@ export default function UserProfile() {
                                 { color: globalStyles.white },
                             ] }
                         >
-                            update +
+                            Add +
                         </Text>
                     </TouchableOpacity>
                 </View>
             </View>
+
             <View style={ styles.Section }>
                 <Text style={ styles.sectionTitle }>Your Saved Events (5)</Text>
             </View>

@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     darkMode: {
         backgroundColor: globalStyles.black,
         height: '100%',
-        paddingBottom: 10
+        paddingBottom: 10,
     },
     container: {
         display: 'flex',

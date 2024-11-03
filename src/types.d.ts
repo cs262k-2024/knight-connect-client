@@ -4,6 +4,7 @@ declare module '*.css';
 declare interface User {
     username: string;
     email: string;
+    interests: string[];
 }
 
 declare interface CalvinEvent {
