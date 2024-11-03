@@ -13,7 +13,8 @@ export default function TabLayout() {
                     backgroundColor: globalStyles.black,
                     borderTopColor: globalStyles.darkGray,
                 },
-                tabBarActiveTintColor: globalStyles.gold,
+                tabBarActiveTintColor
+                : globalStyles.gold,
                 tabBarInactiveTintColor: globalStyles.gray,
             } }
         >

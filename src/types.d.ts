@@ -1,6 +1,11 @@
 // Styles should be imported as modules
 declare module '*.css';
 
+declare interface User {
+    username: string;
+    email: string;
+}
+
 declare interface CalvinEvent {
     name: string;
     date: Date;
