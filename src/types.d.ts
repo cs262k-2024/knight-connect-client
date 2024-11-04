@@ -5,6 +5,7 @@ declare interface User {
     username: string;
     email: string;
     interests: string[];
+    bio: string;
 }
 
 declare interface CalvinEvent {

@@ -22,10 +22,11 @@ export default function ProfileLayout() {
                         <View>
                             <TouchableOpacity
                                 onPress={ () => {
-                                    router.navigate('/editProfile');
                                     Haptics.impactAsync(
                                         Haptics.ImpactFeedbackStyle.Soft,
                                     );
+
+                                    router.navigate('/editProfile');
                                 } }
                             >
                                 <Icon

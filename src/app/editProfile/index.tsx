@@ -1,10 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 
 import { Avatar, Divider, Icon } from '@rneui/themed';
-
 import * as Haptics from 'expo-haptics';
+
+import Input from '@/components/input';
+import Button from '@/components/button';
 
 import { UserContext } from '@/contexts/userContext';
 
@@ -14,18 +16,35 @@ import { router } from 'expo-router';
 import styles from './styles';
 
 export default function UserProfile() {
-    const { user } = useContext(UserContext);
+    const { user, updateUser } = useContext(UserContext);
 
     if(!user) return;
-
-    const [numInterests, setNumInterests] = useState(user.interests.length > 3 ? 3 : user.interests.length);
-
-    useEffect(() => {
+    
+    const [username, updateUsername] = useState(user.username);
+    const [bio, updateBio] = useState(user.bio);
+    
+    function save() {
         if(!user) return;
 
-        setNumInterests(user.interests.length > 3 ? 3 : user.interests.length);
-    }, [user]);
+        updateUser({
+            ...user,
+            ...(username && { username }),
+            ...(bio && { bio }),
+        });
 
+        router.navigate('/profile');
+    }
+
+    const containerInputStyle = {
+        backgroundColor: 'none',
+        borderColor: globalStyles.darkGray,
+        borderWidth: 1
+    };
+
+    const inputStyle = {
+        color: globalStyles.white,
+    };
+    
     return (
         <ScrollView style={ styles.container }>
             <View style={ styles.userInfoSection }>
@@ -39,8 +58,24 @@ export default function UserProfile() {
                     />
                 </View>
 
-                <View>
-                    <Text style={ styles.title }>{ user.username }</Text>
+                <View
+                    style={
+                        {
+                            width: '60%',
+                            flex: 1,
+                            flexDirection: 'column',
+                            gap: 10,
+                            alignItems: 'flex-start'
+                        }
+                    }
+                >
+                    <Input
+                        containerStyle={ containerInputStyle }
+                        inputStyle={ inputStyle }
+                        placeholder={ username }
+                        value={ username }
+                        onChangeText={ updateUsername }
+                    />
 
                     <View style={ [styles.avatarContainer, styles.center] }>
                         <Icon
@@ -79,9 +114,13 @@ export default function UserProfile() {
             <View style={ styles.section }>
                 <Text style={ styles.sectionTitle }>About Me</Text>
                 
-                <Text style={ { fontSize: 16, color: globalStyles.gray } }>
-                    { user.bio }
-                </Text>
+                <Input
+                    containerStyle={ containerInputStyle }
+                    inputStyle={ inputStyle }
+                    placeholder={ bio }
+                    value={ bio }
+                    onChangeText={ updateBio }
+                />
             </View>
 
             <View style={ styles.section }>
@@ -102,6 +141,7 @@ export default function UserProfile() {
                                     Haptics.ImpactFeedbackStyle.Soft,
                                 );
 
+                                save();
                                 router.navigate('/selectInterests?edit=true');
                             } 
                         }
@@ -118,7 +158,7 @@ export default function UserProfile() {
                 </View>
 
                 <View style={ styles.row }>
-                    { user.interests.slice(0, numInterests + 1).map(interest => {
+                    { user.interests.map(interest => {
                         return (
                             <View
                                 key={ interest }
@@ -130,48 +170,22 @@ export default function UserProfile() {
                             </View>
                         );
                     }) }
-
-                    {
-                        user.interests.length > 4 && (
-                            <TouchableOpacity
-                                    style={ [
-                                        styles.interestContainer,
-                                        {
-                                            backgroundColor: globalStyles.lightBlue,
-                                            borderColor: globalStyles.lightBlue,
-                                        },
-                                    ] }
-                                    onPress={ 
-                                        () => {
-                                            Haptics.impactAsync(
-                                                Haptics.ImpactFeedbackStyle.Soft,
-                                            );
-
-                                            if(numInterests < user.interests.length) setNumInterests(user.interests.length);
-                                            else setNumInterests(3);
-                                        } 
-                                    }
-                                >
-                                    <Text
-                                        style={ [
-                                            styles.interestText,
-                                            { color: globalStyles.white },
-                                        ] }
-                                    >
-                                        {
-                                            numInterests < user.interests.length
-                                                ? 'See all...'
-                                                : 'Show Less'
-                                        }
-                                    </Text>
-                                </TouchableOpacity>
-                        )
-                    }
                 </View>
             </View>
 
             <View style={ styles.section }>
                 <Text style={ styles.sectionTitle }>Your Saved Events (5)</Text>
+            </View>
+
+            <View style={ styles.section }>
+                <Button
+                    onPress={ save }
+                    style={
+                        { backgroundColor: globalStyles.lightBlue }
+                    }
+                >
+                    <Text style={ { color: globalStyles.white, textAlign: 'center',  } }>Save</Text>
+                </Button>
             </View>
         </ScrollView>
     );

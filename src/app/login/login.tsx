@@ -63,6 +63,7 @@ export default function Login({
                 username: 'John Doe',
                 email: email,
                 interests: [],
+                bio: 'Hi this is a sample bio. New to Calvin. Looking for connections.'
             });
         }
  else router.navigate(`/selectInterests?email=${email}`);
