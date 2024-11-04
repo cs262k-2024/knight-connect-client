@@ -13,27 +13,21 @@ export default function Event(props: EventProps) {
     function renderActionButton() {
         let backgroundColor;
 
-        if(props.eventCardType === 'price')
-            backgroundColor = '#C7B0F173';
-        else
-            backgroundColor = globalStyles.lightBlue;
+        if (props.eventCardType === 'price') backgroundColor = '#C7B0F173';
+        else backgroundColor = globalStyles.lightBlue;
 
         return (
             <Button
                 onPress={ () => {} }
-                style={
-                    {
-                        backgroundColor: backgroundColor,
-                        borderColor: backgroundColor,
-                    }
-                }
+                style={ {
+                    backgroundColor: backgroundColor,
+                    borderColor: backgroundColor,
+                } }
             >
                 <Text
-                    style={
-                        {
-                            color: globalStyles.white
-                        }
-                    }
+                    style={ {
+                        color: globalStyles.white,
+                    } }
                 >
                     Join
                 </Text>
@@ -43,31 +37,23 @@ export default function Event(props: EventProps) {
 
     return (
         <View
-            style={
-                {
-                    ...styles.container,
-                    width: props.eventCardType === 'price' ? '95%' : 'auto'
-                }
-            }
+            style={ {
+                ...styles.container,
+                width: props.eventCardType === 'price' ? '95%' : 'auto',
+            } }
         >
             <View style={ styles.imageContainer }>
                 <Image
-                    source={
-                        {
-                            uri: (
-                                props.coverImage
-                                    ? props.coverImage
-                                    : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9FiSXn0_Suecx7cveYhokZe2Qx8qGu3Vwmw&s'
-                            )
-                        }
-                    }
-                    style={
-                        {
-                            width: 90,
-                            height: 90,
-                            borderRadius: 10
-                        }
-                    }
+                    source={ {
+                        uri: props.coverImage
+                            ? props.coverImage
+                            : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9FiSXn0_Suecx7cveYhokZe2Qx8qGu3Vwmw&s',
+                    } }
+                    style={ {
+                        width: 90,
+                        height: 90,
+                        borderRadius: 10,
+                    } }
                 />
             </View>
 
@@ -76,9 +62,15 @@ export default function Event(props: EventProps) {
 
                 <View style={ styles.joinLocContainer }>
                     <View style={ styles.locationContainer }>
-                        <EvilIcons name="location" size={ 16 } color={ globalStyles.gray } />
+                        <EvilIcons
+                            name="location"
+                            size={ 16 }
+                            color={ globalStyles.gray }
+                        />
 
-                        <Text style={ styles.locationText }>{ props.location.substring(0, 10) }...</Text>
+                        <Text style={ styles.locationText }>
+                            { props.location.substring(0, 10) }...
+                        </Text>
                     </View>
 
                     { renderActionButton() }
@@ -99,33 +91,33 @@ const styles = StyleSheet.create({
         padding: 5,
         backgroundColor: 'transparent',
         borderWidth: 1,
-        borderColor: globalStyles.darkGray
+        borderColor: globalStyles.darkGray,
     },
     imageContainer: {},
     headerText: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: globalStyles.white
+        color: globalStyles.white,
     },
     infoContainer: {
         display: 'flex',
         flexDirection: 'column',
-        gap: 10
+        gap: 10,
     },
     locationContainer: {
         display: 'flex',
         flexDirection: 'row',
         gap: 5,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     locationText: {
         color: globalStyles.gray,
-        fontSize: 12
+        fontSize: 12,
     },
     joinLocContainer: {
         display: 'flex',
         flexDirection: 'row',
         gap: 15,
-        alignItems: 'center'
-    }
+        alignItems: 'center',
+    },
 });

@@ -1,13 +1,5 @@
-import { Stack } from 'expo-router';
+import { Slot } from 'expo-router';
 
-export default function EditUserLayout() {
-    return (
-        <Stack
-            screenOptions={ {
-                headerShown: false,
-            } }
-        >
-            <Stack.Screen name="index" />
-        </Stack>
-    );
+export default function ProfileLayout() {
+    return <Slot />;
 }

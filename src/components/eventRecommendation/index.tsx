@@ -34,52 +34,49 @@ export default function EventRecommendation(props: EventRecommendationProps) {
             fontSize: 12,
             color: globalStyles.lightBlue,
             alignSelf: 'center',
-            textDecorationLine: 'underline'
+            textDecorationLine: 'underline',
         },
         cardContainer: {
             display: 'flex',
             flexDirection: props.horizontalScroll ? 'row' : 'column',
             gap: 20,
-            paddingBottom: 5
-        }
+            paddingBottom: 5,
+        },
     });
-    
+
     const [events, updateEvents] = useState<CalvinEvent[]>([]);
 
     useEffect(() => {
-        (async function() {
+        (async function () {
             // Fetch events -> get from backend and use title as a filter
             updateEvents(EVENTS);
         })();
     }, []);
-    
+
     return (
         <View style={ styles.container }>
             <View style={ styles.headerContainer }>
-                <Text
-                    style={ styles.headerText }
-                >
-                    { props.title }
-                </Text>
+                <Text style={ styles.headerText }>{ props.title }</Text>
 
                 <Text style={ styles.seeAllText }>See All</Text>
             </View>
-            
-            <ScrollView style={ styles.container } horizontal={ props.horizontalScroll }>
+
+            <ScrollView
+                style={ styles.container }
+                horizontal={ props.horizontalScroll }
+            >
                 <View style={ styles.cardContainer }>
-                    {
-                        events.filter(
-                            (_e, i) => props.horizontalScroll ? i < 8 : i < 3
-                        ).map(
-                            (event, index) => (
-                                <Event
-                                    key={ index }
-                                    eventCardType={ props.eventCardType }
-                                    { ...event }
-                                />
-                            )
+                    { events
+                        .filter((_e, i) =>
+                            props.horizontalScroll ? i < 8 : i < 3,
                         )
-                    }
+                        .map((event, index) => (
+                            <Event
+                                key={ index }
+                                eventCardType={ props.eventCardType }
+                                { ...event }
+                            />
+                        )) }
                 </View>
             </ScrollView>
         </View>

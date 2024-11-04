@@ -1,16 +1,58 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 import * as Haptics from 'expo-haptics';
 
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
+
+import { UserContext } from '@/contexts/userContext';
 
 import Button from '@/components/button';
 import { CATEGORIES } from '@/globals/constants';
+
 import styles from './styles';
 
-export default function selectInterests() {
-    const [userInterests, setUserInterests] = useState<string[]>([]);
+function SelectInterestsHeader() {
+    return (
+        <View style={ styles.container }>
+            <View>
+                <Text style={ styles.headerText }>Your Interests</Text>
+            </View>
+
+            <View>
+                <Text style={ styles.credentials }>
+                    Select your interests and get personalized campus event
+                    recommendations
+                </Text>
+            </View>
+        </View>
+    );
+}
+
+function SelectInterestsFooter({
+    storePreferences,
+}: {
+    storePreferences: () => void;
+}) {
+    return (
+        <View style={ styles.continueButtonContainer }>
+            <Button style={ styles.continueButton } onPress={ storePreferences }>
+                <Text style={ styles.buttonText }>Continue</Text>
+            </Button>
+        </View>
+    );
+}
+
+export default function SelectInterests() {
+    const local = useLocalSearchParams<{ email: string; edit: string }>();
+    const { user, updateUser } = useContext(UserContext);
+    
+    const isEdit = local.edit === 'true';
+    
+    if(!user && isEdit) return;
+
+    const [userInterests, setUserInterests] = useState<string[]>(isEdit ? user?.interests! : []);
 
     // adds selected items to userInterests. Removes item if already in the list
     const itemSelect = (item: string) => {
@@ -20,45 +62,46 @@ export default function selectInterests() {
                 prevItems.filter((categoryItem) => categoryItem !== item),
             );
         }
- else {
+        else {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
             setUserInterests((prevItems) => [...prevItems, item]);
         }
+
         return userInterests;
     };
 
     // stores the list of user interests and proceeds to the home page
-    const storePreferences = () => {
+    function storePreferences() {
+        if(isEdit && user) {
+            updateUser({
+                ...user,
+                interests: userInterests,
+            });
+
+            router.navigate('/profile');
+        }
+        else
+            updateUser({
+                interests: userInterests,
+                email: local.email,
+                username: 'John Doe',
+                bio: 'Hi this is a sample bio. New to Calvin. Looking for connections.'
+            });
+
         if (userInterests.length === 0) {
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
             Alert.alert('Choose at least one category');
         }
- else {
-            router.navigate('/home');
-        }
-        console.log(userInterests);
-    };
+        else router.navigate('/home');
+    }
+
     return (
-        <View style={ styles.darkmode }>
-            <SafeAreaView>
-                <View style={ styles.container }>
-                    <View>
-                        <Text style={ styles.headerText }>Your Interests</Text>
-                    </View>
-                    <View>
-                        <Text style={ styles.credentials }>
-                            Select your interests and get personalized campus
-                            event recommendations
-                        </Text>
-                    </View>
-                </View>
-            </SafeAreaView>
-            <View style={ styles.listContainer }>
+        <View style={ styles.darkMode }>
+            <SafeAreaView style={ styles.listContainer }>
                 <FlatList
                     contentContainerStyle={ {
                         alignItems: 'center',
                         gap: 20,
-                        // backgroundColor: globalStyles.darkGray,
                     } }
                     numColumns={ 2 }
                     data={ CATEGORIES }
@@ -85,16 +128,14 @@ export default function selectInterests() {
                         </TouchableOpacity>
                     ) }
                     keyExtractor={ (item) => item }
-                ></FlatList>
-            </View>
-            <View style={ styles.continueButtonContainer }>
-                <Button
-                    style={ styles.continueButton }
-                    onPress={ storePreferences }
-                >
-                    <Text style={ styles.buttonText }>Continue</Text>
-                </Button>
-            </View>
+                    ListHeaderComponent={ SelectInterestsHeader }
+                    ListFooterComponent={ (
+                        <SelectInterestsFooter
+                            storePreferences={ storePreferences }
+                        />
+                      ) }
+                />
+            </SafeAreaView>
         </View>
     );
 }

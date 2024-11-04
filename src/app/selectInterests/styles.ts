@@ -2,9 +2,10 @@ import { StyleSheet } from 'react-native';
 import globalStyles from '@/globals/globalStyles';
 
 const styles = StyleSheet.create({
-    darkmode: {
+    darkMode: {
         backgroundColor: globalStyles.black,
         height: '100%',
+        paddingBottom: 10,
     },
     container: {
         display: 'flex',
@@ -14,10 +15,7 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     listContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        paddingHorizontal: 20,
-        paddingVertical: 10,
+        width: '100%',
     },
     headerText: {
         color: globalStyles.white,
@@ -33,21 +31,19 @@ const styles = StyleSheet.create({
         lineHeight: 21,
         textAlign: 'left',
     },
-
     itemContainer: {
         borderColor: globalStyles.darkGray,
         borderWidth: 2,
         borderRadius: 50,
         margin: 5,
     },
-
     itemText: {
         padding: 10,
         color: globalStyles.gray,
     },
     itemSelectedText: {
         padding: 10,
-        color: globalStyles.lightBlue,
+        color: globalStyles.black,
     },
     itemSelectedContainer: {
         backgroundColor: '#62aeff',
@@ -56,12 +52,12 @@ const styles = StyleSheet.create({
         borderColor: globalStyles.lightBlue,
         margin: 5,
     },
-
     continueButtonContainer: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 30,
+        width: '100%',
     },
     continueButton: {
         borderRadius: 50,

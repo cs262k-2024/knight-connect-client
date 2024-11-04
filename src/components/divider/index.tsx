@@ -12,10 +12,12 @@ export default function Divider(props: DividerProps) {
     const styles = StyleSheet.create({
         divider: {
             flexDirection: 'row',
-            justifyContent: 'space-evenly'
+            justifyContent: 'space-evenly',
         },
-        dividerLine: {	
-            backgroundColor: props.color ? props.color : globalStyles.veryDarkGray,
+        dividerLine: {
+            backgroundColor: props.color
+                ? props.color
+                : globalStyles.veryDarkGray,
             height: 1,
             width: '30%',
             alignSelf: 'center',

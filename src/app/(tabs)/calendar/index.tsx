@@ -20,22 +20,20 @@ function loadEvents() {
     for (const event of EVENTS) {
         const dateStr = timeToString(event.date.valueOf());
 
-        if (dateStr in items)
-            items[dateStr].push(event);
-        else
-            items[dateStr] = [event];
+        if (dateStr in items) items[dateStr].push(event);
+        else items[dateStr] = [event];
     }
     return items;
 }
 
-export default function() {
-    const [items, setItems] = useState<{ [key: string]: Array<CalvinEvent> }>({});
-
-    useEffect(
-        () => {
-            setItems(loadEvents());
-        }, []
+export default function () {
+    const [items, setItems] = useState<{ [key: string]: Array<CalvinEvent> }>(
+        {},
     );
+
+    useEffect(() => {
+        setItems(loadEvents());
+    }, []);
 
     function loadItems(day: NativeCalendar.DateData) {
         const tempItems = { ...items };
@@ -82,7 +80,9 @@ export default function() {
     return (
         <NativeCalendar.Agenda
             items={ items }
-            loadItemsForMonth={ (d: NativeCalendar.DateData) => setItems(loadItems(d)) }
+            loadItemsForMonth={ (d: NativeCalendar.DateData) =>
+                setItems(loadItems(d))
+            }
             selected={ timeToString(Date.now()) }
             renderItem={ renderItem }
             renderEmptyDate={ renderEmptyDate }

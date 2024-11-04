@@ -1,8 +1,10 @@
-import { Stack, router } from 'expo-router';
-import globalStyles from '@/globals/globalStyles';
 import { View, TouchableOpacity } from 'react-native';
-import { Icon } from '@rneui/themed';
+
+import { Stack, router } from 'expo-router';
 import * as Haptics from 'expo-haptics';
+
+import { Icon } from '@rneui/themed';
+import globalStyles from '@/globals/globalStyles';
 
 export default function ProfileLayout() {
     return (
@@ -20,10 +22,11 @@ export default function ProfileLayout() {
                         <View>
                             <TouchableOpacity
                                 onPress={ () => {
-                                    router.navigate('/editProfile');
                                     Haptics.impactAsync(
                                         Haptics.ImpactFeedbackStyle.Soft,
                                     );
+
+                                    router.navigate('/editProfile');
                                 } }
                             >
                                 <Icon
@@ -47,20 +50,3 @@ export default function ProfileLayout() {
         </Stack>
     );
 }
-
-// title: 'Profile',
-//                 headerTitleStyle: {
-//                     color: globalStyles.white,
-//                     fontSize: 16,
-//                 },
-//                 headerStyle: {
-//                     backgroundColor: globalStyles.black,
-//                     shadowOffset: {
-//                         width: 0,
-//                         height: 3,
-//                     },
-//                     shadowColor: 'black',
-//                     shadowOpacity: 1,
-//                     shadowRadius: 3.84,
-//                     elevation: 15,
-//                 },

@@ -5,6 +5,8 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 
+import UserContextProvider from '@/contexts/userContext';
+
 import globalStyles from '@/globals/globalStyles';
 
 import 'react-native-reanimated';
@@ -27,19 +29,21 @@ export default function RootLayout() {
     if (!loaded) return null;
 
     return (
-        <Stack
-            screenOptions={ {
-                contentStyle: {
-                    backgroundColor: globalStyles.black,
-                    paddingTop: 50,
-                },
-                headerShown: false,
-            } }
-        >
-            <Stack.Screen name="(tabs)" options={ { headerShown: false } } />
-            <Stack.Screen name="login" options={ { headerShown: false } } />
+        <UserContextProvider>
+            <Stack
+                screenOptions={ {
+                    contentStyle: {
+                        backgroundColor: globalStyles.black,
+                        paddingTop: 50,
+                    },
+                    headerShown: false,
+                } }
+            >
+                <Stack.Screen name="(tabs)" options={ { headerShown: false } } />
+                <Stack.Screen name="login" options={ { headerShown: false } } />
 
-            <Stack.Screen name="+not-found" />
-        </Stack>
+                <Stack.Screen name="+not-found" />
+            </Stack>
+        </UserContextProvider>
     );
 }

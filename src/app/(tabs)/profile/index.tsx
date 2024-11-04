@@ -1,13 +1,31 @@
+import { useContext, useEffect, useState } from 'react';
+
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import React from 'react';
-import styles from './styles';
+
 import { Avatar, Divider, Icon } from '@rneui/themed';
-import globalStyles from '@/globals/globalStyles';
-import { CATEGORIES } from '@/globals/constants';
+
 import * as Haptics from 'expo-haptics';
 
+import { UserContext } from '@/contexts/userContext';
+
+import globalStyles from '@/globals/globalStyles';
+
+import { router } from 'expo-router';
+import styles from './styles';
+
 export default function UserProfile() {
-    const userInterest = CATEGORIES.slice(0, 7);
+    const { user } = useContext(UserContext);
+
+    if(!user) return;
+
+    const [numInterests, setNumInterests] = useState(user.interests.length > 3 ? 3 : user.interests.length);
+
+    useEffect(() => {
+        if(!user) return;
+
+        setNumInterests(user.interests.length > 3 ? 3 : user.interests.length);
+    }, [user]);
+
     return (
         <ScrollView style={ styles.container }>
             <View style={ styles.userInfoSection }>
@@ -20,8 +38,10 @@ export default function UserProfile() {
                         } }
                     />
                 </View>
+
                 <View>
-                    <Text style={ styles.title }>Username</Text>
+                    <Text style={ styles.title }>{ user.username }</Text>
+
                     <View style={ [styles.avatarContainer, styles.center] }>
                         <Icon
                             name="location"
@@ -29,37 +49,76 @@ export default function UserProfile() {
                             type="octicon"
                             color={ globalStyles.gray }
                         />
+
                         <Text style={ styles.caption }>Calvin University</Text>
                     </View>
                 </View>
             </View>
+
             <View style={ styles.userStatsSection }>
                 <View style={ [{ flexDirection: 'column' }, styles.center] }>
                     <Text style={ styles.caption }>Friends</Text>
                     <Text style={ styles.title }>24.5k</Text>
                 </View>
+                
                 <Divider orientation="vertical" />
+                
                 <View style={ [{ flexDirection: 'column' }, styles.center] }>
                     <Text style={ styles.caption }>Interests</Text>
-                    <Text style={ styles.title }>7</Text>
+                    <Text style={ styles.title }>{ user.interests.length }</Text>
                 </View>
+
                 <Divider orientation="vertical" />
+                
                 <View style={ [{ flexDirection: 'column' }, styles.center] }>
                     <Text style={ styles.caption }>Events</Text>
                     <Text style={ styles.title }>5</Text>
                 </View>
             </View>
-            <View style={ styles.Section }>
+
+            <View style={ styles.section }>
                 <Text style={ styles.sectionTitle }>About Me</Text>
+                
                 <Text style={ { fontSize: 16, color: globalStyles.gray } }>
-                    Hi this is a sample bio. New to Calvin. Looking for
-                    connections.
+                    { user.bio }
                 </Text>
             </View>
-            <View style={ styles.Section }>
-                <Text style={ styles.sectionTitle }>Your Interests (7)</Text>
+
+            <View style={ styles.section }>
+                <View style={ styles.selectInterestsHeader }>
+                    <Text style={ styles.sectionTitle }>Your Interests ({ user.interests.length })</Text>
+
+                    <TouchableOpacity
+                        style={ [
+                            styles.interestContainer,
+                            {
+                                backgroundColor: globalStyles.lightBlue,
+                                borderColor: globalStyles.lightBlue,
+                            },
+                        ] }
+                        onPress={ 
+                            () => {
+                                Haptics.impactAsync(
+                                    Haptics.ImpactFeedbackStyle.Soft,
+                                );
+
+                                router.navigate('/selectInterests?edit=true');
+                            } 
+                        }
+                    >
+                        <Text
+                            style={ [
+                                styles.interestText,
+                                { color: globalStyles.white },
+                            ] }
+                        >
+                            Add +
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+
                 <View style={ styles.row }>
-                    { userInterest.map((interest) => {
+                    { user.interests.slice(0, numInterests + 1).map(interest => {
                         return (
                             <View
                                 key={ interest }
@@ -71,32 +130,47 @@ export default function UserProfile() {
                             </View>
                         );
                     }) }
-                    <TouchableOpacity
-                        style={ [
-                            styles.interestContainer,
-                            {
-                                backgroundColor: globalStyles.lightBlue,
-                                borderColor: globalStyles.lightBlue,
-                            },
-                        ] }
-                        onPress={ () => {
-                            Haptics.impactAsync(
-                                Haptics.ImpactFeedbackStyle.Soft,
-                            );
-                        } }
-                    >
-                        <Text
-                            style={ [
-                                styles.interestText,
-                                { color: globalStyles.white },
-                            ] }
-                        >
-                            update +
-                        </Text>
-                    </TouchableOpacity>
+
+                    {
+                        user.interests.length > 4 && (
+                            <TouchableOpacity
+                                    style={ [
+                                        styles.interestContainer,
+                                        {
+                                            backgroundColor: globalStyles.lightBlue,
+                                            borderColor: globalStyles.lightBlue,
+                                        },
+                                    ] }
+                                    onPress={ 
+                                        () => {
+                                            Haptics.impactAsync(
+                                                Haptics.ImpactFeedbackStyle.Soft,
+                                            );
+
+                                            if(numInterests < user.interests.length) setNumInterests(user.interests.length);
+                                            else setNumInterests(3);
+                                        } 
+                                    }
+                                >
+                                    <Text
+                                        style={ [
+                                            styles.interestText,
+                                            { color: globalStyles.white },
+                                        ] }
+                                    >
+                                        {
+                                            numInterests < user.interests.length
+                                                ? 'See all...'
+                                                : 'Show Less'
+                                        }
+                                    </Text>
+                                </TouchableOpacity>
+                        )
+                    }
                 </View>
             </View>
-            <View style={ styles.Section }>
+
+            <View style={ styles.section }>
                 <Text style={ styles.sectionTitle }>Your Saved Events (5)</Text>
             </View>
         </ScrollView>
