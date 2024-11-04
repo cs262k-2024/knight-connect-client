@@ -10,9 +10,7 @@ export default function NotFoundScreen() {
             <Text style={ styles.containerHeader }>This page doesn't exist</Text>
 
             <Link href="/" style={ styles.link }>
-                <Text>
-                    Take me back home
-                </Text>
+                <Text>Take me back home</Text>
             </Link>
         </View>
     );
@@ -23,13 +21,13 @@ const styles = StyleSheet.create({
         padding: 15,
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'        
+        alignItems: 'center',
     },
     containerHeader: {
         marginBottom: 16,
         color: globalStyles.white,
         fontSize: 32,
-        letterSpacing: 1
+        letterSpacing: 1,
     },
     link: {
         fontSize: 18,
@@ -37,6 +35,6 @@ const styles = StyleSheet.create({
         cursor: 'pointer',
         textDecorationLine: 'underline',
         lineHeight: 4,
-        textDecorationColor: 'rgb(88, 88, 88)'
-    }
+        textDecorationColor: 'rgb(88, 88, 88)',
+    },
 });

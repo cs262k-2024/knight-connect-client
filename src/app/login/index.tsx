@@ -12,77 +12,61 @@ import styles from './styles';
 
 export default function LoginLanding() {
     const [action, updateAction] = useState('');
-    
+
     return (
         <View
-            style={
-                {   
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 60,
-                    height: '100%',
-                    padding: 20,
-                }
-            }
+            style={ {
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 60,
+                height: '100%',
+                padding: 20,
+            } }
         >
             <Logo />
 
-            {
-                action === '' && (
-                    <>
-                        <View
-                            style={
-                                {
-                                    gap: 20,
-                                    width: '100%',
-                                    alignItems: 'center',
-                                    justifyContent: 'center'
-                                }
-                            }
+            { action === '' && (
+                <>
+                    <View
+                        style={ {
+                            gap: 20,
+                            width: '100%',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        } }
+                    >
+                        <Button
+                            onPress={ () => updateAction('Sign Up') }
+                            style={ Object.assign({}, styles.actionButton, {
+                                borderColor: globalStyles.darkMaroon,
+                            }) }
                         >
-                            <Button
-                                onPress={
-                                    () => updateAction('Sign Up')
-                                }
-                                style={
-                                    Object.assign({}, styles.actionButton, { borderColor: globalStyles.darkMaroon })
-                                }
-                            >
-                                <Text style={ styles.actionButtonText }>
-                                    Create New Account
-                                </Text>
-                            </Button>
+                            <Text style={ styles.actionButtonText }>
+                                Create New Account
+                            </Text>
+                        </Button>
 
-                            <Divider text="or" />
+                        <Divider text="or" />
 
-                            <Button
-                                onPress={
-                                    () => updateAction('Login')
-                                }
-                                style={
-                                    Object.assign({}, styles.actionButton, { borderColor: globalStyles.darkGold })
-                                }
-                            >
-                                <Text style={ styles.actionButtonText }>
-                                    Log In
-                                </Text>
-                            </Button>
-                        </View>
-                    </>
-                )
-            }
+                        <Button
+                            onPress={ () => updateAction('Login') }
+                            style={ Object.assign({}, styles.actionButton, {
+                                borderColor: globalStyles.darkGold,
+                            }) }
+                        >
+                            <Text style={ styles.actionButtonText }>Log In</Text>
+                        </Button>
+                    </View>
+                </>
+            ) }
 
-            {
-                action === 'Sign Up' && (
-                    <Login updateAction={ updateAction } action={ action } />
-                )
-            }
+            { action === 'Sign Up' && (
+                <Login updateAction={ updateAction } action={ action } />
+            ) }
 
-            {
-                action === 'Login' && (
-                    <Login updateAction={ updateAction } action={ action } />
-                )
-            }
+            { action === 'Login' && (
+                <Login updateAction={ updateAction } action={ action } />
+            ) }
         </View>
     );
 }

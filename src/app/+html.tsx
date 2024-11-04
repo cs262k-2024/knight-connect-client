@@ -29,7 +29,7 @@ export default function Root({ children }: PropsWithChildren) {
                 />
                 { /* Add any additional <head> elements that you want globally available on web... */ }
             </head>
-            
+
             <body>{ children }</body>
         </html>
     );

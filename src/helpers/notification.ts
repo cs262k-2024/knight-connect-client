@@ -25,7 +25,8 @@ async function registerForPushNotificationsAsync() {
     }
 
     if (Device.isDevice) {
-        const { status: existingStatus } = await Notifications.getPermissionsAsync();
+        const { status: existingStatus } =
+            await Notifications.getPermissionsAsync();
         let finalStatus = existingStatus;
         if (existingStatus !== 'granted') {
             const { status } = await Notifications.requestPermissionsAsync();
@@ -37,7 +38,8 @@ async function registerForPushNotificationsAsync() {
         }
         try {
             const projectId =
-                Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
+                Constants?.expoConfig?.extra?.eas?.projectId ??
+                Constants?.easConfig?.projectId;
             if (!projectId) {
                 throw new Error('Project ID not found');
             }
@@ -47,11 +49,11 @@ async function registerForPushNotificationsAsync() {
                 })
             ).data;
         }
-        catch (e) {
+ catch (e) {
             token = `${e}`;
         }
     }
-    else {
+ else {
         alert('Must use physical device for Push Notifications');
     }
 

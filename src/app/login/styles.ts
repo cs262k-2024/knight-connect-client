@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Fredoka',
         letterSpacing: -0.5,
         fontSize: 16,
-    }
+    },
 });
 
 export default styles;
