@@ -184,7 +184,7 @@ export default function UserProfile() {
                         { backgroundColor: globalStyles.lightBlue }
                     }
                 >
-                    <Text style={ { color: globalStyles.white, textAlign: 'center',  } }>Save</Text>
+                    <Text style={ { color: globalStyles.white, textAlign: 'center'  } }>Save</Text>
                 </Button>
             </View>
         </ScrollView>
