@@ -51,7 +51,7 @@ export default function Home() {
                     borderRadius: 10,
                     display: 'flex',
                     flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    justifyContent: 'center',
                 } }
             >
                 <Text style={ { color: globalStyles.white } }>
@@ -178,9 +178,12 @@ export default function Home() {
                             width: '100%',
                             padding: 10,
                             borderRadius: 10,
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'center',
                         } }
                     >
-                        <Text style={ { color: globalStyles.white } }>
+                        <Text style={ { color: globalStyles.white, textAlign: 'center' } }>
                             Close
                         </Text>
                     </Button>
