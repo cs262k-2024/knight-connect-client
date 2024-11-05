@@ -85,7 +85,8 @@ export default function SelectInterests() {
                 interests: userInterests,
                 email: local.email,
                 username: 'John Doe',
-                bio: 'Hi this is a sample bio. New to Calvin. Looking for connections.'
+                bio: 'Hi this is a sample bio. New to Calvin. Looking for connections.',
+                events: []
             });
 
         if (userInterests.length === 0) {

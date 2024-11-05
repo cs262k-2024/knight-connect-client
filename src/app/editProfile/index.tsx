@@ -174,10 +174,6 @@ export default function UserProfile() {
             </View>
 
             <View style={ styles.section }>
-                <Text style={ styles.sectionTitle }>Your Saved Events (5)</Text>
-            </View>
-
-            <View style={ styles.section }>
                 <Button
                     onPress={ save }
                     style={

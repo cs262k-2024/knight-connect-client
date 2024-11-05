@@ -71,8 +71,8 @@ export default function UserProfile() {
                 <Divider orientation="vertical" />
                 
                 <View style={ [{ flexDirection: 'column' }, styles.center] }>
-                    <Text style={ styles.caption }>Events</Text>
-                    <Text style={ styles.title }>5</Text>
+                    <Text style={ styles.caption }>Saved Events</Text>
+                    <Text style={ styles.title }>{ user.events.length }</Text>
                 </View>
             </View>
 
@@ -168,10 +168,6 @@ export default function UserProfile() {
                         )
                     }
                 </View>
-            </View>
-
-            <View style={ styles.section }>
-                <Text style={ styles.sectionTitle }>Your Saved Events (5)</Text>
             </View>
         </ScrollView>
     );
