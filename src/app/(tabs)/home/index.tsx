@@ -45,17 +45,18 @@ export default function Home() {
             <Button
                 onPress={ () => toggleCalendar(true) }
                 style={ {
-                    backgroundColor: globalStyles.veryDarkGray,
+                    backgroundColor: 'none',
                     width: '100%',
                     padding: 10,
                     borderRadius: 10,
                     display: 'flex',
                     flexDirection: 'row',
                     justifyContent: 'center',
+                    borderColor: globalStyles.darkGray,
                 } }
             >
-                <Text style={ { color: globalStyles.white } }>
-                    Open Calendar
+                <Text style={ { color: globalStyles.gray } }>
+                    Open Calendar View
                 </Text>
             </Button>
 

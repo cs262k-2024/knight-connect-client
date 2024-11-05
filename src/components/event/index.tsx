@@ -13,14 +13,14 @@ export default function Event(props: EventProps) {
     function renderActionButton() {
         let backgroundColor;
 
-        if (props.eventCardType === 'price') backgroundColor = '#C7B0F173';
-        else backgroundColor = globalStyles.lightBlue;
+        if (props.eventCardType === 'price') backgroundColor = globalStyles.maroon;
+        else backgroundColor = globalStyles.gold;
 
         return (
             <Button
                 onPress={ () => {} }
                 style={ {
-                    backgroundColor: backgroundColor,
+                    backgroundColor: 'none',
                     borderColor: backgroundColor,
                 } }
             >
@@ -88,10 +88,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         gap: 10,
         borderRadius: 5,
-        padding: 5,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
         backgroundColor: 'transparent',
         borderWidth: 1,
-        borderColor: globalStyles.darkGray,
+        borderColor: globalStyles.veryDarkGray,
     },
     imageContainer: {},
     headerText: {
