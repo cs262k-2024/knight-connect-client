@@ -8,6 +8,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import globalStyles from '@/globals/globalStyles';
 
 import 'react-native-reanimated';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -27,19 +29,29 @@ export default function RootLayout() {
     if (!loaded) return null;
 
     return (
-        <Stack
-            screenOptions={ {
-                contentStyle: {
-                    backgroundColor: globalStyles.black,
-                    paddingTop: 50,
-                },
-                headerShown: false,
-            } }
-        >
-            <Stack.Screen name="(tabs)" options={ { headerShown: false } } />
-            <Stack.Screen name="login" options={ { headerShown: false } } />
+        <GestureHandlerRootView style={ { flex: 1 } }>
+            <BottomSheetModalProvider>
+                <Stack
+                    screenOptions={ {
+                        contentStyle: {
+                            backgroundColor: globalStyles.black,
+                            paddingTop: 50,
+                        },
+                        headerShown: false,
+                    } }
+                >
+                    <Stack.Screen
+                        name="(tabs)"
+                        options={ { headerShown: false } }
+                    />
+                    <Stack.Screen
+                        name="login"
+                        options={ { headerShown: false } }
+                    />
 
-            <Stack.Screen name="+not-found" />
-        </Stack>
+                    <Stack.Screen name="+not-found" />
+                </Stack>
+            </BottomSheetModalProvider>
+        </GestureHandlerRootView>
     );
 }

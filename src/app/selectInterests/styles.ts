@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         paddingHorizontal: 20,
         paddingVertical: 10,
+        margin: 20,
     },
     headerText: {
         color: globalStyles.white,
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     continueButton: {
         borderRadius: 50,
         paddingVertical: 15,
-        width: '70%',
+        width: '85%',
         backgroundColor: globalStyles.lightBlue,
     },
     buttonText: {

@@ -39,8 +39,8 @@ export default function selectInterests() {
         console.log(userInterests);
     };
     return (
-        <View style={ styles.darkmode }>
-            <SafeAreaView>
+        <SafeAreaView style={ styles.darkmode }>
+            <View>
                 <View style={ styles.container }>
                     <View>
                         <Text style={ styles.headerText }>Your Interests</Text>
@@ -52,7 +52,7 @@ export default function selectInterests() {
                         </Text>
                     </View>
                 </View>
-            </SafeAreaView>
+            </View>
             <View style={ styles.listContainer }>
                 <FlatList
                     contentContainerStyle={ {
@@ -95,6 +95,6 @@ export default function selectInterests() {
                     <Text style={ styles.buttonText }>Continue</Text>
                 </Button>
             </View>
-        </View>
+        </SafeAreaView>
     );
 }

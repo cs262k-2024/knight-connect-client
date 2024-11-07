@@ -1,15 +1,25 @@
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import React from 'react';
+import { useRef, useCallback } from 'react';
 import styles from './styles';
 import { Avatar, Divider, Icon } from '@rneui/themed';
 import globalStyles from '@/globals/globalStyles';
 import { CATEGORIES } from '@/globals/constants';
 import * as Haptics from 'expo-haptics';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import InterestsBottomSheetModal from '@/components/interestsBottomSheetModal';
 
 export default function UserProfile() {
+    const bottomSheetRef = useRef<BottomSheetModal>(null);
+
+    const handlePresentModalPress = useCallback(() => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+        bottomSheetRef.current?.present();
+    }, []);
+
     const userInterest = CATEGORIES.slice(0, 7);
     return (
         <ScrollView style={ styles.container }>
+            <InterestsBottomSheetModal ref={ bottomSheetRef } />
             <View style={ styles.userInfoSection }>
                 <View style={ { paddingHorizontal: 20 } }>
                     <Avatar
@@ -79,11 +89,7 @@ export default function UserProfile() {
                                 borderColor: globalStyles.lightBlue,
                             },
                         ] }
-                        onPress={ () => {
-                            Haptics.impactAsync(
-                                Haptics.ImpactFeedbackStyle.Soft,
-                            );
-                        } }
+                        onPress={ handlePresentModalPress }
                     >
                         <Text
                             style={ [

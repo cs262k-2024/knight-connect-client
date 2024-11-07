@@ -47,20 +47,3 @@ export default function ProfileLayout() {
         </Stack>
     );
 }
-
-// title: 'Profile',
-//                 headerTitleStyle: {
-//                     color: globalStyles.white,
-//                     fontSize: 16,
-//                 },
-//                 headerStyle: {
-//                     backgroundColor: globalStyles.black,
-//                     shadowOffset: {
-//                         width: 0,
-//                         height: 3,
-//                     },
-//                     shadowColor: 'black',
-//                     shadowOpacity: 1,
-//                     shadowRadius: 3.84,
-//                     elevation: 15,
-//                 },
