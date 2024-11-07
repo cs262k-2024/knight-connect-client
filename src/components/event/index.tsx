@@ -1,8 +1,13 @@
+import { useContext, useEffect } from 'react';
+
 import { Text, View, StyleSheet, Image } from 'react-native';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 
+import { UserContext } from '@/contexts/userContext';
+
 import Button from '../button';
 
+import { userJoinedEvent } from '@/helpers/user';
 import globalStyles from '@/globals/globalStyles';
 
 type EventProps = CalvinEvent & {
@@ -10,6 +15,30 @@ type EventProps = CalvinEvent & {
 };
 
 export default function Event(props: EventProps) {
+    const { user, updateUser } = useContext(UserContext);
+    if(!user) return;
+
+    const event: CalvinEvent = (
+        () => {
+            const tempEvent: EventProps = {...props};
+            delete tempEvent.eventCardType;
+
+            return tempEvent;
+        }
+    )();
+
+    useEffect(() => {}, [user]);
+
+    function joinEvent() {
+        if(userJoinedEvent(user!, event)) return;
+        
+        const updatedUser = {...user} as User;
+        
+        updatedUser.events.push(event);
+
+        updateUser(updatedUser);
+    }
+
     function renderActionButton() {
         let backgroundColor;
 
@@ -18,7 +47,8 @@ export default function Event(props: EventProps) {
 
         return (
             <Button
-                onPress={ () => {} }
+                disabled={ userJoinedEvent(user!, event) }
+                onPress={ joinEvent }
                 style={ {
                     backgroundColor: 'none',
                     borderColor: backgroundColor,
@@ -29,7 +59,11 @@ export default function Event(props: EventProps) {
                         color: globalStyles.white,
                     } }
                 >
-                    Join
+                    {
+                        userJoinedEvent(user!, event)
+                            ? 'Joined'
+                            : 'Join'
+                    }
                 </Text>
             </Button>
         );

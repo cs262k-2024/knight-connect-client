@@ -1,68 +1,75 @@
-import { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Alert, StyleSheet } from 'react-native';
+import { useState, useEffect } from 'react';
+import { View, Text, Alert, StyleSheet, Pressable } from 'react-native';
 
 import * as NativeCalendar from 'react-native-calendars';
 
-import { EVENTS } from '@/globals/constants';
 import globalStyles from '@/globals/globalStyles';
 
-function timeToString(time: number) {
-    const date = new Date(time);
+function dateToString(d: Date) {
+    const date = new Date(d);
 
     return date.toISOString().split('T')[0];
 }
 
-function loadEvents() {
-    const items: { [key: string]: Array<CalvinEvent> } = {};
+export default function Calendar(props: { events: CalvinEvent[], isUser?: boolean }) {
+    const [items, setItems] = useState<{ [key: string]: CalvinEvent[] }>({});
+    const [refresh, updateRefresh] = useState(false);
 
-    for (const event of EVENTS) {
-        const dateStr = timeToString(event.date.valueOf());
+    useEffect(() => {
+        setItems(loadItemsForMonth((new Date()).getTime()));
+    }, [props]);
 
-        if (dateStr in items)
-            items[dateStr].push(event);
-        else
-            items[dateStr] = [event];
-    }
-    return items;
-}
-
-export default function() {
-    const [items, setItems] = useState<{ [key: string]: Array<CalvinEvent> }>({});
-
-    useEffect(
-        () => {
-            setItems(loadEvents());
-        }, []
-    );
-
-    function loadItems(day: NativeCalendar.DateData) {
+    function loadItemsForMonth(timestamp: number) {
         const tempItems = { ...items };
 
         for (let i = -14; i <= 14; i++) {
-            const date = timeToString(day.timestamp + i * 24 * 60 * 60 * 1000);
+            const date = new Date(timestamp);
+            date.setDate(date.getDate() + i);
+            
+            const dateString = dateToString(date);
 
-            if (!(date in tempItems)) tempItems[date] = [];
+            tempItems[dateString] = props.events.filter(event => dateToString(event.date) === dateString);
         }
+
+        updateRefresh(!refresh);
 
         return tempItems;
     }
 
-    const renderItem = (reservation: CalvinEvent) => {
+    function Item(reservation: CalvinEvent) {
         return (
-            <TouchableOpacity
+            <View
                 style={ styles.item }
-                onPress={ () => Alert.alert(reservation.name) }
             >
-                <Text style={ styles.text }>{ reservation.name }</Text>
-                <Text style={ styles.text }>{ reservation.location }</Text>
+                <Pressable
+                    onPress={ () => Alert.alert(reservation.name) }
+                    style={ { flex: 1 } }
+                >
+                    <Text style={ {color: globalStyles.lightGray, fontSize: 15, fontWeight: 'bold'} }>{ reservation.name }</Text>
+                    <Text style={ {color: globalStyles.gray, fontSize: 15, fontStyle: 'italic'} }>{ reservation.location }</Text>
+                </Pressable>
 
-                <Text style={ styles.text }>{ reservation.description }</Text>
-                <Text style={ styles.text }>{ reservation.type }</Text>
-            </TouchableOpacity>
+                {
+                    props.isUser && (
+                        <Pressable
+                            style={
+                                {
+                                    paddingHorizontal: 10,
+                                    alignSelf: 'center',
+                                    
+                                }
+                            }
+                            onPress={ () => {} }
+                        >
+                            <Text style={ styles.text }>x</Text>
+                        </Pressable>
+                    )
+                }
+            </View>
         );
     };
 
-    const renderEmptyDate = () => {
+    function EmptyDate() {
         return (
             <View style={ styles.emptyDate }>
                 <Text style={ styles.text }>This is empty date!</Text>
@@ -80,10 +87,10 @@ export default function() {
     return (
         <NativeCalendar.Agenda
             items={ items }
-            loadItemsForMonth={ (d: NativeCalendar.DateData) => setItems(loadItems(d)) }
-            selected={ timeToString(Date.now()) }
-            renderItem={ renderItem }
-            renderEmptyDate={ renderEmptyDate }
+            loadItemsForMonth={ (d: NativeCalendar.DateData) => setItems(loadItemsForMonth(d.timestamp)) }
+            selected={ (new Date()).toISOString() }
+            renderItem={ Item }
+            renderEmptyDate={ EmptyDate }
             rowHasChanged={ rowHasChanged }
             showClosingKnob={ true }
             theme={ {
@@ -100,16 +107,22 @@ export default function() {
 
 const styles = StyleSheet.create({
     item: {
-        flex: 1,
         borderRadius: 5,
         padding: 10,
         marginRight: 10,
         marginTop: 17,
+        borderWidth: 1,
+        borderColor: globalStyles.darkGray,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        gap: 15
     },
     emptyDate: {
         height: 15,
         flex: 1,
-        paddingTop: 30,
+        padding: 10,
+        marginRight: 10,
     },
     dayItem: {
         marginLeft: 34,
