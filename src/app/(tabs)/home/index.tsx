@@ -21,6 +21,39 @@ export default function Home() {
     const [fitler, updateFilter] = useState('');
     const [isCalendarVisible, toggleCalendar] = useState(false);
 
+    if(isCalendarVisible)
+        return (
+            <Modal
+                visible={ isCalendarVisible }
+                onRequestClose={ () => toggleCalendar(false) }
+                animationType="slide"
+                transparent={ true }
+            >
+                <View style={ { marginTop: 25 } } />
+                    
+                <Calendar events={ EVENTS } />
+                
+                <Button
+                    onPress={ () => toggleCalendar(false) }
+                    style={ {
+                        backgroundColor: globalStyles.veryDarkGray,
+                        width: '70%',
+                        padding: 10,
+                        borderRadius: 10,
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignSelf: 'center',
+                        marginBottom: 60,
+                    } }
+                >
+                    <Text style={ { color: globalStyles.white, textAlign: 'center' } }>
+                        Close
+                    </Text>
+                </Button>
+            </Modal>
+        );
+
     return (
         <ScrollView contentContainerStyle={ styles.container }>
             <View style={ styles.headerContainer }>
@@ -163,33 +196,6 @@ export default function Home() {
                         </>
                     ) }
                 </View>
-
-                <Modal
-                    visible={ isCalendarVisible }
-                    onRequestClose={ () => toggleCalendar(false) }
-                    animationType="slide"
-                    transparent={ true }
-                >
-                    <Calendar events={ EVENTS } />
-                    { /* a close button */ }
-                    
-                    <Button
-                        onPress={ () => toggleCalendar(false) }
-                        style={ {
-                            backgroundColor: globalStyles.veryDarkGray,
-                            width: '100%',
-                            padding: 10,
-                            borderRadius: 10,
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                        } }
-                    >
-                        <Text style={ { color: globalStyles.white, textAlign: 'center' } }>
-                            Close
-                        </Text>
-                    </Button>
-                </Modal>
             </View>
         </ScrollView>
     );
