@@ -92,6 +92,7 @@ export default function CreateEvent() {
                 <DateTimePicker
                     testID="dateTimePicker"
                     value={ date }
+                    mode="datetime"
                     onChange={ onDateChange }
                     style={
                         {
