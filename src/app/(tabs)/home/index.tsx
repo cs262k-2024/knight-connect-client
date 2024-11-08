@@ -170,8 +170,9 @@ export default function Home() {
                     animationType="slide"
                     transparent={ true }
                 >
-                    <Calendar />
+                    <Calendar events={ EVENTS } />
                     { /* a close button */ }
+                    
                     <Button
                         onPress={ () => toggleCalendar(false) }
                         style={ {
