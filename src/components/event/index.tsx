@@ -20,7 +20,7 @@ export default function Event(props: EventProps) {
 
     const event: CalvinEvent = (
         () => {
-            const tempEvent: EventProps = {...props};
+            const tempEvent: EventProps = { ...props };
             delete tempEvent.eventCardType;
 
             return tempEvent;
@@ -32,7 +32,7 @@ export default function Event(props: EventProps) {
     function joinEvent() {
         if(userJoinedEvent(user!, event)) return;
         
-        const updatedUser = {...user} as User;
+        const updatedUser = { ...user } as User;
         
         updatedUser.events.push(event);
 

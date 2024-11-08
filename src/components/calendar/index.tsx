@@ -45,8 +45,8 @@ export default function Calendar(props: { events: CalvinEvent[], isUser?: boolea
                     onPress={ () => Alert.alert(reservation.name) }
                     style={ { flex: 1 } }
                 >
-                    <Text style={ {color: globalStyles.lightGray, fontSize: 15, fontWeight: 'bold'} }>{ reservation.name }</Text>
-                    <Text style={ {color: globalStyles.gray, fontSize: 15, fontStyle: 'italic'} }>{ reservation.location }</Text>
+                    <Text style={ { color: globalStyles.lightGray, fontSize: 15, fontWeight: 'bold' } }>{ reservation.name }</Text>
+                    <Text style={ { color: globalStyles.gray, fontSize: 15, fontStyle: 'italic' } }>{ reservation.location }</Text>
                 </Pressable>
 
                 {
@@ -67,7 +67,7 @@ export default function Calendar(props: { events: CalvinEvent[], isUser?: boolea
                 }
             </View>
         );
-    };
+    }
 
     function EmptyDate() {
         return (
@@ -75,7 +75,7 @@ export default function Calendar(props: { events: CalvinEvent[], isUser?: boolea
                 <Text style={ styles.text }>This is empty date!</Text>
             </View>
         );
-    };
+    }
 
     const rowHasChanged = (
         r1: NativeCalendar.AgendaEntry,
