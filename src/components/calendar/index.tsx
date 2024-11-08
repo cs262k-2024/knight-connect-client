@@ -123,6 +123,10 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         marginRight: 10,
+        marginTop: 10,
+        justifyContent: 'center',
+        textAlign: 'left',
+        display: 'flex',
     },
     dayItem: {
         marginLeft: 34,
