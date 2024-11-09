@@ -3,8 +3,6 @@ import { StyleSheet, View, Text } from 'react-native';
 
 import { router } from 'expo-router';
 
-import { FontAwesome5 } from '@expo/vector-icons';
-
 import Button from '@/components/button';
 import Input from '@/components/input';
 import Divider from '@/components/divider';
@@ -28,7 +26,7 @@ function LoginInput({
             containerStyle={ {
                 borderWidth: 1,
                 borderColor: focused ? globalStyles.darkMaroon : 'transparent',
-                backgroundColor: globalStyles.veryDarkGray,
+                backgroundColor: focused ? 'transparent' : globalStyles.veryDarkGray,
             } }
             inputStyle={ {
                 color: globalStyles.white,
@@ -67,7 +65,7 @@ export default function Login({
                 events: []
             });
         }
- else router.navigate(`/selectInterests?email=${email}`);
+        else router.navigate(`/selectInterests?email=${email}`);
     }
 
     return (
@@ -96,7 +94,7 @@ export default function Login({
             >
                 <Button
                     style={ Object.assign({}, loginStyles.actionButton, {
-                        borderColor: globalStyles.darkMaroon,
+                        borderColor: globalStyles.gold,
                         marginTop: 20,
                         width: '100%',
                     }) }
@@ -104,18 +102,6 @@ export default function Login({
                     disabled={ email === '' || password === '' }
                 >
                     <Text style={ loginStyles.actionButtonText }>{ action }</Text>
-                </Button>
-
-                <Button style={ styles.otherLogin } onPress={ login }>
-                    <FontAwesome5
-                        name="google"
-                        size={ 24 }
-                        color={ globalStyles.gold }
-                    />
-
-                    <Text style={ styles.otherLoginText }>
-                        { action } with Google
-                    </Text>
                 </Button>
             </View>
 
@@ -125,6 +111,7 @@ export default function Login({
                 <Text style={ styles.signupText }>
                     { action === 'Login' ? 'Don\'t' : 'Already' } have an account?{ ' ' }
                 </Text>
+
                 <Text
                     style={ styles.signupLink }
                     onPress={ () =>
@@ -149,11 +136,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     forgot: {
-        color: globalStyles.gold,
+        color: globalStyles.gray,
         fontSize: 12,
         alignSelf: 'flex-end',
         userSelect: 'none',
-        opacity: 0.5,
     },
     login: {
         borderRadius: 10,
@@ -193,7 +179,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
     },
     signupText: {
-        color: globalStyles.darkGray,
+        color: globalStyles.gray,
         fontSize: 14,
         lineHeight: 20,
         textAlign: 'center',

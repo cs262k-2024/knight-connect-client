@@ -5,7 +5,7 @@ import {
     TextInput,
     TextInputProps,
     ViewStyle,
-    TextStyle,
+    TextStyle
 } from 'react-native';
 
 import globalStyles from '@/globals/globalStyles';
@@ -56,6 +56,7 @@ export default function Input(props: InputProps) {
                 }
                 onFocus={ () => updateFocused(true) }
                 onBlur={ () => updateFocused(false) }
+                keyboardType='default'
                 { ...props }
             />
         </View>
