@@ -9,6 +9,7 @@ import Button from '../button';
 
 import { userJoinedEvent } from '@/helpers/user';
 import globalStyles from '@/globals/globalStyles';
+import { scheduleNotification } from '@/helpers/notification';
 
 type EventProps = CalvinEvent & {
     eventCardType?: string;
@@ -37,6 +38,12 @@ export default function Event(props: EventProps) {
         updatedUser.events.push(event);
 
         updateUser(updatedUser);
+
+        // schedule a notification for the event
+        const notificationDate = new Date(props.date);
+        // schedule a notification 30 minutes before the event
+        notificationDate.setMinutes(notificationDate.getMinutes() - 30);
+        scheduleNotification(props.id, props.name, 'Event is starting soon!', notificationDate);
     }
 
     function renderActionButton() {

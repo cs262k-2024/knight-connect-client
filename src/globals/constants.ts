@@ -18,15 +18,25 @@ export const CATEGORIES = [
 
 export const EVENTS: CalvinEvent[] = [
     {
+        id: '1',
         name: 'Maroon & Gold Day',
-        date: new Date(Date.now()),
+        date: (() => {
+            const now = new Date();
+            now.setMinutes(now.getMinutes() + 32);
+            return now;
+        })(),
         location: 'Calvin University',
         description: 'Gold',
         type: 'education',
     },
     {
+        id: '2',
         name: 'Cornhole Tournament',
-        date: new Date(),
+        date: (() => {
+            const now = new Date();
+            now.setMinutes(now.getMinutes() + 35);
+            return now;
+        })(),
         location: 'Calvin University',
         description: 'Gold',
         type: 'sports',
