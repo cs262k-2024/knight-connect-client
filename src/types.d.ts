@@ -10,10 +10,11 @@ declare interface User {
 }
 
 declare interface CalvinEvent {
+    id: string;
     name: string;
     date: Date;
     location: string;
-    description: string;
+    description?: string;
     type: string;
     coverImage?: string;
     price?: number;

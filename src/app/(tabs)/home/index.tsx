@@ -158,8 +158,8 @@ export default function Home() {
                                             .toLowerCase()
                                             .includes(fitler.toLowerCase()) ||
                                         e.description
-                                            .toLowerCase()
-                                            .includes(fitler.toLowerCase()) ||
+                                            ?.toLowerCase()
+                                            ?.includes(fitler.toLowerCase()) ||
                                         e.type
                                             .toLowerCase()
                                             .includes(fitler.toLowerCase()),
