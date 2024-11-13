@@ -116,7 +116,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between',
         gap: 10,
         borderRadius: 5,
         paddingVertical: 10,

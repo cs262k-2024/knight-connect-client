@@ -28,6 +28,16 @@ export default function TabLayout() {
             />
 
             <Tabs.Screen
+                name="createEvent"
+                options={ {
+                    title: '',
+                    tabBarIcon: ({ color }) => (
+                        <AntDesign name="pluscircleo" size={ 24 } color={ color } />
+                    ),
+                } }
+            />
+
+            <Tabs.Screen
                 name="calendar"
                 options={ {
                     title: '',
