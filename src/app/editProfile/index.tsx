@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useRef, useState } from 'react';
 
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 
@@ -15,16 +15,26 @@ import globalStyles from '@/globals/globalStyles';
 import { router } from 'expo-router';
 import styles from './styles';
 
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import InterestsBottomSheetModal from '@/components/selectInterestsBottomSheet';
+
 export default function UserProfile() {
+    const bottomSheetRef = useRef<BottomSheetModal>(null);
+
+    const handlePresentModalPress = useCallback(() => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+        bottomSheetRef.current?.present();
+    }, []);
+
     const { user, updateUser } = useContext(UserContext);
 
-    if(!user) return;
-    
+    if (!user) return;
+
     const [username, updateUsername] = useState(user.username);
     const [bio, updateBio] = useState(user.bio);
-    
+
     function save() {
-        if(!user) return;
+        if (!user) return;
 
         updateUser({
             ...user,
@@ -38,15 +48,16 @@ export default function UserProfile() {
     const containerInputStyle = {
         backgroundColor: 'none',
         borderColor: globalStyles.darkGray,
-        borderWidth: 1
+        borderWidth: 1,
     };
 
     const inputStyle = {
         color: globalStyles.white,
     };
-    
+
     return (
         <ScrollView style={ styles.container }>
+            <InterestsBottomSheetModal ref={ bottomSheetRef } />
             <View style={ styles.userInfoSection }>
                 <View style={ { paddingHorizontal: 20 } }>
                     <Avatar
@@ -59,15 +70,13 @@ export default function UserProfile() {
                 </View>
 
                 <View
-                    style={
-                        {
-                            width: '60%',
-                            flex: 1,
-                            flexDirection: 'column',
-                            gap: 10,
-                            alignItems: 'flex-start'
-                        }
-                    }
+                    style={ {
+                        width: '60%',
+                        flex: 1,
+                        flexDirection: 'column',
+                        gap: 10,
+                        alignItems: 'flex-start',
+                    } }
                 >
                     <Input
                         containerStyle={ containerInputStyle }
@@ -95,16 +104,16 @@ export default function UserProfile() {
                     <Text style={ styles.caption }>Friends</Text>
                     <Text style={ styles.title }>24.5k</Text>
                 </View>
-                
+
                 <Divider orientation="vertical" />
-                
+
                 <View style={ [{ flexDirection: 'column' }, styles.center] }>
                     <Text style={ styles.caption }>Interests</Text>
                     <Text style={ styles.title }>{ user.interests.length }</Text>
                 </View>
 
                 <Divider orientation="vertical" />
-                
+
                 <View style={ [{ flexDirection: 'column' }, styles.center] }>
                     <Text style={ styles.caption }>Events</Text>
                     <Text style={ styles.title }>5</Text>
@@ -113,7 +122,7 @@ export default function UserProfile() {
 
             <View style={ styles.section }>
                 <Text style={ styles.sectionTitle }>About Me</Text>
-                
+
                 <Input
                     containerStyle={ containerInputStyle }
                     inputStyle={ inputStyle }
@@ -125,7 +134,9 @@ export default function UserProfile() {
 
             <View style={ styles.section }>
                 <View style={ styles.selectInterestsHeader }>
-                    <Text style={ styles.sectionTitle }>Your Interests ({ user.interests.length })</Text>
+                    <Text style={ styles.sectionTitle }>
+                        Your Interests ({ user.interests.length })
+                    </Text>
 
                     <TouchableOpacity
                         style={ [
@@ -135,16 +146,15 @@ export default function UserProfile() {
                                 borderColor: globalStyles.lightBlue,
                             },
                         ] }
-                        onPress={ 
-                            () => {
-                                Haptics.impactAsync(
-                                    Haptics.ImpactFeedbackStyle.Soft,
-                                );
+                        onPress={ handlePresentModalPress }
+                        // onPress={() => {
+                        //     Haptics.impactAsync(
+                        //         Haptics.ImpactFeedbackStyle.Soft,
+                        //     );
 
-                                save();
-                                router.navigate('/selectInterests?edit=true');
-                            } 
-                        }
+                        //     save();
+                        //     router.navigate('/selectInterests?edit=true');
+                        // }}
                     >
                         <Text
                             style={ [
@@ -158,7 +168,7 @@ export default function UserProfile() {
                 </View>
 
                 <View style={ styles.row }>
-                    { user.interests.map(interest => {
+                    { user.interests.map((interest) => {
                         return (
                             <View
                                 key={ interest }
@@ -176,11 +186,16 @@ export default function UserProfile() {
             <View style={ styles.section }>
                 <Button
                     onPress={ save }
-                    style={
-                        { backgroundColor: globalStyles.lightBlue }
-                    }
+                    style={ { backgroundColor: globalStyles.lightBlue } }
                 >
-                    <Text style={ { color: globalStyles.white, textAlign: 'center'  } }>Save</Text>
+                    <Text
+                        style={ {
+                            color: globalStyles.white,
+                            textAlign: 'center',
+                        } }
+                    >
+                        Save
+                    </Text>
                 </Button>
             </View>
         </ScrollView>
