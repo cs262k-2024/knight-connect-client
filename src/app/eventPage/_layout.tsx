@@ -24,7 +24,7 @@ export default function EventPageLayout() {
                                         Haptics.ImpactFeedbackStyle.Soft,
                                     );
 
-                                    router.navigate('/(tabs)/home');
+                                    router.back();
                                 } }
                             >
                                 <Icon
