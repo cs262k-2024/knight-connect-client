@@ -11,6 +11,7 @@ import { userJoinedEvent } from '@/helpers/user';
 import globalStyles from '@/globals/globalStyles';
 import { router } from 'expo-router';
 import { scheduleNotification } from '@/helpers/notification';
+import { addEventToCalendar } from '@/helpers/nativeCalendar';
 
 type EventProps = CalvinEvent & {
     eventCardType?: string;
@@ -43,6 +44,9 @@ export default function Event(props: EventProps) {
         // schedule a notification 30 minutes before the event
         notificationDate.setMinutes(notificationDate.getMinutes() - 30);
         scheduleNotification(props.id, props.name, 'Event is starting soon!', notificationDate);
+
+        // add the event to the user's system calendar
+        addEventToCalendar(props.name, new Date(props.date), new Date(props.date), props.location);
     }
 
     function renderActionButton() {
