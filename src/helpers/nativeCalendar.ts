@@ -77,7 +77,7 @@ async function addEventToCalendar(
             startDate,
             endDate,
             location,
-            timeZone: 'GMT',
+            timeZone: 'EST',
         });
     }
  catch (e: any) {
