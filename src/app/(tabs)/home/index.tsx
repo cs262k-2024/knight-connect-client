@@ -236,7 +236,7 @@ export default function Home() {
                         alignItems: 'center'
                     } }
                 >
-                    <AntDesign name="calendar" size={30} color={ globalStyles.white } />
+                    <AntDesign name="calendar" size={ 30 } color={ globalStyles.white } />
                 </Button>
             </View>
         </>
