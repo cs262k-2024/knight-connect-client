@@ -11,7 +11,6 @@ import styles from './styles';
 import globalStyles from '@/globals/globalStyles';
 
 import ParallaxScrollView from '@/components/parallaxScrollView';
-import Event from '@/components/event';
 
 import { Divider, Icon } from '@rneui/base';
 import { CATEGORIES } from '@/globals/constants';

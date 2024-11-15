@@ -10,7 +10,6 @@ import { UserContext } from '@/contexts/userContext';
 
 import globalStyles from '@/globals/globalStyles';
 
-import { router } from 'expo-router';
 import styles from './styles';
 
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
