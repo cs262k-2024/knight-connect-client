@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 
 import { UserContext } from '@/contexts/userContext';
@@ -9,6 +9,7 @@ import Button from '../button';
 
 import { userJoinedEvent } from '@/helpers/user';
 import globalStyles from '@/globals/globalStyles';
+import { router } from 'expo-router';
 import { scheduleNotification } from '@/helpers/notification';
 
 type EventProps = CalvinEvent & {
@@ -17,24 +18,22 @@ type EventProps = CalvinEvent & {
 
 export default function Event(props: EventProps) {
     const { user, updateUser } = useContext(UserContext);
-    if(!user) return;
+    if (!user) return;
 
-    const event: CalvinEvent = (
-        () => {
-            const tempEvent: EventProps = { ...props };
-            delete tempEvent.eventCardType;
+    const event: CalvinEvent = (() => {
+        const tempEvent: EventProps = { ...props };
+        delete tempEvent.eventCardType;
 
-            return tempEvent;
-        }
-    )();
+        return tempEvent;
+    })();
 
     useEffect(() => {}, [user]);
 
     function joinEvent() {
-        if(userJoinedEvent(user!, event)) return;
-        
+        if (userJoinedEvent(user!, event)) return;
+
         const updatedUser = { ...user } as User;
-        
+
         updatedUser.events.push(event);
 
         updateUser(updatedUser);
@@ -49,7 +48,8 @@ export default function Event(props: EventProps) {
     function renderActionButton() {
         let backgroundColor;
 
-        if (props.eventCardType === 'price') backgroundColor = globalStyles.maroon;
+        if (props.eventCardType === 'price')
+            backgroundColor = globalStyles.maroon;
         else backgroundColor = globalStyles.gold;
 
         return (
@@ -66,18 +66,15 @@ export default function Event(props: EventProps) {
                         color: globalStyles.white,
                     } }
                 >
-                    {
-                        userJoinedEvent(user!, event)
-                            ? 'Joined'
-                            : 'Join'
-                    }
+                    { userJoinedEvent(user!, event) ? 'Joined' : 'Join' }
                 </Text>
             </Button>
         );
     }
 
     return (
-        <View
+        <TouchableOpacity
+            onPress={ () => router.navigate('/eventPage') }
             style={ {
                 ...styles.container,
                 width: props.eventCardType === 'price' ? '95%' : 'auto',
@@ -117,7 +114,7 @@ export default function Event(props: EventProps) {
                     { renderActionButton() }
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 }
 
