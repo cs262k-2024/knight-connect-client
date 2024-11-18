@@ -51,6 +51,12 @@ export default function RootLayout() {
                             name="login"
                             options={ { headerShown: false } }
                         />
+                        <Stack.Screen
+                            name="editProfile"
+                            options={ {
+                                presentation: 'containedTransparentModal',
+                            } }
+                        />
 
                         <Stack.Screen name="+not-found" />
                     </Stack>
