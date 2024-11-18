@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Alert } from 'react-native';
 
 import { router } from 'expo-router';
 
@@ -10,6 +10,8 @@ import Divider from '@/components/divider';
 import { UserContext } from '@/contexts/userContext';
 
 import globalStyles from '@/globals/globalStyles';
+import { BACKEND_URL } from '@/globals/backend';
+
 import loginStyles from './styles';
 
 function LoginInput({
@@ -32,7 +34,7 @@ function LoginInput({
                 color: globalStyles.white,
             } }
             placeholder={ type[0].toUpperCase() + type.slice(1) }
-            inputMode={ type === 'email' ? type : undefined }
+            inputMode={ type === 'email' ? type : 'text' }
             secureTextEntry={ type === 'password' }
             onFocus={ () => updateFocused(true) }
             onBlur={ () => updateFocused(false) }
@@ -50,22 +52,43 @@ export default function Login({
 }) {
     const { updateUser } = useContext(UserContext);
 
+    const [name, updateName] = useState('');
     const [email, updateEmail] = useState('');
     const [password, updatePassword] = useState('');
 
     async function login() {
         if (action === 'Login') {
-            router.navigate('/home');
-
-            updateUser({
-                username: 'John Doe',
-                email: email,
-                interests: [],
-                bio: 'Hi this is a sample bio. New to Calvin. Looking for connections.',
-                events: []
+            const response = await fetch(`${BACKEND_URL}/validate/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
             });
+
+            if(!response.ok)
+                return Alert.alert('Invalid Password')
+
+            const json = await response.json();
+
+            updateUser(json.data);
+            router.navigate('/home');
         }
-        else router.navigate(`/selectInterests?email=${email}`);
+        else {
+            updateUser({
+                id: '',
+                name: name,
+                email: email,
+                preferences: [],
+                bio: '',
+                password: password
+            });
+
+            router.navigate(`/selectInterests?email=${email}`);
+        }
     }
 
     return (
@@ -76,6 +99,12 @@ export default function Login({
                     width: '100%',
                 } }
             >
+                {
+                    action !== 'Login' && (
+                        <LoginInput updateText={ updateName } type="name" />
+                    )
+                }
+
                 <LoginInput updateText={ updateEmail } type="email" />
                 <LoginInput updateText={ updatePassword } type="password" />
             </View>

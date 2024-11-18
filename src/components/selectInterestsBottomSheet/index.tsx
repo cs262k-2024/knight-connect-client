@@ -63,7 +63,7 @@ const InterestsBottomSheetModal = forwardRef<Ref>((props, ref) => {
         if (isEdit && user) {
             updateUser({
                 ...user,
-                interests: userInterests,
+                preferences: userInterests,
             });
 
             dismiss();
@@ -71,11 +71,10 @@ const InterestsBottomSheetModal = forwardRef<Ref>((props, ref) => {
         }
  else
             updateUser({
-                interests: userInterests,
+                preferences: userInterests,
                 email: local.email,
-                username: 'John Doe',
-                bio: 'Hi this is a sample bio. New to Calvin. Looking for connections.',
-                events: [],
+                name: 'John Doe',
+                bio: 'Hi this is a sample bio. New to Calvin. Looking for connections.'
             });
 
         if (userInterests.length === 0) {

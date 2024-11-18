@@ -170,9 +170,7 @@ export default function Home() {
                                                 e.description
                                                     .toLowerCase()
                                                     .includes(filter.toLowerCase()) ||
-                                                e.type
-                                                    .toLowerCase()
-                                                    .includes(filter.toLowerCase()),
+                                                e.tags.filter(t => t.toLowerCase().includes(filter.toLowerCase())).length > 0
                                         ).map((e, i) => <Event key={ i } { ...e } />);
 
                                         if (filteredEvents.length === 0)

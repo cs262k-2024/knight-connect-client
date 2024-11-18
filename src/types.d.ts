@@ -2,19 +2,29 @@
 declare module '*.css';
 
 declare interface User {
-    username: string;
+    id: string;
+    name: string;
     email: string;
-    interests: string[];
+    preferences: string[];
     bio: string;
-    events: CalvinEvent[];
+
+    password?: string;
 }
 
 declare interface CalvinEvent {
+    id: string;
+    organizer: string;
     name: string;
-    date: Date;
+
+    date_created: Date;
+    start_date: Date;
+    end_date: Date;
+    
+    price: number;
+
     location: string;
     description: string;
-    type: string;
-    coverImage?: string;
-    price?: number;
+
+    cover_uri?: string;
+    tags: string[];
 }

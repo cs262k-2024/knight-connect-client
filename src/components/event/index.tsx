@@ -33,7 +33,8 @@ export default function Event(props: EventProps) {
 
         const updatedUser = { ...user } as User;
 
-        updatedUser.events.push(event);
+        // TODO
+        // updatedUser.events.push(event);
 
         updateUser(updatedUser);
     }
@@ -76,8 +77,8 @@ export default function Event(props: EventProps) {
             <View style={ styles.imageContainer }>
                 <Image
                     source={ {
-                        uri: props.coverImage
-                            ? props.coverImage
+                        uri: props.cover_uri
+                            ? props.cover_uri
                             : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9FiSXn0_Suecx7cveYhokZe2Qx8qGu3Vwmw&s',
                     } }
                     style={ {
