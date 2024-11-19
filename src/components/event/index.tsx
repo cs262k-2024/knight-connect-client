@@ -1,6 +1,8 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
+
+import { router } from 'expo-router';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 
 import { UserContext } from '@/contexts/userContext';
@@ -8,8 +10,9 @@ import { UserContext } from '@/contexts/userContext';
 import Button from '../button';
 
 import { userJoinedEvent } from '@/helpers/user';
+
+import { BACKEND_URL } from '@/globals/backend';
 import globalStyles from '@/globals/globalStyles';
-import { router } from 'expo-router';
 
 type EventProps = CalvinEvent & {
     eventCardType?: string;
@@ -17,7 +20,10 @@ type EventProps = CalvinEvent & {
 
 export default function Event(props: EventProps) {
     const { user, updateUser } = useContext(UserContext);
+
     if (!user) return;
+
+    const [events, updateEvents] = useState<CalvinEvent[]>([]);
 
     const event: CalvinEvent = (() => {
         const tempEvent: EventProps = { ...props };
@@ -26,17 +32,37 @@ export default function Event(props: EventProps) {
         return tempEvent;
     })();
 
+    useEffect(() => {
+        (async function() {
+            const response = await fetch(`${BACKEND_URL}/eventsforuser/${user.id}/`);
+    
+            if(!response.ok)
+                throw new Error();  
+
+            updateEvents((await response.json()).data);
+        })()
+    }, []);
+
     useEffect(() => {}, [user]);
 
-    function joinEvent() {
-        if (userJoinedEvent(user!, event)) return;
+    async function joinEvent() {
+        const response = await fetch(`${BACKEND_URL}/join/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id: user?.id,
+                event_id: event.id,
+            })
+        });
 
-        const updatedUser = { ...user } as User;
+        if(!response.ok)
+            return Alert.alert('Error');
 
-        // TODO
-        // updatedUser.events.push(event);
+        const json = await response.json();
 
-        updateUser(updatedUser);
+        updateUser(json.data);
     }
 
     function renderActionButton() {

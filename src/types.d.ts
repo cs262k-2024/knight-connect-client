@@ -9,6 +9,7 @@ declare interface User {
     bio: string;
 
     password?: string;
+    joined_events: string[];
 }
 
 declare interface CalvinEvent {

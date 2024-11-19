@@ -84,7 +84,8 @@ export default function Login({
                 email: email,
                 preferences: [],
                 bio: '',
-                password: password
+                password: password,
+                joined_events: [],
             });
 
             router.navigate(`/selectInterests?email=${email}`);
