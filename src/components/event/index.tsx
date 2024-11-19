@@ -23,25 +23,12 @@ export default function Event(props: EventProps) {
 
     if (!user) return;
 
-    const [events, updateEvents] = useState<CalvinEvent[]>([]);
-
     const event: CalvinEvent = (() => {
         const tempEvent: EventProps = { ...props };
         delete tempEvent.eventCardType;
 
         return tempEvent;
     })();
-
-    useEffect(() => {
-        (async function() {
-            const response = await fetch(`${BACKEND_URL}/eventsforuser/${user.id}/`);
-    
-            if(!response.ok)
-                throw new Error();  
-
-            updateEvents((await response.json()).data);
-        })()
-    }, []);
 
     useEffect(() => {}, [user]);
 

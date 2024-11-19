@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ScrollView, View, Text, Image, Pressable, Modal, Alert } from 'react-native';
 
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
@@ -20,6 +20,8 @@ import { CATEGORIES } from '@/globals/constants';
 import styles from './styles';
 
 export default function Home() {
+    const params = useLocalSearchParams();
+
     const [filter, updateFilter] = useState('');
     const [isCalendarVisible, toggleCalendar] = useState(false);
 
@@ -37,7 +39,7 @@ export default function Home() {
 
             updateEvents(json.data);
         })();
-    }, [page]);
+    }, [params.reload]);
 
     if(isCalendarVisible)
         return (

@@ -58,7 +58,7 @@ export default function CreateEvent() {
         if(!response.ok)
             return Alert.alert('Error');
 
-        router.navigate('/home');
+        router.navigate('/home?reload=true');
     }
 
     return (
