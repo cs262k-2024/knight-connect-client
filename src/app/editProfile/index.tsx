@@ -139,18 +139,6 @@ export default function EditProfilel() {
                         </View>
                     </View>
 
-                    <View style={ styles.section }>
-                        <Text style={ styles.sectionTitle }>About Me</Text>
-
-                        <Input
-                            containerStyle={ containerInputStyle }
-                            inputStyle={ inputStyle }
-                            placeholder={ bio }
-                            value={ bio }
-                            onChangeText={ updateBio }
-                        />
-                    </View>
-
                     <InterestsBottomSheetModal ref={ bottomSheetRef } />
 
                     <View style={ styles.section }>
