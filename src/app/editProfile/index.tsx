@@ -20,6 +20,7 @@ import styles from './styles';
 
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import InterestsBottomSheetModal from '@/components/selectInterestsBottomSheet';
+
 import { router } from 'expo-router';
 import { BACKEND_URL } from '@/globals/backend';
 
@@ -143,7 +144,7 @@ export default function EditProfilel() {
                     <View style={ styles.section }>
                         <View style={ styles.selectInterestsHeader }>
                             <Text style={ styles.sectionTitle }>
-                                Your Interests ({ user.interests.length })
+                                Your Interests ({ user.preferences.length })
                             </Text>
 
                             <TouchableOpacity
@@ -176,7 +177,7 @@ export default function EditProfilel() {
                         </View>
 
                         <View style={ styles.row }>
-                            { user.interests.map((interest) => {
+                            { user.preferences.map((interest) => {
                                 return (
                                     <View
                                         key={ interest }
