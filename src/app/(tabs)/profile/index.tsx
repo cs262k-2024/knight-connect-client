@@ -144,8 +144,8 @@ export default function UserProfile() {
                             style={ [
                                 styles.interestContainer,
                                 {
-                                    backgroundColor: globalStyles.lightBlue,
-                                    borderColor: globalStyles.lightBlue,
+                                    backgroundColor: globalStyles.darkGray,
+                                    borderColor: globalStyles.gray,
                                 },
                             ] }
                             onPress={ () => {
