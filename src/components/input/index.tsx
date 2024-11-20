@@ -56,7 +56,7 @@ export default function Input(props: InputProps) {
                 }
                 onFocus={ () => updateFocused(true) }
                 onBlur={ () => updateFocused(false) }
-                keyboardType='default'
+                keyboardType="default"
                 { ...props }
             />
         </View>

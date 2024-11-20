@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { ScrollView, View, Text, Image, Pressable, Modal } from 'react-native';
+import { useState, useEffect } from 'react';
+import { ScrollView, View, Text, Image, Pressable, Modal, Alert } from 'react-native';
 
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
@@ -13,14 +13,33 @@ import Calendar from '@/components/calendar';
 import EventRecommendation from '@/components/eventRecommendation';
 import Event from '@/components/event';
 
+import { BACKEND_URL } from '@/globals/backend';
 import globalStyles from '@/globals/globalStyles';
-import { CATEGORIES, EVENTS } from '@/globals/constants';
+import { CATEGORIES } from '@/globals/constants';
 
 import styles from './styles';
 
 export default function Home() {
+    const params = useLocalSearchParams();
+
     const [filter, updateFilter] = useState('');
     const [isCalendarVisible, toggleCalendar] = useState(false);
+
+    const [events, updateEvents] = useState<CalvinEvent[]>([]);
+    const [page, _updatePage] = useState(0);
+
+    useEffect(() => {
+        (async function () {
+            const response = await fetch(`${BACKEND_URL}/event/${page}/`);
+
+            if(!response.ok)
+                return Alert.alert('Error');
+
+            const json = await response.json();
+
+            updateEvents(json.data);
+        })();
+    }, [params.reload]);
 
     if(isCalendarVisible)
         return (
@@ -44,7 +63,7 @@ export default function Home() {
                         }
                     }
                 >
-                    <Calendar events={ EVENTS } />
+                    <Calendar events={ events } />
                 </View>
 
 
@@ -159,7 +178,7 @@ export default function Home() {
                             { filter.replaceAll(' ', '').length > 0 ? (
                                 <>
                                     { (function filterEvents() {
-                                        const filteredEvents = EVENTS.filter(
+                                        const filteredEvents = events.filter(
                                             (e) =>
                                                 e.name
                                                     .toLowerCase()
@@ -170,9 +189,7 @@ export default function Home() {
                                                 e.description
                                                     .toLowerCase()
                                                     .includes(filter.toLowerCase()) ||
-                                                e.type
-                                                    .toLowerCase()
-                                                    .includes(filter.toLowerCase()),
+                                                e.tags.filter(t => t.toLowerCase().includes(filter.toLowerCase())).length > 0
                                         ).map((e, i) => <Event key={ i } { ...e } />);
 
                                         if (filteredEvents.length === 0)
@@ -196,12 +213,14 @@ export default function Home() {
                                     <EventRecommendation
                                         title="Upcoming Events"
                                         horizontalScroll={ true }
+                                        events={ events }
                                     />
                                     
                                     <EventRecommendation
                                         title="Recommended for You"
                                         eventCardType="price"
                                         horizontalScroll={ false }
+                                        events={ events }
                                     />
                                 </>
                             ) }
