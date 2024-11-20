@@ -1,9 +1,7 @@
 import { useState, useContext } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Alert } from 'react-native';
 
 import { router } from 'expo-router';
-
-import { FontAwesome5 } from '@expo/vector-icons';
 
 import Button from '@/components/button';
 import Input from '@/components/input';
@@ -12,6 +10,8 @@ import Divider from '@/components/divider';
 import { UserContext } from '@/contexts/userContext';
 
 import globalStyles from '@/globals/globalStyles';
+import { BACKEND_URL } from '@/globals/backend';
+
 import loginStyles from './styles';
 
 function LoginInput({
@@ -28,13 +28,13 @@ function LoginInput({
             containerStyle={ {
                 borderWidth: 1,
                 borderColor: focused ? globalStyles.darkMaroon : 'transparent',
-                backgroundColor: globalStyles.veryDarkGray,
+                backgroundColor: focused ? 'transparent' : globalStyles.veryDarkGray,
             } }
             inputStyle={ {
                 color: globalStyles.white,
             } }
             placeholder={ type[0].toUpperCase() + type.slice(1) }
-            inputMode={ type === 'email' ? type : undefined }
+            inputMode={ type === 'email' ? type : 'text' }
             secureTextEntry={ type === 'password' }
             onFocus={ () => updateFocused(true) }
             onBlur={ () => updateFocused(false) }
@@ -52,22 +52,44 @@ export default function Login({
 }) {
     const { updateUser } = useContext(UserContext);
 
+    const [name, updateName] = useState('');
     const [email, updateEmail] = useState('');
     const [password, updatePassword] = useState('');
 
     async function login() {
         if (action === 'Login') {
-            router.navigate('/home');
-
-            updateUser({
-                username: 'John Doe',
-                email: email,
-                interests: [],
-                bio: 'Hi this is a sample bio. New to Calvin. Looking for connections.',
-                events: []
+            const response = await fetch(`${BACKEND_URL}/validate/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
             });
+
+            if(!response.ok)
+                return Alert.alert('Invalid Password');
+
+            const json = await response.json();
+
+            updateUser(json.data);
+            router.navigate('/home');
         }
- else router.navigate(`/selectInterests?email=${email}`);
+        else {
+            updateUser({
+                id: '',
+                name: name,
+                email: email,
+                preferences: [],
+                bio: '',
+                password: password,
+                joined_events: [],
+            });
+
+            router.navigate(`/selectInterests?email=${email}`);
+        }
     }
 
     return (
@@ -78,6 +100,12 @@ export default function Login({
                     width: '100%',
                 } }
             >
+                {
+                    action !== 'Login' && (
+                        <LoginInput updateText={ updateName } type="name" />
+                    )
+                }
+
                 <LoginInput updateText={ updateEmail } type="email" />
                 <LoginInput updateText={ updatePassword } type="password" />
             </View>
@@ -96,7 +124,7 @@ export default function Login({
             >
                 <Button
                     style={ Object.assign({}, loginStyles.actionButton, {
-                        borderColor: globalStyles.darkMaroon,
+                        borderColor: globalStyles.gold,
                         marginTop: 20,
                         width: '100%',
                     }) }
@@ -104,18 +132,6 @@ export default function Login({
                     disabled={ email === '' || password === '' }
                 >
                     <Text style={ loginStyles.actionButtonText }>{ action }</Text>
-                </Button>
-
-                <Button style={ styles.otherLogin } onPress={ login }>
-                    <FontAwesome5
-                        name="google"
-                        size={ 24 }
-                        color={ globalStyles.gold }
-                    />
-
-                    <Text style={ styles.otherLoginText }>
-                        { action } with Google
-                    </Text>
                 </Button>
             </View>
 
@@ -125,6 +141,7 @@ export default function Login({
                 <Text style={ styles.signupText }>
                     { action === 'Login' ? 'Don\'t' : 'Already' } have an account?{ ' ' }
                 </Text>
+
                 <Text
                     style={ styles.signupLink }
                     onPress={ () =>
@@ -149,11 +166,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     forgot: {
-        color: globalStyles.gold,
+        color: globalStyles.gray,
         fontSize: 12,
         alignSelf: 'flex-end',
         userSelect: 'none',
-        opacity: 0.5,
     },
     login: {
         borderRadius: 10,
@@ -193,7 +209,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
     },
     signupText: {
-        color: globalStyles.darkGray,
+        color: globalStyles.gray,
         fontSize: 14,
         lineHeight: 20,
         textAlign: 'center',

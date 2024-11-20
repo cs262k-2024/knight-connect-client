@@ -7,6 +7,7 @@ import {
     SafeAreaView,
     KeyboardAvoidingView,
     ScrollView,
+    Alert,
 } from 'react-native';
 
 import { Avatar, Input, Icon } from '@rneui/themed';
@@ -20,6 +21,7 @@ import styles from './styles';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import InterestsBottomSheetModal from '@/components/selectInterestsBottomSheet';
 import { router } from 'expo-router';
+import { BACKEND_URL } from '@/globals/backend';
 
 export default function EditProfilel() {
     const bottomSheetRef = useRef<BottomSheetModal>(null);
@@ -33,17 +35,29 @@ export default function EditProfilel() {
 
     if (!user) return;
 
-    const [username, updateUsername] = useState(user.username);
+    const [username, updateUsername] = useState(user.name);
     const [bio, updateBio] = useState(user.bio);
 
-    function save() {
+    async function save() {
+        // TODO: implement changing password and etc
         if (!user) return;
 
-        updateUser({
-            ...user,
-            ...(username && { username }),
-            ...(bio && { bio }),
+        const response = await fetch(`${BACKEND_URL}/edituser/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id: user.id,
+                ...(username && { name: username }),
+                ...(bio && { bio }),
+            }),
         });
+
+        if (!response.ok) return Alert.alert('Error');
+
+        const json = await response.json();
+        updateUser(json.data);
 
         router.back();
     }

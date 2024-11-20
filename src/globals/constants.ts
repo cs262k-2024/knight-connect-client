@@ -15,21 +15,3 @@ export const CATEGORIES = [
     '🎬 Film & Media',
     '🍔 Food & Drink',
 ];
-
-export const EVENTS: CalvinEvent[] = [
-    {
-        name: 'Maroon & Gold Day',
-        date: new Date(Date.now()),
-        location: 'Calvin University',
-        description: 'Gold',
-        type: 'education',
-    },
-    {
-        name: 'Cornhole Tournament',
-        date: new Date(),
-        location: 'Calvin University',
-        description: 'Gold',
-        type: 'sports',
-        price: 15,
-    },
-];

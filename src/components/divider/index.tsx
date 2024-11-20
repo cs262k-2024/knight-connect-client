@@ -17,18 +17,20 @@ export default function Divider(props: DividerProps) {
         dividerLine: {
             backgroundColor: props.color
                 ? props.color
-                : globalStyles.veryDarkGray,
+                : globalStyles.darkGray,
             height: 1,
             width: '30%',
             alignSelf: 'center',
+            opacity: 0.5
         },
         dividerText: {
             alignSelf: 'center',
             paddingHorizontal: 5,
             color: props.color ? props.color : globalStyles.darkGray,
-            fontSize: 11,
+            fontSize: 13,
             lineHeight: 16.5,
             userSelect: 'none',
+            fontFamily: 'Fredoka'
         },
     });
 

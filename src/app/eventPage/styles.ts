@@ -68,15 +68,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
     },
-    stickyFooterButton: {
-        borderRadius: 50,
-        margin: 2.5,
-        alignSelf: 'center',
-        paddingVertical: 10,
-        paddingHorizontal: 24,
-        backgroundColor: globalStyles.lightBlue,
-    },
-
     stickyfooter: {
         position: 'absolute',
         bottom: 0,
