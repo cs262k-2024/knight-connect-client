@@ -27,18 +27,19 @@ export default function UserProfile() {
     if (!user) return;
 
     const [numInterests, setNumInterests] = useState(
-        user.interests.length > 3 ? 3 : user.interests.length,
+        user.preferences.length > 3 ? 3 : user.preferences.length,
     );
 
     useEffect(() => {
         if (!user) return;
 
-        setNumInterests(user.interests.length > 3 ? 3 : user.interests.length);
+        setNumInterests(user.preferences.length > 3 ? 3 : user.preferences.length);
     }, [user]);
 
     return (
         <ScrollView style={ styles.container }>
             <InterestsBottomSheetModal ref={ bottomSheetRef } />
+            
             <View style={ styles.userInfoSection }>
                 <View style={ { paddingHorizontal: 20 } }>
                     <Avatar
@@ -51,7 +52,7 @@ export default function UserProfile() {
                 </View>
 
                 <View>
-                    <Text style={ styles.title }>{ user.username }</Text>
+                    <Text style={ styles.title }>{ user.name }</Text>
 
                     <View style={ [styles.avatarContainer, styles.center] }>
                         <Icon
@@ -76,14 +77,14 @@ export default function UserProfile() {
 
                 <View style={ [{ flexDirection: 'column' }, styles.center] }>
                     <Text style={ styles.caption }>Interests</Text>
-                    <Text style={ styles.title }>{ user.interests.length }</Text>
+                    <Text style={ styles.title }>{ user.preferences.length }</Text>
                 </View>
 
                 <Divider orientation="vertical" />
 
                 <View style={ [{ flexDirection: 'column' }, styles.center] }>
                     <Text style={ styles.caption }>Saved Events</Text>
-                    <Text style={ styles.title }>{ user.events.length }</Text>
+                    <Text style={ styles.title }>{ user.joined_events.length }</Text>
                 </View>
             </View>
 
@@ -98,7 +99,7 @@ export default function UserProfile() {
             <View style={ styles.section }>
                 <View style={ styles.selectInterestsHeader }>
                     <Text style={ styles.sectionTitle }>
-                        Your Interests ({ user.interests.length })
+                        Your Interests ({ user.preferences.length })
                     </Text>
 
                     <TouchableOpacity
@@ -109,13 +110,6 @@ export default function UserProfile() {
                                 borderColor: globalStyles.lightBlue,
                             },
                         ] }
-                        // onPress={() => {
-                        //     Haptics.impactAsync(
-                        //         Haptics.ImpactFeedbackStyle.Soft,
-                        //     );
-
-                        //     router.navigate('/selectInterests?edit=true');
-                        // }}
                         onPress={ handlePresentModalPress }
                     >
                         <Text
@@ -130,7 +124,7 @@ export default function UserProfile() {
                 </View>
 
                 <View style={ styles.row }>
-                    { user.interests
+                    { user.preferences
                         .slice(0, numInterests + 1)
                         .map((interest) => {
                             return (
@@ -145,7 +139,7 @@ export default function UserProfile() {
                             );
                         }) }
 
-                    { user.interests.length > 4 && (
+                    { user.preferences.length > 4 && (
                         <TouchableOpacity
                             style={ [
                                 styles.interestContainer,
@@ -159,8 +153,8 @@ export default function UserProfile() {
                                     Haptics.ImpactFeedbackStyle.Soft,
                                 );
 
-                                if (numInterests < user.interests.length)
-                                    setNumInterests(user.interests.length);
+                                if (numInterests < user.preferences.length)
+                                    setNumInterests(user.preferences.length);
                                 else setNumInterests(3);
                             } }
                         >
@@ -170,7 +164,7 @@ export default function UserProfile() {
                                     { color: globalStyles.white },
                                 ] }
                             >
-                                { numInterests < user.interests.length
+                                { numInterests < user.preferences.length
                                     ? 'See all...'
                                     : 'Show Less' }
                             </Text>

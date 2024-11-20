@@ -1,22 +1,22 @@
 import { useCallback, useContext, useRef, useState } from 'react';
 
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import * as Haptics from 'expo-haptics';
+import { router } from 'expo-router';
 
 import { Avatar, Divider, Icon } from '@rneui/themed';
-import * as Haptics from 'expo-haptics';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 import Input from '@/components/input';
 import Button from '@/components/button';
+import InterestsBottomSheetModal from '@/components/selectInterestsBottomSheet';
 
 import { UserContext } from '@/contexts/userContext';
 
 import globalStyles from '@/globals/globalStyles';
+import { BACKEND_URL } from '@/globals/backend';
 
-import { router } from 'expo-router';
 import styles from './styles';
-
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import InterestsBottomSheetModal from '@/components/selectInterestsBottomSheet';
 
 export default function UserProfile() {
     const bottomSheetRef = useRef<BottomSheetModal>(null);
@@ -30,17 +30,30 @@ export default function UserProfile() {
 
     if (!user) return;
 
-    const [username, updateUsername] = useState(user.username);
+    const [username, updateUsername] = useState(user.name);
     const [bio, updateBio] = useState(user.bio);
 
-    function save() {
+    async function save() {        
+        // TODO: implement changing password and etc
         if (!user) return;
 
-        updateUser({
-            ...user,
-            ...(username && { username }),
-            ...(bio && { bio }),
+        const response = await fetch(`${BACKEND_URL}/edituser/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id: user.id,
+                ...(username && { name: username }),
+                ...(bio && { bio }),
+            })
         });
+
+        if(!response.ok)
+            return Alert.alert('Error');
+        
+        const json = await response.json();
+        updateUser(json.data);
 
         router.navigate('/profile');
     }
@@ -58,6 +71,7 @@ export default function UserProfile() {
     return (
         <ScrollView style={ styles.container }>
             <InterestsBottomSheetModal ref={ bottomSheetRef } />
+            
             <View style={ styles.userInfoSection }>
                 <View style={ { paddingHorizontal: 20 } }>
                     <Avatar
@@ -109,7 +123,7 @@ export default function UserProfile() {
 
                 <View style={ [{ flexDirection: 'column' }, styles.center] }>
                     <Text style={ styles.caption }>Interests</Text>
-                    <Text style={ styles.title }>{ user.interests.length }</Text>
+                    <Text style={ styles.title }>{ user.preferences.length }</Text>
                 </View>
 
                 <Divider orientation="vertical" />
@@ -135,7 +149,7 @@ export default function UserProfile() {
             <View style={ styles.section }>
                 <View style={ styles.selectInterestsHeader }>
                     <Text style={ styles.sectionTitle }>
-                        Your Interests ({ user.interests.length })
+                        Your Interests ({ user.preferences.length })
                     </Text>
 
                     <TouchableOpacity
@@ -147,14 +161,6 @@ export default function UserProfile() {
                             },
                         ] }
                         onPress={ handlePresentModalPress }
-                        // onPress={() => {
-                        //     Haptics.impactAsync(
-                        //         Haptics.ImpactFeedbackStyle.Soft,
-                        //     );
-
-                        //     save();
-                        //     router.navigate('/selectInterests?edit=true');
-                        // }}
                     >
                         <Text
                             style={ [
@@ -168,7 +174,7 @@ export default function UserProfile() {
                 </View>
 
                 <View style={ styles.row }>
-                    { user.interests.map((interest) => {
+                    { user.preferences.map((interest) => {
                         return (
                             <View
                                 key={ interest }

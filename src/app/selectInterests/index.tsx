@@ -9,6 +9,8 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { UserContext } from '@/contexts/userContext';
 
 import Button from '@/components/button';
+
+import { BACKEND_URL } from '@/globals/backend';
 import { CATEGORIES } from '@/globals/constants';
 
 import styles from './styles';
@@ -52,10 +54,10 @@ export default function SelectInterests() {
     
     if(!user && isEdit) return;
 
-    const [userInterests, setUserInterests] = useState<string[]>(isEdit ? user?.interests! : []);
+    const [userInterests, setUserInterests] = useState<string[]>(isEdit ? user?.preferences! : []);
 
     // adds selected items to userInterests. Removes item if already in the list
-    const itemSelect = (item: string) => {
+    function itemSelect(item: string) {
         if (userInterests.includes(item)) {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
             setUserInterests((prevItems) =>
@@ -68,32 +70,45 @@ export default function SelectInterests() {
         }
 
         return userInterests;
-    };
+    }
 
     // stores the list of user interests and proceeds to the home page
-    function storePreferences() {
+    async function storePreferences() {
         if(isEdit && user) {
+            // TODO: Update with backend functionality
+
             updateUser({
                 ...user,
-                interests: userInterests,
+                preferences: userInterests,
             });
 
             router.navigate('/profile');
         }
-        else
-            updateUser({
-                interests: userInterests,
-                email: local.email,
-                username: 'John Doe',
-                bio: 'Hi this is a sample bio. New to Calvin. Looking for connections.',
-                events: []
+        else {
+            // Create user
+            const response = await fetch(`${BACKEND_URL}/user/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: user!.name,
+                    email: user!.email,
+                    password: user!.password,
+                    bio: user!.bio,
+                    preferences: userInterests
+                })
             });
 
-        if (userInterests.length === 0) {
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-            Alert.alert('Choose at least one category');
+            if(!response.ok)
+                return Alert.alert('');
+            
+            const json = await response.json();
+
+            updateUser(json.data);
+
+            router.navigate('/home');
         }
-        else router.navigate('/home');
     }
 
     return (
