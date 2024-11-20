@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { router } from 'expo-router';
 
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
@@ -9,8 +9,8 @@ import { UserContext } from '@/contexts/userContext';
 import Input from '@/components/input';
 import Button from '@/components/button';
 
+import { BACKEND_URL } from '@/globals/backend';
 import globalStyles from '@/globals/globalStyles';
-import { EVENTS } from '@/globals/constants';
 
 import styles from './styles';
 
@@ -34,16 +34,31 @@ export default function CreateEvent() {
     if(!user) return <></>;
 
     async function publish() {
-        const event: CalvinEvent = {
-            name: eventName,
-            description: eventDescription,
-            location: eventLocation,
-            date: new Date(),
-            type: ''
-        };
+        const response = await fetch(`${BACKEND_URL}/event/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                organizer: user?.id,
+                name: eventName,
+                start_date: date,
+                // TODO
+                end_date: date,
+                location: eventLocation,
+                description: eventDescription,
+                // TODO
+                tags: [],
+                // TODO
+                cover_uri: '',
+                price: 0.0
+            })
+        });
 
-        EVENTS.push(event);
-        router.navigate('/home');
+        if(!response.ok)
+            return Alert.alert('Error');
+
+        router.navigate('/home?reload=true');
     }
 
     return (

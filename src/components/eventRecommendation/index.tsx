@@ -1,20 +1,18 @@
-import { useEffect, useState } from 'react';
 import { ScrollView, Text, StyleSheet, View } from 'react-native';
 
 import Event from '../event';
 
-import { EVENTS } from '@/globals/constants';
 import globalStyles from '@/globals/globalStyles';
 
 type EventRecommendationProps = {
     title: string;
+    events: CalvinEvent[];
     eventCardType?: string;
     horizontalScroll?: boolean;
 };
 
 export default function EventRecommendation(props: EventRecommendationProps) {
     const styles = StyleSheet.create({
-        // TODO: Put shadow on the right side and left side
         container: {
             display: 'flex',
             alignSelf: 'stretch',
@@ -44,15 +42,6 @@ export default function EventRecommendation(props: EventRecommendationProps) {
         },
     });
 
-    const [events, updateEvents] = useState<CalvinEvent[]>([]);
-
-    useEffect(() => {
-        (async function () {
-            // Fetch events -> get from backend and use title as a filter
-            updateEvents(EVENTS);
-        })();
-    }, []);
-
     return (
         <View style={ styles.container }>
             <View style={ styles.headerContainer }>
@@ -66,7 +55,11 @@ export default function EventRecommendation(props: EventRecommendationProps) {
                 horizontal={ props.horizontalScroll }
             >
                 <View style={ styles.cardContainer }>
-                    { events
+                    {
+                        props.events.length === 0 && <Text style={ styles.headerText }>No events...</Text>
+                    }
+
+                    { props.events
                         .filter((_e, i) =>
                             props.horizontalScroll ? i < 8 : i < 3,
                         )

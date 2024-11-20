@@ -7,6 +7,7 @@ import {
     SafeAreaView,
     KeyboardAvoidingView,
     ScrollView,
+    Alert,
 } from 'react-native';
 
 import { Avatar, Input, Icon } from '@rneui/themed';
@@ -19,7 +20,9 @@ import styles from './styles';
 
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import InterestsBottomSheetModal from '@/components/selectInterestsBottomSheet';
+
 import { router } from 'expo-router';
+import { BACKEND_URL } from '@/globals/backend';
 
 export default function EditProfilel() {
     const bottomSheetRef = useRef<BottomSheetModal>(null);
@@ -33,17 +36,29 @@ export default function EditProfilel() {
 
     if (!user) return;
 
-    const [username, updateUsername] = useState(user.username);
+    const [username, updateUsername] = useState(user.name);
     const [bio, updateBio] = useState(user.bio);
 
-    function save() {
+    async function save() {
+        // TODO: implement changing password and etc
         if (!user) return;
 
-        updateUser({
-            ...user,
-            ...(username && { username }),
-            ...(bio && { bio }),
+        const response = await fetch(`${BACKEND_URL}/edituser/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id: user.id,
+                ...(username && { name: username }),
+                ...(bio && { bio }),
+            }),
         });
+
+        if (!response.ok) return Alert.alert('Error');
+
+        const json = await response.json();
+        updateUser(json.data);
 
         router.back();
     }
@@ -51,96 +66,108 @@ export default function EditProfilel() {
     return (
         <KeyboardAvoidingView
             behavior="padding"
-            enabled={ true }
-            style={ styles.container }
+            enabled={true}
+            style={styles.container}
         >
-            <SafeAreaView style={ styles.container }>
-                <View style={ styles.topButtonsContainer }>
+            <SafeAreaView style={styles.container}>
+                <View style={styles.topButtonsContainer}>
                     <View>
                         <TouchableOpacity
-                            onPress={ () => {
+                            onPress={() => {
                                 router.back();
-                            } }
+                            }}
                         >
                             <Icon
                                 name="x"
                                 type="feather"
-                                color={ globalStyles.white }
+                                color={globalStyles.white}
                             />
                         </TouchableOpacity>
                     </View>
                     <View>
                         <TouchableOpacity
-                            onPress={ () => {
+                            onPress={() => {
                                 Haptics.impactAsync(
                                     Haptics.ImpactFeedbackStyle.Soft,
                                 );
                                 save();
-                            } }
+                            }}
                         >
-                            <Text style={ styles.saveText }>Save</Text>
+                            <Text style={styles.saveText}>Save</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <ScrollView
-                    contentContainerStyle={ { flexGrow: 1 } }
+                    contentContainerStyle={{ flexGrow: 1 }}
                     keyboardShouldPersistTaps="handled"
                 >
-                    <View style={ styles.avatarContainer }>
+                    <View style={styles.avatarContainer}>
                         <Avatar
-                            size={ 88 }
+                            size={88}
                             rounded
-                            source={ {
+                            source={{
                                 uri: 'https://gratisography.com/wp-content/uploads/2024/01/gratisography-cyber-kitty-800x525.jpg',
-                            } }
+                            }}
                         />
                     </View>
                     <View>
-                        <View style={ styles.center }>
-                            <Text style={ styles.caption }>Username</Text>
+                        <View style={styles.center}>
+                            <Text style={styles.caption}>Username</Text>
                             <Input
-                                cursorColor={ globalStyles.gray }
+                                cursorColor={globalStyles.gray}
                                 placeholder="Username"
                                 textAlign="center"
-                                placeholderTextColor={ globalStyles.darkGray }
-                                value={ username }
-                                onChangeText={ updateUsername }
-                                inputContainerStyle={ styles.inputContainer }
-                                inputStyle={ styles.input }
+                                placeholderTextColor={globalStyles.darkGray}
+                                value={username}
+                                onChangeText={updateUsername}
+                                inputContainerStyle={styles.inputContainer}
+                                inputStyle={styles.input}
                             />
                         </View>
-                        <View style={ styles.center }>
-                            <Text style={ styles.caption }>About</Text>
+                        <View style={styles.center}>
+                            <Text style={styles.caption}>About</Text>
                             <Input
-                                multiline={ true }
+                                multiline={true}
                                 placeholder="Enter a bio"
                                 textAlign="center"
-                                placeholderTextColor={ globalStyles.darkGray }
-                                value={ bio }
-                                onChangeText={ updateBio }
-                                inputContainerStyle={ styles.inputContainer }
-                                inputStyle={ styles.input }
+                                placeholderTextColor={globalStyles.darkGray}
+                                value={bio}
+                                onChangeText={updateBio}
+                                inputContainerStyle={styles.inputContainer}
+                                inputStyle={styles.input}
                             />
                         </View>
                     </View>
 
-                    <InterestsBottomSheetModal ref={ bottomSheetRef } />
+                    <View style={styles.section}>
+                        <Text style={styles.sectionTitle}>About Me</Text>
 
-                    <View style={ styles.section }>
-                        <View style={ styles.selectInterestsHeader }>
-                            <Text style={ styles.sectionTitle }>
-                                Your Interests ({ user.interests.length })
+                        <Input
+                            containerStyle={containerInputStyle}
+                            inputStyle={inputStyle}
+                            placeholder={bio}
+                            value={bio}
+                            onChangeText={updateBio}
+                        />
+                    </View>
+
+                    <InterestsBottomSheetModal ref={bottomSheetRef} />
+
+                    <View style={styles.section}>
+                        <View style={styles.selectInterestsHeader}>
+                            <Text style={styles.sectionTitle}>
+                                Your Interests ({user.preferences.length})
                             </Text>
 
                             <TouchableOpacity
-                                style={ [
+                                style={[
                                     styles.interestContainer,
                                     {
                                         backgroundColor: globalStyles.lightBlue,
                                         borderColor: globalStyles.lightBlue,
                                     },
-                                ] }
-                                onPress={ handlePresentBottomSheet }
+                                ]}
+                                onPress={handlePresentBottomSheet}
                                 // onPress={() => {
                                 //     Haptics.impactAsync(
                                 //         Haptics.ImpactFeedbackStyle.Soft,
@@ -151,29 +178,29 @@ export default function EditProfilel() {
                                 // }}
                             >
                                 <Text
-                                    style={ [
+                                    style={[
                                         styles.interestText,
                                         { color: globalStyles.white },
-                                    ] }
+                                    ]}
                                 >
                                     Add +
                                 </Text>
                             </TouchableOpacity>
                         </View>
 
-                        <View style={ styles.row }>
-                            { user.interests.map((interest) => {
+                        <View style={styles.row}>
+                            {user.preferences.map((interest) => {
                                 return (
                                     <View
-                                        key={ interest }
-                                        style={ styles.interestContainer }
+                                        key={interest}
+                                        style={styles.interestContainer}
                                     >
-                                        <Text style={ styles.interestText }>
-                                            { interest }
+                                        <Text style={styles.interestText}>
+                                            {interest}
                                         </Text>
                                     </View>
                                 );
-                            }) }
+                            })}
                         </View>
                     </View>
                 </ScrollView>

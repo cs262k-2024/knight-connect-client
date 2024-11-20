@@ -1,21 +1,51 @@
+import { useContext, useEffect, useState } from 'react';
 import {
     View,
     Text,
     Image,
-    TouchableOpacity,
     SafeAreaView,
+    Alert
 } from 'react-native';
-import React from 'react';
 
-import styles from './styles';
-import globalStyles from '@/globals/globalStyles';
+import { useLocalSearchParams } from 'expo-router';
+import { Divider, Icon } from '@rneui/base';
 
 import ParallaxScrollView from '@/components/parallaxScrollView';
 
-import { Divider, Icon } from '@rneui/base';
-import { CATEGORIES } from '@/globals/constants';
+import { UserContext } from '@/contexts/userContext';
+
+import { joinEvent, userJoinedEvent } from '@/helpers/user';
+
+import { BACKEND_URL } from '@/globals/backend';
+import globalStyles from '@/globals/globalStyles';
+
+import styles from './styles';
+import Button from '@/components/button';
 
 export default function EventPage() {
+    const params = useLocalSearchParams();
+
+    const { user } = useContext(UserContext);
+
+    const [event, updateEvent] = useState<CalvinEvent | null>(null);
+
+    useEffect(() => {
+        (async function() {
+            const response = await fetch(`${BACKEND_URL}/getevent/${params.id}/`);
+
+            if(!response.ok)
+                return Alert.alert('Error');
+
+            const json = await response.json();
+
+            updateEvent(json.data);
+        })();
+    }, []);
+
+
+    if(!event)
+        return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
+
     return (
         <SafeAreaView style={ styles.container }>
             <ParallaxScrollView
@@ -32,7 +62,7 @@ export default function EventPage() {
                 <View style={ styles.container }>
                     <View style={ styles.section }>
                         <Text style={ styles.title }>
-                            Light: Donna Spaan Contemporary Art Collection
+                            { event.name }
                         </Text>
                     </View>
                     <View style={ styles.section }>
@@ -45,12 +75,14 @@ export default function EventPage() {
                                     style={ { paddingRight: 5 } }
                                 />
                             </View>
+
                             <View style={ { gap: 5 } }>
                                 <Text style={ styles.text }>
-                                    Friday, November 15, 2024
+                                    { (new Date(event.start_date)).toLocaleDateString() }
                                 </Text>
+
                                 <Text style={ styles.subtext }>
-                                    7:00 PM - 7:45 PM EST
+                                { (new Date(event.start_date)).toLocaleTimeString() } - { (new Date(event.end_date)).toLocaleTimeString() }
                                 </Text>
                             </View>
                         </View>
@@ -64,6 +96,7 @@ export default function EventPage() {
                                     style={ { paddingRight: 5 } }
                                 />
                             </View>
+
                             <View
                                 style={ [
                                     { justifyContent: 'center' },
@@ -71,8 +104,7 @@ export default function EventPage() {
                                 ] }
                             >
                                 <Text numberOfLines={ 1 } style={ styles.text }>
-                                    Center Art Gallery in the Covenant Fine Arts
-                                    Center
+                                    { event.location }
                                 </Text>
                             </View>
                         </View>
@@ -84,15 +116,7 @@ export default function EventPage() {
                         </View>
                         <View>
                             <Text numberOfLines={ 10 } style={ styles.subtext }>
-                                What is light? Where does it comes from? What
-                                can it reveal? The works in the Donna Spaan
-                                Contemporary Art Collection are varied in their
-                                approach, aesthetic, medium, and conceptual,
-                                light-driven underpinnings. Yet together, they
-                                weave a journey of discovery. Exhibition runs
-                                September 3 - November 29, 2024. Come visit this
-                                illuminating collection for FREE, no ticket
-                                required!
+                                { event.description }
                             </Text>
                         </View>
                     </View>
@@ -101,7 +125,7 @@ export default function EventPage() {
                             <Text style={ styles.sectionTitle }>Tags</Text>
                         </View>
                         <View style={ styles.row }>
-                            { CATEGORIES.slice(0, 4).map((interest) => {
+                            { event.tags.slice(0, 4).map((interest) => {
                                 return (
                                     <View
                                         key={ interest }
@@ -117,15 +141,20 @@ export default function EventPage() {
                     </View>
                 </View>
             </ParallaxScrollView>
+
             <View style={ styles.stickyfooter }>
                 <View>
-                    <Text style={ styles.buttonText }>Price</Text>
+                    <Text style={ styles.buttonText }>${ event.price }</Text>
                 </View>
-                <TouchableOpacity>
-                    <View style={ styles.stickyFooterButton }>
-                        <Text style={ styles.buttonText }>Going</Text>
-                    </View>
-                </TouchableOpacity>
+
+                <Button
+                    disabled={ userJoinedEvent(user!, event) }
+                    onPress={
+                        () => joinEvent(user!, event)
+                    }
+                >
+                    <Text style={ styles.buttonText }>Join</Text>
+                </Button>
             </View>
         </SafeAreaView>
     );
