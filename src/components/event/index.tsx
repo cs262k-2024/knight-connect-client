@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 
-import { Text, View, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import { router } from 'expo-router';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
@@ -9,9 +9,7 @@ import { UserContext } from '@/contexts/userContext';
 
 import Button from '../button';
 
-import { userJoinedEvent } from '@/helpers/user';
-
-import { BACKEND_URL } from '@/globals/backend';
+import { userJoinedEvent, joinEvent as join } from '@/helpers/user';
 import globalStyles from '@/globals/globalStyles';
 
 type EventProps = CalvinEvent & {
@@ -33,23 +31,7 @@ export default function Event(props: EventProps) {
     useEffect(() => {}, [user]);
 
     async function joinEvent() {
-        const response = await fetch(`${BACKEND_URL}/join/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                user_id: user?.id,
-                event_id: event.id,
-            })
-        });
-
-        if(!response.ok)
-            return Alert.alert('Error');
-
-        const json = await response.json();
-
-        updateUser(json.data);
+        updateUser(await join(user!, event));
     }
 
     function renderActionButton() {
@@ -81,7 +63,7 @@ export default function Event(props: EventProps) {
 
     return (
         <TouchableOpacity
-            onPress={ () => router.navigate('/eventPage') }
+            onPress={ () => router.navigate(`/eventPage?id=${event.id}`) }
             style={ {
                 ...styles.container,
                 width: props.eventCardType === 'price' ? '95%' : 'auto',

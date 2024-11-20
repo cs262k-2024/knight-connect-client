@@ -70,7 +70,7 @@ export default function SelectInterests() {
         }
 
         return userInterests;
-    };
+    }
 
     // stores the list of user interests and proceeds to the home page
     async function storePreferences() {

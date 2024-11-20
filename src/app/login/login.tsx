@@ -70,7 +70,7 @@ export default function Login({
             });
 
             if(!response.ok)
-                return Alert.alert('Invalid Password')
+                return Alert.alert('Invalid Password');
 
             const json = await response.json();
 

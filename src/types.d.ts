@@ -17,9 +17,9 @@ declare interface CalvinEvent {
     organizer: string;
     name: string;
 
-    date_created: Date;
-    start_date: Date;
-    end_date: Date;
+    date_created: string;
+    start_date: string;
+    end_date: string;
     
     price: number;
 

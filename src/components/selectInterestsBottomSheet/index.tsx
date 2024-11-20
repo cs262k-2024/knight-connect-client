@@ -1,3 +1,4 @@
+import { forwardRef, useMemo, useState, useCallback, useContext } from 'react';
 import {
     StyleSheet,
     Text,
@@ -5,25 +6,32 @@ import {
     Alert,
     FlatList,
 } from 'react-native';
-import { forwardRef, useMemo, useState, useCallback, useContext } from 'react';
+
+import { router, useLocalSearchParams } from 'expo-router';
+import * as Haptics from 'expo-haptics';
+
 import {
     BottomSheetBackdrop,
+    BottomSheetBackdropProps,
     BottomSheetModal,
     BottomSheetView,
     useBottomSheetModal,
 } from '@gorhom/bottom-sheet';
-import { router, useLocalSearchParams } from 'expo-router';
+
 import { UserContext } from '@/contexts/userContext';
+
+import { BACKEND_URL } from '@/globals/backend';
 import { CATEGORIES } from '@/globals/constants';
-import * as Haptics from 'expo-haptics';
 import globalStyles from '@/globals/globalStyles';
+
 export type Ref = BottomSheetModal;
 
-const InterestsBottomSheetModal = forwardRef<Ref>((props, ref) => {
+const InterestsBottomSheetModal = forwardRef<Ref>((_props, ref) => {
     const snapPoints = useMemo(() => ['50%', '75%'], []);
     const { dismiss } = useBottomSheetModal();
+
     const renderBackdrop = useCallback(
-        (props) => (
+        (props: BottomSheetBackdropProps) => (
             <BottomSheetBackdrop
                 { ...props }
                 appearsOnIndex={ 0 }
@@ -41,7 +49,7 @@ const InterestsBottomSheetModal = forwardRef<Ref>((props, ref) => {
     if (!user && isEdit) return;
 
     const [userInterests, setUserInterests] = useState<string[]>(
-        isEdit ? user?.interests! : [],
+        isEdit ? user?.preferences! : [],
     );
 
     // adds new items to userInterests. Removes item if already in the list
@@ -52,36 +60,35 @@ const InterestsBottomSheetModal = forwardRef<Ref>((props, ref) => {
                 prevItems.filter((categoryItem) => categoryItem !== item),
             );
         }
- else {
+        else {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
             setUserInterests((prevItems) => [...prevItems, item]);
         }
         return userInterests;
     };
     // stores new list of user interests and proceeds to the home page
-    function storePreferences() {
-        if (isEdit && user) {
-            updateUser({
-                ...user,
-                preferences: userInterests,
-            });
+    async function storePreferences() {
+        if(!user) return;
 
-            dismiss();
-            router.navigate('/profile');
-        }
- else
-            updateUser({
-                preferences: userInterests,
-                email: local.email,
-                name: 'John Doe',
-                bio: 'Hi this is a sample bio. New to Calvin. Looking for connections.'
-            });
+        const response = await fetch(`${BACKEND_URL}/edituser/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id: user.id,
+                preferences: userInterests
+            })
+        });
 
-        if (userInterests.length === 0) {
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-            Alert.alert('Choose at least one category');
-        }
- else dismiss();
+        if(!response.ok)
+            return Alert.alert('Error');
+        
+        const json = await response.json();
+        updateUser(json.data);
+
+        dismiss();
+        router.navigate('/profile');
     }
 
     return (

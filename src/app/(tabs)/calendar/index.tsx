@@ -24,7 +24,7 @@ export default function UserCalendar() {
 
             updateEvents(json.data);
         })();
-    }, []);
+    }, [user]);
 
     return (
         <Calendar
