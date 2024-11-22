@@ -43,7 +43,7 @@ export default function Event(props: EventProps) {
         scheduleNotification(props.id, props.name, 'Event is starting soon!', notificationDate);
 
         // add the event to the user's system calendar
-        addEventToCalendar(props.name, new Date(props.start_date), new Date(props.end_date), props.location);
+        addEventToCalendar(props.name, new Date(props.start_date), new Date(props.end_date), props.location, props.description);
     }
 
     function renderActionButton() {
