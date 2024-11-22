@@ -24,7 +24,7 @@ declare interface CalvinEvent {
     price: number;
 
     location: string;
-    description: string;
+    description?: string;
 
     cover_uri?: string;
     tags: string[];
