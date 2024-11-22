@@ -21,7 +21,7 @@ async function getDefaultCalendarSource() {
 
         return defaultCalendars[0].source;
     }
- catch (e: any) {
+    catch (e: any) {
         Alert.alert(e.toString());
         return null;
     }
@@ -38,7 +38,7 @@ async function grantPermissions() {
     
     const { status: status2 } = await Calendar.requestRemindersPermissionsAsync();
     
-        if (status2 !== 'granted') {
+    if (status2 !== 'granted') {
         Alert.alert('Reminders permission not granted');
         return false;
     }
@@ -82,7 +82,7 @@ async function addEventToCalendar(
             notes: details,
         });
     }
- catch (e: any) {
+    catch (e: any) {
         Alert.alert(e.toString());
         return false;
     }

@@ -50,11 +50,11 @@ async function registerForPushNotificationsAsync() {
                 })
             ).data;
         }
- catch (e) {
+        catch (e) {
             token = `${e}`;
         }
     }
- else {
+    else {
         alert('Must use physical device for Push Notifications');
     }
 
