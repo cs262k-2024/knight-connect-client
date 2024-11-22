@@ -57,6 +57,14 @@ export default function Login({
     const [password, updatePassword] = useState('');
 
     async function login() {
+        if (action === 'Sign Up' && (password.length < 8 || !/\d/.test(password) || !/[A-Z]/.test(password) || !/[a-z]/.test(password))) {
+            Alert.alert('Invalid Password');
+            return;
+        }
+        if (email === '' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            Alert.alert('Invalid Email');
+            return;
+        }
         if (action === 'Login') {
             const response = await fetch(`${BACKEND_URL}/validate/`, {
                 method: 'POST',
@@ -78,6 +86,11 @@ export default function Login({
             router.navigate('/home');
         }
         else {
+            if (name === '') {
+                Alert.alert('Invalid Name');
+                return;
+            }
+            
             updateUser({
                 id: '',
                 name: name,
@@ -108,6 +121,27 @@ export default function Login({
 
                 <LoginInput updateText={ updateEmail } type="email" />
                 <LoginInput updateText={ updatePassword } type="password" />
+
+                { action === 'Sign Up' && password.length < 8 && (
+                    <Text style={ styles.badPassword }>
+                        X at least 8 characters
+                    </Text>
+                ) }
+                { action === 'Sign Up' && !/\d/.test(password) && (
+                    <Text style={ styles.badPassword }>
+                        X at least 1 number
+                    </Text>
+                ) }
+                { action === 'Sign Up' && !/[A-Z]/.test(password) && (
+                    <Text style={ styles.badPassword }>
+                        X at least 1 uppercase letter
+                    </Text>
+                ) }
+                { action === 'Sign Up' && !/[a-z]/.test(password) && (
+                    <Text style={ styles.badPassword }>
+                        X at least 1 lowercase letter
+                    </Text>
+                ) }
             </View>
 
             { action === 'Login' && (
@@ -222,4 +256,10 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         userSelect: 'none',
     },
+    badPassword: {
+        color: globalStyles.maroon,
+        fontSize: 12,
+        alignSelf: 'flex-end',
+        userSelect: 'none',
+    }
 });

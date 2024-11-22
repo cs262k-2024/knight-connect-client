@@ -187,8 +187,8 @@ export default function Home() {
                                                     .toLowerCase()
                                                     .includes(filter.toLowerCase()) ||
                                                 e.description
-                                                    .toLowerCase()
-                                                    .includes(filter.toLowerCase()) ||
+                                                    ?.toLowerCase()
+                                                    ?.includes(filter.toLowerCase()) ||
                                                 e.tags.filter(t => t.toLowerCase().includes(filter.toLowerCase())).length > 0
                                         ).map((e, i) => <Event key={ i } { ...e } />);
 

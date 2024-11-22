@@ -51,6 +51,7 @@ async function addEventToCalendar(
     startDate: Date,
     endDate: Date,
     location?: string,
+    details?: string
 ) {
     if (!(await grantPermissions())) {
         Alert.alert('Calendar permission not granted');
@@ -77,7 +78,8 @@ async function addEventToCalendar(
             startDate,
             endDate,
             location,
-            timeZone: 'GMT',
+            timeZone: 'EST',
+            notes: details,
         });
     }
  catch (e: any) {

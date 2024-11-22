@@ -12,6 +12,9 @@ import Button from '../button';
 import { userJoinedEvent, joinEvent as join } from '@/helpers/user';
 import globalStyles from '@/globals/globalStyles';
 
+import { scheduleNotification } from '@/helpers/notification';
+import { addEventToCalendar } from '@/helpers/nativeCalendar';
+
 type EventProps = CalvinEvent & {
     eventCardType?: string;
 };
@@ -32,6 +35,15 @@ export default function Event(props: EventProps) {
 
     async function joinEvent() {
         updateUser(await join(user!, event));
+
+        // schedule a notification for the event
+        const notificationDate = new Date(props.start_date);
+        // schedule a notification 30 minutes before the event
+        notificationDate.setMinutes(notificationDate.getMinutes() - 30);
+        scheduleNotification(props.id, props.name, 'Event is starting soon!', notificationDate);
+
+        // add the event to the user's system calendar
+        addEventToCalendar(props.name, new Date(props.start_date), new Date(props.end_date), props.location, props.description);
     }
 
     function renderActionButton() {
