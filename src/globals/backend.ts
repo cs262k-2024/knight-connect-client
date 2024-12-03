@@ -1,1 +1,1 @@
-export const BACKEND_URL = 'http://127.0.0.1:8000';
+export const BACKEND_URL = 'https://knightconnect-aqe5cmfkaqgca7bw.canadacentral-01.azurewebsites.net';
