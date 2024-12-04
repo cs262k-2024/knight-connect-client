@@ -149,7 +149,7 @@ export default function SelectInterests() {
                         <SelectInterestsFooter
                             storePreferences={ storePreferences }
                         />
-                      ) }
+                    ) }
                 />
             </SafeAreaView>
         </View>

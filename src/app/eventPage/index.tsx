@@ -57,7 +57,7 @@ export default function EventPage() {
                         } }
                         style={ { flex: 1 } }
                     />
-                  ) }
+                ) }
             >
                 <View style={ styles.container }>
                     <View style={ styles.section }>
@@ -82,7 +82,7 @@ export default function EventPage() {
                                 </Text>
 
                                 <Text style={ styles.subtext }>
-                                { (new Date(event.start_date)).toLocaleTimeString() } - { (new Date(event.end_date)).toLocaleTimeString() }
+                                    { (new Date(event.start_date)).toLocaleTimeString() } - { (new Date(event.end_date)).toLocaleTimeString() }
                                 </Text>
                             </View>
                         </View>
