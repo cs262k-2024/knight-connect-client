@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { StyleSheet, View, Text, Alert } from 'react-native';
+import { StyleSheet, View, Text, Alert, ActivityIndicator } from 'react-native';
 
 import { router } from 'expo-router';
 
@@ -56,6 +56,8 @@ export default function Login({
     const [email, updateEmail] = useState('');
     const [password, updatePassword] = useState('');
 
+    const [loading, updateLoading] = useState(false);
+
     async function login() {
         if (action === 'Sign Up' && (password.length < 8 || !/\d/.test(password) || !/[A-Z]/.test(password) || !/[a-z]/.test(password))) {
             Alert.alert('Invalid Password');
@@ -66,6 +68,9 @@ export default function Login({
             return;
         }
         if (action === 'Login') {
+            // show loading spinner
+            updateLoading(true);
+            
             const response = await fetch(`${BACKEND_URL}/validate/`, {
                 method: 'POST',
                 headers: {
@@ -76,6 +81,9 @@ export default function Login({
                     password: password
                 })
             });
+
+            // hide loading spinner
+            updateLoading(false);
 
             if(!response.ok)
                 return Alert.alert('Invalid Password');
@@ -113,6 +121,9 @@ export default function Login({
                     width: '100%',
                 } }
             >
+
+                <ActivityIndicator size="large" color={ globalStyles.gold } animating={ loading } />
+
                 {
                     action !== 'Login' && (
                         <LoginInput updateText={ updateName } type="name" />
