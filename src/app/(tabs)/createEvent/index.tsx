@@ -51,7 +51,7 @@ export default function CreateEvent() {
                 tags: [],
                 // TODO
                 cover_uri: '',
-                price: 0.0
+                price: ''
             })
         });
 

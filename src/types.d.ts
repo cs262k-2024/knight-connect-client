@@ -21,7 +21,7 @@ declare interface CalvinEvent {
     start_date: string;
     end_date: string;
     
-    price: number;
+    price: string;
 
     location: string;
     description?: string;
