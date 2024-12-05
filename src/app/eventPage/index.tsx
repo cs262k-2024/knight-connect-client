@@ -144,7 +144,7 @@ export default function EventPage() {
 
             <View style={ styles.stickyfooter }>
                 <View>
-                    <Text style={ styles.buttonText }>${ event.price }</Text>
+                    <Text style={ styles.buttonText }>{ event.price }</Text>
                 </View>
 
                 <Button
