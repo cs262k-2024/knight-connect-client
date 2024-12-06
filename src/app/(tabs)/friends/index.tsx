@@ -123,35 +123,35 @@ export default function FriendsScreen() {
         const isFriend = 'online' in item;
 
         return (
-            <TouchableOpacity style={styles.itemContainer}>
-                <View style={styles.itemLeft}>
-                    <View style={styles.avatarContainer}>
+            <TouchableOpacity style={ styles.itemContainer }>
+                <View style={ styles.itemLeft }>
+                    <View style={ styles.avatarContainer }>
                         <Image
-                            source={{ uri: item.avatar }}
-                            style={styles.avatar}
+                            source={ { uri: item.avatar } }
+                            style={ styles.avatar }
                         />
-                        {isFriend && (item as Friend).online && (
-                            <View style={styles.onlineIndicator} />
-                        )}
+                        { isFriend && (item as Friend).online && (
+                            <View style={ styles.onlineIndicator } />
+                        ) }
                     </View>
                     <View>
-                        <Text style={styles.itemName}>{item.name}</Text>
-                        <Text style={styles.itemSubtext}>
-                            {isFriend
+                        <Text style={ styles.itemName }>{ item.name }</Text>
+                        <Text style={ styles.itemSubtext }>
+                            { isFriend
                                 ? `${(item as Friend).mutualEvents} mutual events`
-                                : `${(item as Group).members.length} members`}
+                                : `${(item as Group).members.length} members` }
                         </Text>
                     </View>
                 </View>
                 <TouchableOpacity
-                    style={styles.chatButton}
-                    onPress={() => startChat(item.id)}
+                    style={ styles.chatButton }
+                    onPress={ () => startChat(item.id) }
                 >
                     <Icon
                         name="message-square"
                         type="feather"
                         color="#3B82F6"
-                        size={24}
+                        size={ 24 }
                     />
                 </TouchableOpacity>
             </TouchableOpacity>
@@ -159,18 +159,18 @@ export default function FriendsScreen() {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={ styles.container }>
             <StatusBar barStyle="dark-content" />
 
-            {/* Header */}
-            <View style={styles.header}>
-                <View style={styles.headerTabs}>
+            { /* Header */ }
+            <View style={ styles.header }>
+                <View style={ styles.headerTabs }>
                     <TouchableOpacity
-                        style={[
+                        style={ [
                             styles.headerTab,
                             activeView === 'friends' && styles.activeTab,
-                        ]}
-                        onPress={() => setActiveView('friends')}
+                        ] }
+                        onPress={ () => setActiveView('friends') }
                     >
                         <Icon
                             name="user-plus"
@@ -178,24 +178,24 @@ export default function FriendsScreen() {
                             color={
                                 activeView === 'friends' ? '#3B82F6' : '#6B7280'
                             }
-                            size={20}
+                            size={ 20 }
                         />
                         <Text
-                            style={[
+                            style={ [
                                 styles.headerTabText,
                                 activeView === 'friends' &&
                                     styles.activeTabText,
-                            ]}
+                            ] }
                         >
                             Friends
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={[
+                        style={ [
                             styles.headerTab,
                             activeView === 'groups' && styles.activeTab,
-                        ]}
-                        onPress={() => setActiveView('groups')}
+                        ] }
+                        onPress={ () => setActiveView('groups') }
                     >
                         <Icon
                             name="users"
@@ -203,96 +203,96 @@ export default function FriendsScreen() {
                             color={
                                 activeView === 'groups' ? '#3B82F6' : '#6B7280'
                             }
-                            size={20}
+                            size={ 20 }
                         />
                         <Text
-                            style={[
+                            style={ [
                                 styles.headerTabText,
                                 activeView === 'groups' && styles.activeTabText,
-                            ]}
+                            ] }
                         >
                             Groups
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.headerActions}>
+                <View style={ styles.headerActions }>
                     <TouchableOpacity
-                        style={styles.headerActionButton}
-                        onPress={() => setIsAddFriendModalOpen(true)}
+                        style={ styles.headerActionButton }
+                        onPress={ () => setIsAddFriendModalOpen(true) }
                     >
                         <Icon
                             name="user-plus"
                             type="feather"
                             color="#3B82F6"
-                            size={20}
+                            size={ 20 }
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={styles.headerActionButton}
-                        onPress={() => setIsCreateGroupModalOpen(true)}
+                        style={ styles.headerActionButton }
+                        onPress={ () => setIsCreateGroupModalOpen(true) }
                     >
                         <Icon
                             name="users"
                             type="feather"
                             color="#3B82F6"
-                            size={20}
+                            size={ 20 }
                         />
                     </TouchableOpacity>
                 </View>
             </View>
 
-            {/* Search Bar */}
-            <View style={styles.searchContainer}>
+            { /* Search Bar */ }
+            <View style={ styles.searchContainer }>
                 <Icon
                     name="search"
                     type="feather"
                     color="#9CA3AF"
-                    size={20}
-                    style={styles.searchIcon}
+                    size={ 20 }
+                    style={ styles.searchIcon }
                 />
                 <TextInput
-                    placeholder={`Search ${activeView === 'friends' ? 'friends' : 'groups'}`}
-                    value={searchTerm}
-                    onChangeText={setSearchTerm}
-                    style={styles.searchInput}
+                    placeholder={ `Search ${activeView === 'friends' ? 'friends' : 'groups'}` }
+                    value={ searchTerm }
+                    onChangeText={ setSearchTerm }
+                    style={ styles.searchInput }
                 />
             </View>
 
-            {/* List */}
+            { /* List */ }
             <FlatList
-                data={activeView === 'friends' ? filteredFriends : groups}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id}
-                contentContainerStyle={styles.listContainer}
+                data={ activeView === 'friends' ? filteredFriends : groups }
+                renderItem={ renderItem }
+                keyExtractor={ (item) => item.id }
+                contentContainerStyle={ styles.listContainer }
             />
 
-            {/* Add Friend Modal */}
+            { /* Add Friend Modal */ }
             <Modal
-                visible={isAddFriendModalOpen}
-                transparent={true}
+                visible={ isAddFriendModalOpen }
+                transparent={ true }
                 animationType="slide"
             >
-                <View style={styles.modalOverlay}>
-                    <View style={styles.modalContainer}>
-                        <View style={styles.modalHeader}>
-                            <Text style={styles.modalTitle}>Add Friend</Text>
+                <View style={ styles.modalOverlay }>
+                    <View style={ styles.modalContainer }>
+                        <View style={ styles.modalHeader }>
+                            <Text style={ styles.modalTitle }>Add Friend</Text>
                             <TouchableOpacity
-                                onPress={() => setIsAddFriendModalOpen(false)}
+                                onPress={ () => setIsAddFriendModalOpen(false) }
                             >
                                 <Icon
                                     name="x"
                                     type="feather"
                                     color="#6B7280"
-                                    size={24}
+                                    size={ 24 }
                                 />
                             </TouchableOpacity>
                         </View>
                         <TextInput
                             placeholder="Enter username or email"
-                            style={styles.modalInput}
+                            style={ styles.modalInput }
                         />
-                        <TouchableOpacity style={styles.modalButton}>
-                            <Text style={styles.modalButtonText}>
+                        <TouchableOpacity style={ styles.modalButton }>
+                            <Text style={ styles.modalButtonText }>
                                 Send Friend Request
                             </Text>
                         </TouchableOpacity>
@@ -300,88 +300,88 @@ export default function FriendsScreen() {
                 </View>
             </Modal>
 
-            {/* Create Group Modal */}
+            { /* Create Group Modal */ }
             <Modal
-                visible={isCreateGroupModalOpen}
-                transparent={true}
+                visible={ isCreateGroupModalOpen }
+                transparent={ true }
                 animationType="slide"
             >
-                <View style={styles.modalOverlay}>
-                    <View style={styles.modalContainer}>
-                        <View style={styles.modalHeader}>
-                            <Text style={styles.modalTitle}>Create Group</Text>
+                <View style={ styles.modalOverlay }>
+                    <View style={ styles.modalContainer }>
+                        <View style={ styles.modalHeader }>
+                            <Text style={ styles.modalTitle }>Create Group</Text>
                             <TouchableOpacity
-                                onPress={() => setIsCreateGroupModalOpen(false)}
+                                onPress={ () => setIsCreateGroupModalOpen(false) }
                             >
                                 <Icon
                                     name="x"
                                     type="feather"
                                     color="#6B7280"
-                                    size={24}
+                                    size={ 24 }
                                 />
                             </TouchableOpacity>
                         </View>
                         <TextInput
                             placeholder="Group Name"
-                            value={newGroupName}
-                            onChangeText={setNewGroupName}
-                            style={styles.modalInput}
+                            value={ newGroupName }
+                            onChangeText={ setNewGroupName }
+                            style={ styles.modalInput }
                         />
-                        <Text style={styles.selectFriendsText}>
+                        <Text style={ styles.selectFriendsText }>
                             Select Friends
                         </Text>
                         <FlatList
-                            data={friends}
-                            renderItem={({ item }) => (
-                                <View style={styles.friendSelectItem}>
-                                    <View style={styles.friendSelectLeft}>
+                            data={ friends }
+                            renderItem={ ({ item }) => (
+                                <View style={ styles.friendSelectItem }>
+                                    <View style={ styles.friendSelectLeft }>
                                         <Image
-                                            source={{ uri: item.avatar }}
-                                            style={styles.smallAvatar}
+                                            source={ { uri: item.avatar } }
+                                            style={ styles.smallAvatar }
                                         />
-                                        <Text>{item.name}</Text>
+                                        <Text>{ item.name }</Text>
                                     </View>
                                     <TouchableOpacity
-                                        style={[
+                                        style={ [
                                             styles.selectButton,
                                             selectedFriends.includes(item.id)
                                                 ? styles.selectedButton
                                                 : styles.unselectedButton,
-                                        ]}
-                                        onPress={() =>
+                                        ] }
+                                        onPress={ () =>
                                             toggleFriendSelection(item.id)
                                         }
                                     >
-                                        {selectedFriends.includes(item.id) ? (
+                                        { selectedFriends.includes(item.id) ? (
                                             <Icon
                                                 name="check"
                                                 type="feather"
                                                 color="white"
-                                                size={16}
+                                                size={ 16 }
                                             />
                                         ) : (
                                             <Icon
                                                 name="x"
                                                 type="feather"
                                                 color="black"
-                                                size={16}
+                                                size={ 16 }
                                             />
-                                        )}
+                                        ) }
                                     </TouchableOpacity>
                                 </View>
-                            )}
-                            keyExtractor={(item) => item.id}
+                            ) }
+                            keyExtractor={ (item) => item.id }
                         />
                         <TouchableOpacity
-                            style={[
+                            style={ [
                                 styles.modalButton,
                                 selectedFriends.length < 2 &&
                                     styles.disabledButton,
-                            ]}
-                            onPress={createGroup}
-                            disabled={selectedFriends.length < 2}
+                            ] }
+                            onPress={ createGroup }
+                            disabled={ selectedFriends.length < 2 }
                         >
-                            <Text style={styles.modalButtonText}>
+                            <Text style={ styles.modalButtonText }>
                                 Create Group
                             </Text>
                         </TouchableOpacity>

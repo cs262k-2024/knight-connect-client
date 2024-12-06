@@ -9,30 +9,30 @@ import globalStyles from '@/globals/globalStyles';
 export default function FriendsLayout() {
     return (
         <Stack
-            screenOptions={{
+            screenOptions={ {
                 headerShown: true,
-            }}
+            } }
         >
             <Stack.Screen
                 name="index"
-                options={{
+                options={ {
                     headerShadowVisible: false,
                     title: 'Profile',
                     headerRight: () => (
                         <View>
                             <TouchableOpacity
-                                onPress={() => {
+                                onPress={ () => {
                                     Haptics.impactAsync(
                                         Haptics.ImpactFeedbackStyle.Soft,
                                     );
 
                                     router.navigate('/editProfile');
-                                }}
+                                } }
                             >
                                 <Icon
                                     name="account-edit-outline"
                                     type="material-community"
-                                    color={globalStyles.gray}
+                                    color={ globalStyles.gray }
                                 />
                             </TouchableOpacity>
                         </View>
@@ -45,7 +45,7 @@ export default function FriendsLayout() {
                     headerStyle: {
                         backgroundColor: globalStyles.black,
                     },
-                }}
+                } }
             />
         </Stack>
     );

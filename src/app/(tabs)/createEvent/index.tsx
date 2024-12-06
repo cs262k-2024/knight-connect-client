@@ -63,100 +63,100 @@ export default function CreateEvent() {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={ styles.container }>
             <Text
-                style={{
+                style={ {
                     color: globalStyles.white,
                     textAlign: 'center',
                     fontSize: 26,
                     fontWeight: 'bold',
                     letterSpacing: 1,
                     fontFamily: 'Playfair',
-                }}
+                } }
             >
                 Create Event
             </Text>
 
-            <View style={styles.labelContainer}>
-                <Text style={styles.label}>Name</Text>
+            <View style={ styles.labelContainer }>
+                <Text style={ styles.label }>Name</Text>
 
                 <Input
-                    value={eventName}
-                    onChangeText={updateEventName}
-                    containerStyle={{
+                    value={ eventName }
+                    onChangeText={ updateEventName }
+                    containerStyle={ {
                         backgroundColor: 'none',
                         borderColor: globalStyles.darkGray,
                         borderWidth: 1,
-                    }}
-                    inputStyle={{
+                    } }
+                    inputStyle={ {
                         color: globalStyles.white,
-                    }}
-                    placeholderTextColor={globalStyles.gray}
+                    } }
+                    placeholderTextColor={ globalStyles.gray }
                     placeholder="Name"
                 />
             </View>
 
-            <View style={styles.labelContainer}>
-                <Text style={styles.label}>Date</Text>
+            <View style={ styles.labelContainer }>
+                <Text style={ styles.label }>Date</Text>
 
                 <DateTimePicker
                     testID="dateTimePicker"
-                    value={date}
+                    value={ date }
                     mode="datetime"
-                    onChange={onDateChange}
-                    style={{
+                    onChange={ onDateChange }
+                    style={ {
                         alignSelf: 'flex-start',
-                    }}
+                    } }
                 />
             </View>
 
-            <View style={styles.labelContainer}>
-                <Text style={styles.label}>Location</Text>
+            <View style={ styles.labelContainer }>
+                <Text style={ styles.label }>Location</Text>
 
                 <Input
-                    value={eventLocation}
-                    onChangeText={updateEventLocation}
-                    containerStyle={{
+                    value={ eventLocation }
+                    onChangeText={ updateEventLocation }
+                    containerStyle={ {
                         backgroundColor: 'none',
                         borderColor: globalStyles.darkGray,
                         borderWidth: 1,
-                    }}
-                    inputStyle={{
+                    } }
+                    inputStyle={ {
                         color: globalStyles.white,
-                    }}
-                    placeholderTextColor={globalStyles.gray}
+                    } }
+                    placeholderTextColor={ globalStyles.gray }
                     placeholder="Location"
                 />
             </View>
 
-            <View style={styles.labelContainer}>
-                <Text style={styles.label}>Description</Text>
+            <View style={ styles.labelContainer }>
+                <Text style={ styles.label }>Description</Text>
 
                 <Input
-                    value={eventDescription}
-                    onChangeText={updateEventDescription}
-                    containerStyle={{
+                    value={ eventDescription }
+                    onChangeText={ updateEventDescription }
+                    containerStyle={ {
                         backgroundColor: 'none',
                         borderColor: globalStyles.darkGray,
                         borderWidth: 1,
-                    }}
-                    inputStyle={{
+                    } }
+                    inputStyle={ {
                         color: globalStyles.white,
-                    }}
-                    placeholderTextColor={globalStyles.gray}
+                    } }
+                    placeholderTextColor={ globalStyles.gray }
                     placeholder="Description"
                 />
             </View>
 
             <Button
-                onPress={publish}
-                style={{
+                onPress={ publish }
+                style={ {
                     backgroundColor: 'none',
                     borderColor: globalStyles.darkMaroon,
-                }}
+                } }
             >
                 <Text
-                    style={{ textAlign: 'center', color: globalStyles.white }}
+                    style={ { textAlign: 'center', color: globalStyles.white } }
                 >
                     Publish
                 </Text>
