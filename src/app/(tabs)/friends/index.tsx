@@ -11,14 +11,9 @@ import {
     StyleSheet,
     StatusBar,
 } from 'react-native';
-import {
-    UserPlus,
-    MessageSquare,
-    Users,
-    Search,
-    Check,
-    X,
-} from 'lucide-react-native';
+import { Icon } from '@rneui/base';
+import { router, useLocalSearchParams } from 'expo-router';
+import { BACKEND_URL } from '@/globals/backend';
 
 import styles from './styles';
 
@@ -38,8 +33,10 @@ interface Group {
     avatar: string;
 }
 
-const FriendsScreen: React.FC = () => {
+// const FriendsScreen: React.FC = () => {
+export default function FriendsScreen() {
     // Sample initial friends data
+    const params = useLocalSearchParams();
     const [friends, setFriends] = useState<Friend[]>([
         {
             id: '1',
@@ -150,7 +147,12 @@ const FriendsScreen: React.FC = () => {
                     style={styles.chatButton}
                     onPress={() => startChat(item.id)}
                 >
-                    <MessageSquare color="#3B82F6" size={24} />
+                    <Icon
+                        name="message-square"
+                        type="feather"
+                        color="#3B82F6"
+                        size={24}
+                    />
                 </TouchableOpacity>
             </TouchableOpacity>
         );
@@ -170,7 +172,9 @@ const FriendsScreen: React.FC = () => {
                         ]}
                         onPress={() => setActiveView('friends')}
                     >
-                        <UserPlus
+                        <Icon
+                            name="user-plus"
+                            type="feather"
                             color={
                                 activeView === 'friends' ? '#3B82F6' : '#6B7280'
                             }
@@ -193,7 +197,9 @@ const FriendsScreen: React.FC = () => {
                         ]}
                         onPress={() => setActiveView('groups')}
                     >
-                        <Users
+                        <Icon
+                            name="users"
+                            type="feather"
                             color={
                                 activeView === 'groups' ? '#3B82F6' : '#6B7280'
                             }
@@ -214,20 +220,36 @@ const FriendsScreen: React.FC = () => {
                         style={styles.headerActionButton}
                         onPress={() => setIsAddFriendModalOpen(true)}
                     >
-                        <UserPlus color="#3B82F6" size={20} />
+                        <Icon
+                            name="user-plus"
+                            type="feather"
+                            color="#3B82F6"
+                            size={20}
+                        />
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.headerActionButton}
                         onPress={() => setIsCreateGroupModalOpen(true)}
                     >
-                        <Users color="#3B82F6" size={20} />
+                        <Icon
+                            name="users"
+                            type="feather"
+                            color="#3B82F6"
+                            size={20}
+                        />
                     </TouchableOpacity>
                 </View>
             </View>
 
             {/* Search Bar */}
             <View style={styles.searchContainer}>
-                <Search color="#9CA3AF" size={20} style={styles.searchIcon} />
+                <Icon
+                    name="search"
+                    type="feather"
+                    color="#9CA3AF"
+                    size={20}
+                    style={styles.searchIcon}
+                />
                 <TextInput
                     placeholder={`Search ${activeView === 'friends' ? 'friends' : 'groups'}`}
                     value={searchTerm}
@@ -257,7 +279,12 @@ const FriendsScreen: React.FC = () => {
                             <TouchableOpacity
                                 onPress={() => setIsAddFriendModalOpen(false)}
                             >
-                                <X color="#6B7280" size={24} />
+                                <Icon
+                                    name="x"
+                                    type="feather"
+                                    color="#6B7280"
+                                    size={24}
+                                />
                             </TouchableOpacity>
                         </View>
                         <TextInput
@@ -286,7 +313,12 @@ const FriendsScreen: React.FC = () => {
                             <TouchableOpacity
                                 onPress={() => setIsCreateGroupModalOpen(false)}
                             >
-                                <X color="#6B7280" size={24} />
+                                <Icon
+                                    name="x"
+                                    type="feather"
+                                    color="#6B7280"
+                                    size={24}
+                                />
                             </TouchableOpacity>
                         </View>
                         <TextInput
@@ -321,9 +353,19 @@ const FriendsScreen: React.FC = () => {
                                         }
                                     >
                                         {selectedFriends.includes(item.id) ? (
-                                            <Check color="white" size={16} />
+                                            <Icon
+                                                name="check"
+                                                type="feather"
+                                                color="white"
+                                                size={16}
+                                            />
                                         ) : (
-                                            <X color="black" size={16} />
+                                            <Icon
+                                                name="x"
+                                                type="feather"
+                                                color="black"
+                                                size={16}
+                                            />
                                         )}
                                     </TouchableOpacity>
                                 </View>
@@ -348,4 +390,4 @@ const FriendsScreen: React.FC = () => {
             </Modal>
         </SafeAreaView>
     );
-};
+}
