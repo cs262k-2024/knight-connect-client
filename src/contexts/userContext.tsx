@@ -3,10 +3,10 @@ import { createContext, PropsWithChildren, useState } from 'react';
 export const UserContext = createContext<{
     user: User | null;
     updateUser: (user: User | null) => void;
-}>({
-    user: null,
-    updateUser: () => {},
-});
+        }>({
+            user: null,
+            updateUser: () => {},
+        });
 
 export default function UserContextProvider(props: PropsWithChildren) {
     const [user, updateUser] = useState<User | null>(null);

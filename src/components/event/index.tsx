@@ -1,14 +1,19 @@
 import { useContext, useEffect } from 'react';
 
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+
+import { router } from 'expo-router';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 
 import { UserContext } from '@/contexts/userContext';
 
 import Button from '../button';
 
-import { userJoinedEvent } from '@/helpers/user';
+import { userJoinedEvent, joinEvent as join } from '@/helpers/user';
 import globalStyles from '@/globals/globalStyles';
+
+import { scheduleNotification } from '@/helpers/notification';
+import { addEventToCalendar } from '@/helpers/nativeCalendar';
 
 type EventProps = CalvinEvent & {
     eventCardType?: string;
@@ -16,33 +21,36 @@ type EventProps = CalvinEvent & {
 
 export default function Event(props: EventProps) {
     const { user, updateUser } = useContext(UserContext);
-    if(!user) return;
 
-    const event: CalvinEvent = (
-        () => {
-            const tempEvent: EventProps = { ...props };
-            delete tempEvent.eventCardType;
+    if (!user) return;
 
-            return tempEvent;
-        }
-    )();
+    const event: CalvinEvent = (() => {
+        const tempEvent: EventProps = { ...props };
+        delete tempEvent.eventCardType;
+
+        return tempEvent;
+    })();
 
     useEffect(() => {}, [user]);
 
-    function joinEvent() {
-        if(userJoinedEvent(user!, event)) return;
-        
-        const updatedUser = { ...user } as User;
-        
-        updatedUser.events.push(event);
+    async function joinEvent() {
+        updateUser(await join(user!, event));
 
-        updateUser(updatedUser);
+        // schedule a notification for the event
+        const notificationDate = new Date(props.start_date);
+        // schedule a notification 30 minutes before the event
+        notificationDate.setMinutes(notificationDate.getMinutes() - 30);
+        scheduleNotification(props.id, props.name, 'Event is starting soon!', notificationDate);
+
+        // add the event to the user's system calendar
+        addEventToCalendar(props.name, new Date(props.start_date), new Date(props.end_date), props.location, props.description);
     }
 
     function renderActionButton() {
         let backgroundColor;
 
-        if (props.eventCardType === 'price') backgroundColor = globalStyles.maroon;
+        if (props.eventCardType === 'price')
+            backgroundColor = globalStyles.maroon;
         else backgroundColor = globalStyles.gold;
 
         return (
@@ -59,18 +67,15 @@ export default function Event(props: EventProps) {
                         color: globalStyles.white,
                     } }
                 >
-                    {
-                        userJoinedEvent(user!, event)
-                            ? 'Joined'
-                            : 'Join'
-                    }
+                    { userJoinedEvent(user!, event) ? 'Joined' : 'Join' }
                 </Text>
             </Button>
         );
     }
 
     return (
-        <View
+        <TouchableOpacity
+            onPress={ () => router.navigate(`/eventPage?id=${event.id}`) }
             style={ {
                 ...styles.container,
                 width: props.eventCardType === 'price' ? '95%' : 'auto',
@@ -79,8 +84,8 @@ export default function Event(props: EventProps) {
             <View style={ styles.imageContainer }>
                 <Image
                     source={ {
-                        uri: props.coverImage
-                            ? props.coverImage
+                        uri: props.cover_uri
+                            ? props.cover_uri
                             : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9FiSXn0_Suecx7cveYhokZe2Qx8qGu3Vwmw&s',
                     } }
                     style={ {
@@ -110,7 +115,7 @@ export default function Event(props: EventProps) {
                     { renderActionButton() }
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 }
 

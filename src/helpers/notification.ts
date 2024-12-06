@@ -2,6 +2,7 @@ import { Alert, Platform } from 'react-native';
 
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
+import * as SQLite from 'expo-sqlite';
 import Constants from 'expo-constants';
 
 Notifications.setNotificationHandler({
@@ -49,11 +50,11 @@ async function registerForPushNotificationsAsync() {
                 })
             ).data;
         }
- catch (e) {
+        catch (e) {
             token = `${e}`;
         }
     }
- else {
+    else {
         alert('Must use physical device for Push Notifications');
     }
 
@@ -65,18 +66,43 @@ async function registerForPushNotificationsAsync() {
     try {
         await registerForPushNotificationsAsync();
     }
- catch (e) {
+    catch (e) {
         Alert.alert(`failed to register for push notifications: ${e}`);
     }
 })();
 
+const addNotificationRecord = async (eventID: string, notificationID: string) => {
+    const db = await SQLite.openDatabaseAsync('db.db');
+    // create the table if it doesn't exist
+    await db.execAsync(`
+        CREATE TABLE IF NOT EXISTS Notifications (
+            eventID TEXT PRIMARY KEY,
+            notificationID TEXT NOT NULL
+        );
+    `);
+    await db.runAsync('INSERT INTO Notifications (eventID, notificationID) VALUES (?, ?)', eventID, notificationID);
+};
+
 // call this function to schedule a notification
-export const scheduleNotification = async (title: string, body: string) => {
-    await Notifications.scheduleNotificationAsync({
+export const scheduleNotification = async (id: string, title: string, body: string, date: Date) => {
+    const notificationID = await Notifications.scheduleNotificationAsync({
         content: {
             title,
             body,
+            sound: true,
         },
-        trigger: null,
+        trigger: {
+            date,
+        },
     });
+    await addNotificationRecord(id, notificationID);
+};
+
+export const unscheduleNotification = async (id: string) => {
+    const db = await SQLite.openDatabaseAsync('db.db');
+    const record = await db.getFirstAsync('SELECT * FROM Notifications WHERE eventID = ?', id);
+    if (!record) {
+        return;
+    }
+    await Notifications.cancelScheduledNotificationAsync(record.notificationID);
 };

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useRef, useCallback } from 'react';
 
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 
@@ -10,24 +10,36 @@ import { UserContext } from '@/contexts/userContext';
 
 import globalStyles from '@/globals/globalStyles';
 
-import { router } from 'expo-router';
 import styles from './styles';
 
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import InterestsBottomSheetModal from '@/components/selectInterestsBottomSheet';
+
 export default function UserProfile() {
+    const bottomSheetRef = useRef<BottomSheetModal>(null);
+
+    const handlePresentModalPress = useCallback(() => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+        bottomSheetRef.current?.present();
+    }, []);
     const { user } = useContext(UserContext);
 
-    if(!user) return;
+    if (!user) return;
 
-    const [numInterests, setNumInterests] = useState(user.interests.length > 3 ? 3 : user.interests.length);
+    const [numInterests, setNumInterests] = useState(
+        user.preferences.length > 3 ? 3 : user.preferences.length,
+    );
 
     useEffect(() => {
-        if(!user) return;
+        if (!user) return;
 
-        setNumInterests(user.interests.length > 3 ? 3 : user.interests.length);
+        setNumInterests(user.preferences.length > 3 ? 3 : user.preferences.length);
     }, [user]);
 
     return (
         <ScrollView style={ styles.container }>
+            <InterestsBottomSheetModal ref={ bottomSheetRef } />
+            
             <View style={ styles.userInfoSection }>
                 <View style={ { paddingHorizontal: 20 } }>
                     <Avatar
@@ -40,7 +52,7 @@ export default function UserProfile() {
                 </View>
 
                 <View>
-                    <Text style={ styles.title }>{ user.username }</Text>
+                    <Text style={ styles.title }>{ user.name }</Text>
 
                     <View style={ [styles.avatarContainer, styles.center] }>
                         <Icon
@@ -60,25 +72,25 @@ export default function UserProfile() {
                     <Text style={ styles.caption }>Friends</Text>
                     <Text style={ styles.title }>24.5k</Text>
                 </View>
-                
+
                 <Divider orientation="vertical" />
-                
+
                 <View style={ [{ flexDirection: 'column' }, styles.center] }>
                     <Text style={ styles.caption }>Interests</Text>
-                    <Text style={ styles.title }>{ user.interests.length }</Text>
+                    <Text style={ styles.title }>{ user.preferences.length }</Text>
                 </View>
 
                 <Divider orientation="vertical" />
-                
+
                 <View style={ [{ flexDirection: 'column' }, styles.center] }>
                     <Text style={ styles.caption }>Saved Events</Text>
-                    <Text style={ styles.title }>{ user.events.length }</Text>
+                    <Text style={ styles.title }>{ user.joined_events.length }</Text>
                 </View>
             </View>
 
             <View style={ styles.section }>
                 <Text style={ styles.sectionTitle }>About Me</Text>
-                
+
                 <Text style={ { fontSize: 16, color: globalStyles.gray } }>
                     { user.bio }
                 </Text>
@@ -86,7 +98,9 @@ export default function UserProfile() {
 
             <View style={ styles.section }>
                 <View style={ styles.selectInterestsHeader }>
-                    <Text style={ styles.sectionTitle }>Your Interests ({ user.interests.length })</Text>
+                    <Text style={ styles.sectionTitle }>
+                        Your Interests ({ user.preferences.length })
+                    </Text>
 
                     <TouchableOpacity
                         style={ [
@@ -96,15 +110,7 @@ export default function UserProfile() {
                                 borderColor: globalStyles.lightBlue,
                             },
                         ] }
-                        onPress={ 
-                            () => {
-                                Haptics.impactAsync(
-                                    Haptics.ImpactFeedbackStyle.Soft,
-                                );
-
-                                router.navigate('/selectInterests?edit=true');
-                            } 
-                        }
+                        onPress={ handlePresentModalPress }
                     >
                         <Text
                             style={ [
@@ -118,55 +124,52 @@ export default function UserProfile() {
                 </View>
 
                 <View style={ styles.row }>
-                    { user.interests.slice(0, numInterests + 1).map(interest => {
-                        return (
-                            <View
-                                key={ interest }
-                                style={ styles.interestContainer }
-                            >
-                                <Text style={ styles.interestText }>
-                                    { interest }
-                                </Text>
-                            </View>
-                        );
-                    }) }
-
-                    {
-                        user.interests.length > 4 && (
-                            <TouchableOpacity
-                                    style={ [
-                                        styles.interestContainer,
-                                        {
-                                            backgroundColor: globalStyles.lightBlue,
-                                            borderColor: globalStyles.lightBlue,
-                                        },
-                                    ] }
-                                    onPress={ 
-                                        () => {
-                                            Haptics.impactAsync(
-                                                Haptics.ImpactFeedbackStyle.Soft,
-                                            );
-
-                                            if(numInterests < user.interests.length) setNumInterests(user.interests.length);
-                                            else setNumInterests(3);
-                                        } 
-                                    }
+                    { user.preferences
+                        .slice(0, numInterests + 1)
+                        .map((interest) => {
+                            return (
+                                <View
+                                    key={ interest }
+                                    style={ styles.interestContainer }
                                 >
-                                    <Text
-                                        style={ [
-                                            styles.interestText,
-                                            { color: globalStyles.white },
-                                        ] }
-                                    >
-                                        {
-                                            numInterests < user.interests.length
-                                                ? 'See all...'
-                                                : 'Show Less'
-                                        }
+                                    <Text style={ styles.interestText }>
+                                        { interest }
                                     </Text>
-                                </TouchableOpacity>
-                        )
-                    }
+                                </View>
+                            );
+                        }) }
+
+                    { user.preferences.length > 4 && (
+                        <TouchableOpacity
+                            style={ [
+                                styles.interestContainer,
+                                {
+                                    backgroundColor: globalStyles.darkGray,
+                                    borderColor: globalStyles.gray,
+                                },
+                            ] }
+                            onPress={ () => {
+                                Haptics.impactAsync(
+                                    Haptics.ImpactFeedbackStyle.Soft,
+                                );
+
+                                if (numInterests < user.preferences.length)
+                                    setNumInterests(user.preferences.length);
+                                else setNumInterests(3);
+                            } }
+                        >
+                            <Text
+                                style={ [
+                                    styles.interestText,
+                                    { color: globalStyles.white },
+                                ] }
+                            >
+                                { numInterests < user.preferences.length
+                                    ? 'See all...'
+                                    : 'Show Less' }
+                            </Text>
+                        </TouchableOpacity>
+                    ) }
                 </View>
             </View>
         </ScrollView>

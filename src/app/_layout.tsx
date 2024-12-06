@@ -10,6 +10,8 @@ import UserContextProvider from '@/contexts/userContext';
 import globalStyles from '@/globals/globalStyles';
 
 import 'react-native-reanimated';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -30,20 +32,36 @@ export default function RootLayout() {
 
     return (
         <UserContextProvider>
-            <Stack
-                screenOptions={ {
-                    contentStyle: {
-                        backgroundColor: globalStyles.black,
-                        paddingTop: 50,
-                    },
-                    headerShown: false,
-                } }
-            >
-                <Stack.Screen name="(tabs)" options={ { headerShown: false } } />
-                <Stack.Screen name="login" options={ { headerShown: false } } />
+            <GestureHandlerRootView>
+                <BottomSheetModalProvider>
+                    <Stack
+                        screenOptions={ {
+                            contentStyle: {
+                                backgroundColor: globalStyles.black,
+                                paddingTop: 50,
+                            },
+                            headerShown: false,
+                        } }
+                    >
+                        <Stack.Screen
+                            name="(tabs)"
+                            options={ { headerShown: false } }
+                        />
+                        <Stack.Screen
+                            name="login"
+                            options={ { headerShown: false } }
+                        />
+                        <Stack.Screen
+                            name="editProfile"
+                            options={ {
+                                presentation: 'containedTransparentModal',
+                            } }
+                        />
 
-                <Stack.Screen name="+not-found" />
-            </Stack>
+                        <Stack.Screen name="+not-found" />
+                    </Stack>
+                </BottomSheetModalProvider>
+            </GestureHandlerRootView>
         </UserContextProvider>
     );
 }

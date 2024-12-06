@@ -59,13 +59,6 @@
                 "caughtErrorsIgnorePattern": "^_"
             }
         ],
-        // ! Enforce camelCase naming convention
-        "camelcase": [
-            "warn",
-            {
-                "ignoreGlobals": true
-            }
-        ],
         "eqeqeq": "error",
         "no-console": "warn",
         "prefer-const": "error",
@@ -128,6 +121,10 @@
                 "namedComponents": "function-declaration",
                 "unnamedComponents": "arrow-function"
             }
+        ],
+        "indent": [
+            "error",
+            4
         ]
     }
 }
