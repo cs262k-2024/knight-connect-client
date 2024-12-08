@@ -17,6 +17,8 @@ import styles from './styles';
 export default function CreateEvent() {
     const { user } = useContext(UserContext);
 
+    const [isLoading, updateLoading] = useState(false);
+
     const [eventName, updateEventName] = useState('');
     const [eventDescription, updateEventDescription] = useState('');
     const [eventLocation, updateEventLocation] = useState('');
@@ -34,6 +36,8 @@ export default function CreateEvent() {
     if(!user) return <></>;
 
     async function publish() {
+        updateLoading(true);
+
         const response = await fetch(`${BACKEND_URL}/event/`, {
             method: 'POST',
             headers: {
@@ -60,6 +64,8 @@ export default function CreateEvent() {
 
         router.navigate('/home?reload=true');
     }
+
+    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
 
     return (
         <View style={ styles.container }>

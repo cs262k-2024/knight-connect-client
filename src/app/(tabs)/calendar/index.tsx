@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
+import { Text } from 'react-native';
 
 import { UserContext } from '@/contexts/userContext';
 
 import Calendar from '@/components/calendar';
 
 import { BACKEND_URL } from '@/globals/backend';
+import globalStyles from '@/globals/globalStyles';
 
 export default function UserCalendar() {
     const { user } = useContext(UserContext);
@@ -12,9 +14,12 @@ export default function UserCalendar() {
     if(!user) return <></>;
 
     const [events, updateEvents] = useState<CalvinEvent[]>([]);
+    const [isLoading, updateLoading] = useState(false);
 
     useEffect(() => {
-        (async function() {
+        updateLoading(true);
+
+        (async function() {    
             const response = await fetch(`${BACKEND_URL}/join/${user.id}/`);
 
             if(!response.ok)
@@ -23,8 +28,11 @@ export default function UserCalendar() {
             const json = await response.json();
 
             updateEvents(json.data);
+            updateLoading(false);
         })();
     }, [user]);
+
+    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
 
     return (
         <Calendar

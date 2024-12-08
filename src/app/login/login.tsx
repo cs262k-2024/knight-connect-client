@@ -52,6 +52,8 @@ export default function Login({
 }) {
     const { updateUser } = useContext(UserContext);
 
+    const [isLoading, updateLoading] = useState(false);
+
     const [name, updateName] = useState('');
     const [email, updateEmail] = useState('');
     const [password, updatePassword] = useState('');
@@ -65,6 +67,9 @@ export default function Login({
             Alert.alert('Invalid Email');
             return;
         }
+
+        updateLoading(true);
+
         if (action === 'Login') {
             const response = await fetch(`${BACKEND_URL}/validate/`, {
                 method: 'POST',
@@ -104,6 +109,8 @@ export default function Login({
             router.navigate(`/selectInterests?email=${email}`);
         }
     }
+
+    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
 
     return (
         <View style={ styles.container }>

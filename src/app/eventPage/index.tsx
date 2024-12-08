@@ -28,9 +28,11 @@ export default function EventPage() {
     const { user } = useContext(UserContext);
 
     const [event, updateEvent] = useState<CalvinEvent | null>(null);
+    const [isLoading, updateLoading] = useState(true);
 
     useEffect(() => {
         (async function() {
+            updateLoading(true);
             const response = await fetch(`${BACKEND_URL}/getevent/${params.id}/`);
 
             if(!response.ok)
@@ -39,9 +41,11 @@ export default function EventPage() {
             const json = await response.json();
 
             updateEvent(json.data);
+            updateLoading(false);
         })();
     }, []);
 
+    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
 
     if(!event)
         return <Text style={ { color: globalStyles.white } }>Loading...</Text>;

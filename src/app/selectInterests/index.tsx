@@ -12,6 +12,7 @@ import Button from '@/components/button';
 
 import { BACKEND_URL } from '@/globals/backend';
 import { CATEGORIES } from '@/globals/constants';
+import globalStyles from '@/globals/globalStyles';
 
 import styles from './styles';
 
@@ -55,6 +56,7 @@ export default function SelectInterests() {
     if(!user && isEdit) return;
 
     const [userInterests, setUserInterests] = useState<string[]>(isEdit ? user?.preferences! : []);
+    const [isLoading, updateLoading] = useState(false);
 
     // adds selected items to userInterests. Removes item if already in the list
     function itemSelect(item: string) {
@@ -85,6 +87,7 @@ export default function SelectInterests() {
             router.navigate('/profile');
         }
         else {
+            updateLoading(true);
             // Create user
             const response = await fetch(`${BACKEND_URL}/user/`, {
                 method: 'POST',
@@ -110,6 +113,8 @@ export default function SelectInterests() {
             router.navigate('/home');
         }
     }
+
+    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
 
     return (
         <View style={ styles.darkMode }>

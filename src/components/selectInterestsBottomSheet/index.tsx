@@ -52,6 +52,8 @@ const InterestsBottomSheetModal = forwardRef<Ref>((_props, ref) => {
         isEdit ? user?.preferences! : [],
     );
 
+    const [isLoading, updateLoading] = useState(false);
+
     // adds new items to userInterests. Removes item if already in the list
     const itemSelect = (item: string) => {
         if (userInterests.includes(item)) {
@@ -70,6 +72,7 @@ const InterestsBottomSheetModal = forwardRef<Ref>((_props, ref) => {
     async function storePreferences() {
         if(!user) return;
 
+        updateLoading(true);
         const response = await fetch(`${BACKEND_URL}/edituser/`, {
             method: 'POST',
             headers: {
@@ -90,6 +93,8 @@ const InterestsBottomSheetModal = forwardRef<Ref>((_props, ref) => {
         dismiss();
         router.navigate('/profile');
     }
+
+    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
 
     return (
         <BottomSheetModal

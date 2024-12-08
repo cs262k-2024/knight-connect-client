@@ -39,10 +39,13 @@ export default function EditProfilel() {
     const [username, updateUsername] = useState(user.name);
     const [bio, updateBio] = useState(user.bio);
 
+    const [isLoading, updateLoading] = useState(false);
+
     async function save() {
         // TODO: implement changing password and etc
         if (!user) return;
 
+        updateLoading(true);
         const response = await fetch(`${BACKEND_URL}/edituser/`, {
             method: 'POST',
             headers: {
@@ -62,6 +65,8 @@ export default function EditProfilel() {
 
         router.back();
     }
+
+    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
 
     return (
         <KeyboardAvoidingView
