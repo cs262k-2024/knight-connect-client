@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import globalStyles from '@/globals/globalStyles';
 
 const styles = StyleSheet.create({
     container: {
@@ -23,6 +24,14 @@ const styles = StyleSheet.create({
         gap: 20,
         width: '100%',
     },
+    helpText: {
+        color: globalStyles.black
+    },
+    helpTextTitle: {
+        color: globalStyles.black,
+        fontSize: 20,
+        fontWeight: 'bold'
+    }
 });
 
 export default styles;
