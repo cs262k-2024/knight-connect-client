@@ -53,7 +53,7 @@ export default function EventPage() {
                 headerImage={ (
                     <Image
                         source={ {
-                            uri: 'https://calvin.edu/sites/default/files/styles/wide/public/2024-10/Donna%20Spaan%20Exhibition%20Event%20Calendar-45.png?itok=H1lOaM_a',
+                            uri: event.cover_uri,
                         } }
                         style={ { flex: 1 } }
                     />

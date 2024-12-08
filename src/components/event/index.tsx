@@ -97,7 +97,7 @@ export default function Event(props: EventProps) {
             </View>
 
             <View style={ styles.infoContainer }>
-                <Text style={ styles.headerText }>{ props.name }</Text>
+                <Text style={ styles.headerText }>{ props.name.substring(0, 15) }</Text>
 
                 <View style={ styles.joinLocContainer }>
                     <View style={ styles.locationContainer }>
@@ -121,6 +121,7 @@ export default function Event(props: EventProps) {
 
 const styles = StyleSheet.create({
     container: {
+        maxWidth: 300,
         alignSelf: 'center',
         display: 'flex',
         flexDirection: 'row',

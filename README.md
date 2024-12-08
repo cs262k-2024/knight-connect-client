@@ -1,6 +1,8 @@
 # Event Client Setup
 This is the frontend application for the [KnightConnect](https://github.com/cs262k-2024/knight-connect-project) App
 
+Service is hosted on Azure (see [KnightConnect Service](https://github.com/cs262k-2024/knight-connect-service))
+
 ### Pre-requisites
 
 -   `node` and `npm` installed
