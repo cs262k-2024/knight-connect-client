@@ -90,100 +90,100 @@ export default function Home() {
             </Modal>
         );
     
-        if(isHelpVisible)
-            return (
-                <Modal
+    if(isHelpVisible)
+        return (
+            <Modal
+                style={
+                    {
+                        height: '100%',
+                        width: '100%',
+                        backgroundColor: globalStyles.white
+                    }
+                }
+                onRequestClose={ () => toggleHelp(false) }
+                animationType="slide"
+            >
+                <ScrollView
                     style={
                         {
-                            height: '100%',
-                            width: '100%',
-                            backgroundColor: globalStyles.white
+                            padding: 20,
+                            height: '100%'
                         }
                     }
-                    onRequestClose={ () => toggleHelp(false) }
-                    animationType="slide"
                 >
-                    <ScrollView
-                        style={
-                            {
-                                padding: 20,
-                                height: '100%'
-                            }
-                        }
-                    >
-                        <View style={ { marginTop: 30 } } />
+                    <View style={ { marginTop: 30 } } />
         
-                        <View style={ { gap: 30 } }>
-                            <View style={ { gap: 20 } }>
-                                <Text style={ styles.helpTextTitle }>Select Interests</Text>
+                    <View style={ { gap: 30 } }>
+                        <View style={ { gap: 20 } }>
+                            <Text style={ styles.helpTextTitle }>Select Interests</Text>
 
-                                <Text style={ styles.helpText }>
+                            <Text style={ styles.helpText }>
                                 A select interest screen should pop up when a user creates a new account. User can choose one or more interests and continue. 
 
                                 To change the interests later on, click on the right most button at the bottom of the screen, then click on the add button right next to "Your Interests." There the user can check and uncheck interests. Then save your changes. 
-                                </Text>
-                            </View>
+                            </Text>
+                        </View>
 
-                            <View style={ { gap: 20 } }>
-                                <Text style={ styles.helpTextTitle }>View Events</Text>
+                        <View style={ { gap: 20 } }>
+                            <Text style={ styles.helpTextTitle }>View Events</Text>
 
-                                <Text style={ styles.helpText }>
+                            <Text style={ styles.helpText }>
                                 After the user logs in, the home page should show a list of upcoming events. User can check details of each event by clicking on them. 
-                                </Text>
-                            </View>
+                            </Text>
+                        </View>
 
-                            <View style={ { gap: 20 } }>
-                                <Text style={ styles.helpTextTitle }>Search and Filter</Text>
+                        <View style={ { gap: 20 } }>
+                            <Text style={ styles.helpTextTitle }>Search and Filter</Text>
 
-                                <Text style={ styles.helpText }>
+                            <Text style={ styles.helpText }>
                                 There is a search bar on the top of the home screen. Click on the search bar to search events. 
 
                                 On the home screen, there are filter buttons below the search bar. User can click on the buttons to show only one category. 
 
                                 You can use the search bar and the filter together to filter the search results. 
-                                </Text>
-                            </View>
-
-                            <View style={ { gap: 20 } }>
-                                <Text style={ styles.helpTextTitle }>Join Events</Text>
-
-                                <Text style={ styles.helpText }>
-                                User can join events by clicking on the join button of the events. By joining an event, the user also receives a notification before an event. The event should also be created in the user's system calendar.
-                                </Text>
-                            </View>
-
-                            <View style={ { gap: 20 } }>
-                                <Text style={ styles.helpTextTitle }>Create Events</Text>
-
-                                <Text style={ styles.helpText }>
-                                Click on the second button from the left at the bottom of the screen, and you will go to the create event screen. On this screen, type in the information of the event you want to create. Then click on the publish button to complete the process. 
-                                </Text>
-                            </View>
-                        </View>
-        
-                        <View style={ { marginTop: 30 } } />
-
-                        <Button
-                            onPress={ () => toggleHelp(false) }
-                            style={ {
-                                backgroundColor: globalStyles.veryDarkGray,
-                                width: '70%',
-                                padding: 10,
-                                borderRadius: 10,
-                                display: 'flex',
-                                flexDirection: 'row',
-                                justifyContent: 'center',
-                                alignSelf: 'center',
-                                marginBottom: 60,
-                            } }
-                        >
-                            <Text style={ { color: globalStyles.white, textAlign: 'center' } }>
-                                Close
                             </Text>
-                        </Button>
-                    </ScrollView>
-                </Modal>
-            );
+                        </View>
+
+                        <View style={ { gap: 20 } }>
+                            <Text style={ styles.helpTextTitle }>Join Events</Text>
+
+                            <Text style={ styles.helpText }>
+                                User can join events by clicking on the join button of the events. By joining an event, the user also receives a notification before an event. The event should also be created in the user's system calendar.
+                            </Text>
+                        </View>
+
+                        <View style={ { gap: 20 } }>
+                            <Text style={ styles.helpTextTitle }>Create Events</Text>
+
+                            <Text style={ styles.helpText }>
+                                Click on the second button from the left at the bottom of the screen, and you will go to the create event screen. On this screen, type in the information of the event you want to create. Then click on the publish button to complete the process. 
+                            </Text>
+                        </View>
+                    </View>
+        
+                    <View style={ { marginTop: 30 } } />
+
+                    <Button
+                        onPress={ () => toggleHelp(false) }
+                        style={ {
+                            backgroundColor: globalStyles.veryDarkGray,
+                            width: '70%',
+                            padding: 10,
+                            borderRadius: 10,
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignSelf: 'center',
+                            marginBottom: 60,
+                        } }
+                    >
+                        <Text style={ { color: globalStyles.white, textAlign: 'center' } }>
+                                Close
+                        </Text>
+                    </Button>
+                </ScrollView>
+            </Modal>
+        );
 
     return (
         <>
