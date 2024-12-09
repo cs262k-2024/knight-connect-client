@@ -23,6 +23,8 @@ import styles from './styles';
 export default function Home() {
     const params = useLocalSearchParams();
 
+    const [isLoading, updateLoading] = useState(false);
+
     const [filter, updateFilter] = useState('');
     const [isCalendarVisible, toggleCalendar] = useState(false);
 
@@ -33,6 +35,7 @@ export default function Home() {
 
     useEffect(() => {
         (async function () {
+            updateLoading(true);
             const response = await fetch(`${BACKEND_URL}/event/${page}/`);
 
             if(!response.ok)
@@ -41,8 +44,11 @@ export default function Home() {
             const json = await response.json();
 
             updateEvents(json.data);
+            updateLoading(false);
         })();
     }, [params.reload]);
+
+    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
 
     return (
         <>
