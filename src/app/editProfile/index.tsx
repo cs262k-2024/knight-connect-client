@@ -89,6 +89,7 @@ export default function EditProfilel() {
                             />
                         </TouchableOpacity>
                     </View>
+
                     <View>
                         <TouchableOpacity
                             onPress={ () => {
@@ -102,6 +103,7 @@ export default function EditProfilel() {
                         </TouchableOpacity>
                     </View>
                 </View>
+
                 <ScrollView
                     contentContainerStyle={ { flexGrow: 1 } }
                     keyboardShouldPersistTaps="handled"
@@ -115,9 +117,11 @@ export default function EditProfilel() {
                             } }
                         />
                     </View>
+
                     <View>
                         <View style={ styles.center }>
                             <Text style={ styles.caption }>Username</Text>
+
                             <Input
                                 cursorColor={ globalStyles.gray }
                                 placeholder="Username"
@@ -129,12 +133,13 @@ export default function EditProfilel() {
                                 inputStyle={ styles.input }
                             />
                         </View>
+
                         <View style={ styles.center }>
                             <Text style={ styles.caption }>About</Text>
+
                             <Input
                                 multiline={ true }
                                 placeholder="Enter a bio"
-                                textAlign="center"
                                 placeholderTextColor={ globalStyles.darkGray }
                                 value={ bio }
                                 onChangeText={ updateBio }
@@ -161,14 +166,6 @@ export default function EditProfilel() {
                                     },
                                 ] }
                                 onPress={ handlePresentBottomSheet }
-                                // onPress={() => {
-                                //     Haptics.impactAsync(
-                                //         Haptics.ImpactFeedbackStyle.Soft,
-                                //     );
-
-                                //     save();
-                                //     router.navigate('/selectInterests?edit=true');
-                                // }}
                             >
                                 <Text
                                     style={ [
