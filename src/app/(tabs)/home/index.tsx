@@ -44,8 +44,8 @@ export default function Home() {
         })();
     }, [params.reload]);
 
-    if(isCalendarVisible)
-        return (
+    return (
+        <>
             <Modal
                 style={
                     {
@@ -56,6 +56,7 @@ export default function Home() {
                 onRequestClose={ () => toggleCalendar(false) }
                 animationType="slide"
                 transparent={ true }
+                visible={ isCalendarVisible }
             >
                 <View style={ { marginTop: 30 } } />
 
@@ -88,10 +89,7 @@ export default function Home() {
                     </Text>
                 </Button>
             </Modal>
-        );
-    
-    if(isHelpVisible)
-        return (
+
             <Modal
                 style={
                     {
@@ -102,6 +100,7 @@ export default function Home() {
                 }
                 onRequestClose={ () => toggleHelp(false) }
                 animationType="slide"
+                visible={ isHelpVisible }
             >
                 <ScrollView
                     style={
@@ -183,10 +182,7 @@ export default function Home() {
                     </Button>
                 </ScrollView>
             </Modal>
-        );
 
-    return (
-        <>
             <ScrollView contentContainerStyle={ styles.container }>
                 <View>
                     <View style={ styles.headerContainer }>
