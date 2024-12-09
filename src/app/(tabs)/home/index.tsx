@@ -50,8 +50,6 @@ export default function Home() {
 
     if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
 
-    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
-
     return (
         <>
             <Modal
