@@ -1,5 +1,7 @@
 import { useContext, useState } from 'react';
-import { View, Text, Alert } from 'react-native';
+import { TouchableOpacity, View, Text, Alert, ScrollView, FlatList } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { router } from 'expo-router';
 
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
@@ -10,9 +12,41 @@ import Input from '@/components/input';
 import Button from '@/components/button';
 
 import { BACKEND_URL } from '@/globals/backend';
+import { CATEGORIES } from '@/globals/constants';
 import globalStyles from '@/globals/globalStyles';
 
 import styles from './styles';
+
+function SelectTagsHeader() {
+    return (
+        <View style={ styles.container }>
+            <View>
+                <Text style={ styles.headerText }>Your Interests</Text>
+            </View>
+
+            <View>
+                <Text style={ styles.credentials }>
+                    Select your interests and get personalized campus event
+                    recommendations
+                </Text>
+            </View>
+        </View>
+    );
+}
+
+function SelectTagsFooter({
+    submit,
+}: {
+    submit: () => void;
+}) {
+    return (
+        <View style={ styles.continueButtonContainer }>
+            <Button style={ styles.continueButton } onPress={ submit }>
+                <Text style={ styles.buttonText }>Continue</Text>
+            </Button>
+        </View>
+    );
+}
 
 export default function CreateEvent() {
     const { user } = useContext(UserContext);
@@ -22,6 +56,8 @@ export default function CreateEvent() {
     const [eventName, updateEventName] = useState('');
     const [eventDescription, updateEventDescription] = useState('');
     const [eventLocation, updateEventLocation] = useState('');
+
+    const [tags, updateTags] = useState<string[]>([]);
 
     const [date, updateDate] = useState(new Date());
 
@@ -52,7 +88,7 @@ export default function CreateEvent() {
                 location: eventLocation,
                 description: eventDescription,
                 // TODO
-                tags: [],
+                tags: tags,
                 // TODO
                 cover_uri: '',
                 price: ''
@@ -68,7 +104,7 @@ export default function CreateEvent() {
     if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
 
     return (
-        <View style={ styles.container }>
+        <ScrollView style={ styles.container } contentContainerStyle={ { gap: 20 } }>
             <Text
                 style={
                     {
@@ -169,6 +205,47 @@ export default function CreateEvent() {
                 />
             </View>
 
+            <SafeAreaView style={ styles.listContainer }>
+                <View
+                    style={ {
+                        flexDirection: 'row',
+                        gap: 5,
+                        flexWrap: 'wrap',
+                    } }
+                >
+                    {
+                        CATEGORIES.map(
+                            (item, i) => (
+                                <TouchableOpacity
+                                    key={ i }
+                                    onPress={ () => {
+                                        if(tags.includes(item))
+                                            updateTags(tags.filter((tag) => tag !== item));
+                                        else
+                                            updateTags([ ...tags, item ]);
+                                    } }
+                                    style={
+                                        tags.includes(item)
+                                            ? styles.itemSelectedContainer
+                                            : styles.itemContainer
+                                    }
+                                >
+                                    <Text
+                                        style={
+                                            tags.includes(item)
+                                                ? styles.itemSelectedText
+                                                : styles.itemText
+                                        }
+                                    >
+                                        { item }
+                                    </Text>
+                                </TouchableOpacity>
+                            )
+                        )
+                    }
+                </View>
+            </SafeAreaView>
+
             <Button
                 onPress={ publish }
                 style={
@@ -180,6 +257,6 @@ export default function CreateEvent() {
             >
                 <Text style={ { textAlign: 'center', color: globalStyles.white } }>Publish</Text>
             </Button>
-        </View>
+        </ScrollView>
     );
 }
