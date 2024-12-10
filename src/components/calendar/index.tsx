@@ -28,7 +28,7 @@ export default function Calendar(props: { events: CalvinEvent[], isUser?: boolea
             
             const dateString = dateToString(date);
 
-            tempItems[dateString] = props.events.filter(event => dateToString(event.start_date) === dateString);
+            tempItems[dateString] = props.events.filter(event => dateToString(new Date(event.start_date)) === dateString);
         }
 
         updateRefresh(!refresh);
