@@ -57,7 +57,9 @@ export default function EventPage() {
                 headerImage={ (
                     <Image
                         source={ {
-                            uri: event.cover_uri,
+                            uri: event.cover_uri
+                                ? event.cover_uri
+                                : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9FiSXn0_Suecx7cveYhokZe2Qx8qGu3Vwmw&s',
                         } }
                         style={ { flex: 1 } }
                     />
@@ -91,39 +93,46 @@ export default function EventPage() {
                             </View>
                         </View>
                         <Divider color={ globalStyles.darkGray } />
-                        <View style={ [styles.row, { paddingVertical: 10 }] }>
-                            <View>
-                                <Icon
-                                    color={ globalStyles.gray }
-                                    name="location-outline"
-                                    type="ionicon"
-                                    style={ { paddingRight: 5 } }
-                                />
-                            </View>
+                        { event.location && (
+                            <>
+                                <View style={ [styles.row, { paddingVertical: 10 }] }>
+                                    <View>
+                                        <Icon
+                                            color={ globalStyles.gray }
+                                            name="location-outline"
+                                            type="ionicon"
+                                            style={ { paddingRight: 5 } }
+                                        />
+                                    </View>
 
-                            <View
-                                style={ [
-                                    { justifyContent: 'center' },
-                                    { paddingVertical: 10 },
-                                ] }
-                            >
-                                <Text numberOfLines={ 1 } style={ styles.text }>
-                                    { event.location }
+                                    <View
+                                        style={ [
+                                            { justifyContent: 'center' },
+                                            { paddingVertical: 10 },
+                                        ] }
+                                    >
+                                        <Text numberOfLines={ 1 } style={ styles.text }>
+                                            { event.location }
+                                        </Text>
+                                    </View>
+                                </View>
+                                <Divider color={ globalStyles.darkGray } />
+                            </>
+                        ) }
+                        
+                    </View>
+                    { event.description && (
+                        <View style={ styles.section }>
+                            <View>
+                                <Text style={ styles.sectionTitle }>About</Text>
+                            </View>
+                            <View>
+                                <Text numberOfLines={ 10 } style={ styles.subtext }>
+                                    { event.description }
                                 </Text>
                             </View>
                         </View>
-                        <Divider color={ globalStyles.darkGray } />
-                    </View>
-                    <View style={ styles.section }>
-                        <View>
-                            <Text style={ styles.sectionTitle }>About</Text>
-                        </View>
-                        <View>
-                            <Text numberOfLines={ 10 } style={ styles.subtext }>
-                                { event.description }
-                            </Text>
-                        </View>
-                    </View>
+                    ) }
                     <View style={ styles.lastSection }>
                         <View>
                             <Text style={ styles.sectionTitle }>Tags</Text>
