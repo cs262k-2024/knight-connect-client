@@ -85,23 +85,31 @@ export default function Calendar(props: { events: CalvinEvent[], isUser?: boolea
     };
 
     return (
-        <NativeCalendar.Agenda
-            items={ items }
-            loadItemsForMonth={ (d: NativeCalendar.DateData) => setItems(loadItemsForMonth(d.timestamp)) }
-            selected={ (new Date()).toISOString() }
-            renderItem={ Item }
-            renderEmptyDate={ EmptyDate }
-            rowHasChanged={ rowHasChanged }
-            showClosingKnob={ true }
-            theme={ {
-                reservationsBackgroundColor: globalStyles.black,
-                calendarBackground: globalStyles.black,
-                agendaDayTextColor: globalStyles.gray,
-                agendaDayNumColor: globalStyles.maroon,
-                agendaTodayColor: globalStyles.gold,
-                agendaKnobColor: globalStyles.lightBlue,
-            } }
-        />
+        <View
+            style={
+                {
+                    height: '100%'
+                }
+            }
+        >
+            <NativeCalendar.Agenda
+                items={ items }
+                loadItemsForMonth={ (d: NativeCalendar.DateData) => setItems(loadItemsForMonth(d.timestamp)) }
+                selected={ (new Date()).toISOString() }
+                renderItem={ Item }
+                renderEmptyDate={ EmptyDate }
+                rowHasChanged={ rowHasChanged }
+                showClosingKnob={ true }
+                theme={ {
+                    reservationsBackgroundColor: globalStyles.black,
+                    calendarBackground: globalStyles.black,
+                    agendaDayTextColor: globalStyles.gray,
+                    agendaDayNumColor: globalStyles.maroon,
+                    agendaTodayColor: globalStyles.gold,
+                    agendaKnobColor: globalStyles.lightBlue,
+                } }
+            />
+        </View>
     );
 }
 

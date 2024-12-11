@@ -65,14 +65,8 @@ export default function Home() {
                 visible={ isCalendarVisible }
             >
                 <View style={ { marginTop: 30 } } />
-
-                <View
-                    style={
-                        {
-                            height: '70%',
-                        }
-                    }
-                >
+                
+                <View style={ { height: '100%' } }>
                     <Calendar events={ events } />
                 </View>
 
@@ -87,7 +81,10 @@ export default function Home() {
                         flexDirection: 'row',
                         justifyContent: 'center',
                         alignSelf: 'center',
-                        marginBottom: 60,
+                        marginBottom: 15,
+                        position: 'absolute',
+                        zIndex: 100,
+                        bottom: 0
                     } }
                 >
                     <Text style={ { color: globalStyles.white, textAlign: 'center' } }>
