@@ -4,7 +4,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { router } from 'expo-router';
 
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import DateTimePicker, {
+    DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
 
 import { UserContext } from '@/contexts/userContext';
 
@@ -32,14 +34,14 @@ export default function CreateEvent() {
     const [date, updateDate] = useState(new Date());
 
     function onDateChange(_event: DateTimePickerEvent, selectedDate?: Date) {
-        if(!selectedDate) return;
+        if (!selectedDate) return;
 
         const currentDate = selectedDate;
-        
+
         updateDate(currentDate);
     }
 
-    if(!user) return <></>;
+    if (!user) return <></>;
 
     async function publish() {
         updateLoading(true);
@@ -61,12 +63,11 @@ export default function CreateEvent() {
                 tags: tags,
                 // TODO
                 cover_uri: '',
-                price: ''
-            })
+                price: '',
+            }),
         });
 
-        if(!response.ok)
-            return Alert.alert('Error');
+        if (!response.ok) return Alert.alert('Error');
 
         router.navigate('/home?reload=true');
     }
@@ -76,16 +77,14 @@ export default function CreateEvent() {
     return (
         <ScrollView style={ styles.container } contentContainerStyle={ { gap: 20 } }>
             <Text
-                style={
-                    {
-                        color: globalStyles.white,
-                        textAlign: 'center',
-                        fontSize: 26,
-                        fontWeight: 'bold',
-                        letterSpacing: 1,
-                        fontFamily: 'Playfair'
-                    }
-                }
+                style={ {
+                    color: globalStyles.white,
+                    textAlign: 'center',
+                    fontSize: 26,
+                    fontWeight: 'bold',
+                    letterSpacing: 1,
+                    fontFamily: 'Playfair',
+                } }
             >
                 Create Event
             </Text>
@@ -96,18 +95,14 @@ export default function CreateEvent() {
                 <Input
                     value={ eventName }
                     onChangeText={ updateEventName }
-                    containerStyle={
-                        {
-                            backgroundColor: 'none',
-                            borderColor: globalStyles.darkGray,
-                            borderWidth: 1
-                        }
-                    }
-                    inputStyle={
-                        {
-                            color: globalStyles.white,
-                        }
-                    }
+                    containerStyle={ {
+                        backgroundColor: 'none',
+                        borderColor: globalStyles.darkGray,
+                        borderWidth: 1,
+                    } }
+                    inputStyle={ {
+                        color: globalStyles.white,
+                    } }
                     placeholderTextColor={ globalStyles.gray }
                     placeholder="Name"
                 />
@@ -121,11 +116,9 @@ export default function CreateEvent() {
                     value={ date }
                     mode="datetime"
                     onChange={ onDateChange }
-                    style={
-                        {
-                            alignSelf: 'flex-start',
-                        }
-                    }
+                    style={ {
+                        alignSelf: 'flex-start',
+                    } }
                 />
             </View>
 
@@ -135,18 +128,14 @@ export default function CreateEvent() {
                 <Input
                     value={ eventLocation }
                     onChangeText={ updateEventLocation }
-                    containerStyle={
-                        {
-                            backgroundColor: 'none',
-                            borderColor: globalStyles.darkGray,
-                            borderWidth: 1
-                        }
-                    }
-                    inputStyle={
-                        {
-                            color: globalStyles.white,
-                        }
-                    }
+                    containerStyle={ {
+                        backgroundColor: 'none',
+                        borderColor: globalStyles.darkGray,
+                        borderWidth: 1,
+                    } }
+                    inputStyle={ {
+                        color: globalStyles.white,
+                    } }
                     placeholderTextColor={ globalStyles.gray }
                     placeholder="Location"
                 />
@@ -158,18 +147,14 @@ export default function CreateEvent() {
                 <Input
                     value={ eventDescription }
                     onChangeText={ updateEventDescription }
-                    containerStyle={
-                        {
-                            backgroundColor: 'none',
-                            borderColor: globalStyles.darkGray,
-                            borderWidth: 1
-                        }
-                    }
-                    inputStyle={
-                        {
-                            color: globalStyles.white,
-                        }
-                    }
+                    containerStyle={ {
+                        backgroundColor: 'none',
+                        borderColor: globalStyles.darkGray,
+                        borderWidth: 1,
+                    } }
+                    inputStyle={ {
+                        color: globalStyles.white,
+                    } }
                     placeholderTextColor={ globalStyles.gray }
                     placeholder="Description"
                 />
@@ -218,14 +203,16 @@ export default function CreateEvent() {
 
             <Button
                 onPress={ publish }
-                style={
-                    {
-                        backgroundColor: 'none',
-                        borderColor: globalStyles.darkMaroon
-                    }
-                }
+                style={ {
+                    backgroundColor: 'none',
+                    borderColor: globalStyles.darkMaroon,
+                } }
             >
-                <Text style={ { textAlign: 'center', color: globalStyles.white } }>Publish</Text>
+                <Text
+                    style={ { textAlign: 'center', color: globalStyles.white } }
+                >
+                    Publish
+                </Text>
             </Button>
         </ScrollView>
     );
