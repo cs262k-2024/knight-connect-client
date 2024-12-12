@@ -19,6 +19,8 @@ import {
     useBottomSheetModal,
 } from '@gorhom/bottom-sheet';
 
+import Loading from '../loading';
+
 import { UserContext } from '@/contexts/userContext';
 
 import { BACKEND_URL } from '@/globals/backend';
@@ -95,7 +97,7 @@ const InterestsBottomSheetModal = forwardRef<Ref>((_props, ref) => {
         router.navigate('/profile');
     }
 
-    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
+    if(isLoading) return <Loading />;
 
     return (
         <BottomSheetModal

@@ -10,6 +10,7 @@ import Input from '@/components/input';
 import Button from '@/components/button';
 import Logo from '@/components/texts/logo';
 import Calendar from '@/components/calendar';
+import Loading from '@/components/loading';
 
 import EventRecommendation from '@/components/eventRecommendation';
 import Event from '@/components/event';
@@ -48,7 +49,7 @@ export default function Home() {
         })();
     }, [params.reload]);
 
-    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
+    if(isLoading) return <Loading />;
 
     return (
         <>
@@ -109,7 +110,8 @@ export default function Home() {
                     style={
                         {
                             padding: 20,
-                            height: '100%'
+                            height: '100%',
+                            backgroundColor: globalStyles.veryDarkGray
                         }
                     }
                 >

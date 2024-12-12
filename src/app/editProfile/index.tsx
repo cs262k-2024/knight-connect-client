@@ -10,19 +10,21 @@ import {
     Alert,
 } from 'react-native';
 
-import { Avatar, Input, Icon } from '@rneui/themed';
+import { router } from 'expo-router';
 import * as Haptics from 'expo-haptics';
+
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { Avatar, Input, Icon } from '@rneui/themed';
+
+import InterestsBottomSheetModal from '@/components/selectInterestsBottomSheet';
+import Loading from '@/components/loading';
 
 import { UserContext } from '@/contexts/userContext';
 
 import globalStyles from '@/globals/globalStyles';
-import styles from './styles';
-
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import InterestsBottomSheetModal from '@/components/selectInterestsBottomSheet';
-
-import { router } from 'expo-router';
 import { BACKEND_URL } from '@/globals/backend';
+
+import styles from './styles';
 
 export default function EditProfilel() {
     const bottomSheetRef = useRef<BottomSheetModal>(null);
@@ -66,7 +68,7 @@ export default function EditProfilel() {
         router.back();
     }
 
-    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
+    if(isLoading) return <Loading />;
 
     return (
         <KeyboardAvoidingView

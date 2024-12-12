@@ -10,43 +10,13 @@ import { UserContext } from '@/contexts/userContext';
 
 import Input from '@/components/input';
 import Button from '@/components/button';
+import Loading from '@/components/loading';
 
 import { BACKEND_URL } from '@/globals/backend';
 import { CATEGORIES } from '@/globals/constants';
 import globalStyles from '@/globals/globalStyles';
 
 import styles from './styles';
-
-function SelectTagsHeader() {
-    return (
-        <View style={ styles.container }>
-            <View>
-                <Text style={ styles.headerText }>Your Interests</Text>
-            </View>
-
-            <View>
-                <Text style={ styles.credentials }>
-                    Select your interests and get personalized campus event
-                    recommendations
-                </Text>
-            </View>
-        </View>
-    );
-}
-
-function SelectTagsFooter({
-    submit,
-}: {
-    submit: () => void;
-}) {
-    return (
-        <View style={ styles.continueButtonContainer }>
-            <Button style={ styles.continueButton } onPress={ submit }>
-                <Text style={ styles.buttonText }>Continue</Text>
-            </Button>
-        </View>
-    );
-}
 
 export default function CreateEvent() {
     const { user } = useContext(UserContext);
@@ -101,7 +71,7 @@ export default function CreateEvent() {
         router.navigate('/home?reload=true');
     }
 
-    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
+    if(isLoading) return <Loading />;
 
     return (
         <ScrollView style={ styles.container } contentContainerStyle={ { gap: 20 } }>

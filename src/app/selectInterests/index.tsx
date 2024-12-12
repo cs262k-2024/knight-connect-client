@@ -3,16 +3,15 @@ import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import * as Haptics from 'expo-haptics';
-
 import { router, useLocalSearchParams } from 'expo-router';
+
+import Button from '@/components/button';
+import Loading from '@/components/loading';
 
 import { UserContext } from '@/contexts/userContext';
 
-import Button from '@/components/button';
-
 import { BACKEND_URL } from '@/globals/backend';
 import { CATEGORIES } from '@/globals/constants';
-import globalStyles from '@/globals/globalStyles';
 
 import styles from './styles';
 
@@ -114,7 +113,7 @@ export default function SelectInterests() {
         }
     }
 
-    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
+    if(isLoading) return <Loading />;
 
     return (
         <View style={ styles.darkMode }>

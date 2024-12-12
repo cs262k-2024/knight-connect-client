@@ -25,12 +25,14 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     helpText: {
-        color: globalStyles.black
+        color: globalStyles.lightGray,
+        opacity: 0.8
     },
     helpTextTitle: {
-        color: globalStyles.black,
+        color: globalStyles.white,
         fontSize: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        textDecorationLine: 'underline'
     }
 });
 

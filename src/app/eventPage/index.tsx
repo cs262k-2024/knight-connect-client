@@ -11,6 +11,8 @@ import { useLocalSearchParams } from 'expo-router';
 import { Divider, Icon } from '@rneui/base';
 
 import ParallaxScrollView from '@/components/parallaxScrollView';
+import Button from '@/components/button';
+import Loading from '@/components/loading';
 
 import { UserContext } from '@/contexts/userContext';
 
@@ -20,7 +22,6 @@ import { BACKEND_URL } from '@/globals/backend';
 import globalStyles from '@/globals/globalStyles';
 
 import styles from './styles';
-import Button from '@/components/button';
 
 export default function EventPage() {
     const params = useLocalSearchParams();
@@ -45,10 +46,7 @@ export default function EventPage() {
         })();
     }, []);
 
-    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
-
-    if(!event)
-        return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
+    if(isLoading || !event) return <Loading />;
 
     return (
         <SafeAreaView style={ styles.container }>
@@ -90,7 +88,9 @@ export default function EventPage() {
                                 </Text>
                             </View>
                         </View>
+
                         <Divider color={ globalStyles.darkGray } />
+
                         <View style={ [styles.row, { paddingVertical: 10 }] }>
                             <View>
                                 <Icon
@@ -112,22 +112,27 @@ export default function EventPage() {
                                 </Text>
                             </View>
                         </View>
+
                         <Divider color={ globalStyles.darkGray } />
                     </View>
+
                     <View style={ styles.section }>
                         <View>
                             <Text style={ styles.sectionTitle }>About</Text>
                         </View>
+
                         <View>
                             <Text numberOfLines={ 10 } style={ styles.subtext }>
                                 { event.description }
                             </Text>
                         </View>
                     </View>
+
                     <View style={ styles.lastSection }>
                         <View>
                             <Text style={ styles.sectionTitle }>Tags</Text>
                         </View>
+                        
                         <View style={ styles.row }>
                             { event.tags.slice(0, 4).map((interest) => {
                                 return (

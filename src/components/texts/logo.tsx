@@ -8,8 +8,7 @@ export default function Logo(props: { fontSize?: number }) {
             style={ {
                 color: globalStyles.white,
                 fontSize: props.fontSize || 40,
-                letterSpacing: 2,
-                fontFamily: 'PlayfairItalic',
+                letterSpacing: 2
             } }
         >
             knight connect

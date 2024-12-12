@@ -6,6 +6,7 @@ import { router } from 'expo-router';
 import Button from '@/components/button';
 import Input from '@/components/input';
 import Divider from '@/components/divider';
+import Loading from '@/components/loading';
 
 import { UserContext } from '@/contexts/userContext';
 
@@ -58,15 +59,12 @@ export default function Login({
     const [email, updateEmail] = useState('');
     const [password, updatePassword] = useState('');
 
+    const [hasSubmittedOnce, updateHasSubmittedOnce] = useState(false);
+
     async function login() {
-        if (action === 'Sign Up' && (password.length < 8 || !/\d/.test(password) || !/[A-Z]/.test(password) || !/[a-z]/.test(password))) {
-            Alert.alert('Invalid Password');
-            return;
-        }
-        if (email === '' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            Alert.alert('Invalid Email');
-            return;
-        }
+        updateHasSubmittedOnce(true);
+        if (action === 'Sign Up' && (password.length < 8 || !/\d/.test(password) || !/[A-Z]/.test(password) || !/[a-z]/.test(password))) return Alert.alert('Invalid Password');
+        if (email === '' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return Alert.alert('Invalid Email');
 
         updateLoading(true);
 
@@ -110,7 +108,7 @@ export default function Login({
         }
     }
 
-    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
+    if(isLoading) return <Loading />;
 
     return (
         <View style={ styles.container }>
@@ -129,33 +127,36 @@ export default function Login({
                 <LoginInput updateText={ updateEmail } type="email" />
                 <LoginInput updateText={ updatePassword } type="password" />
 
-                { action === 'Sign Up' && password.length < 8 && (
-                    <Text style={ styles.badPassword }>
-                        X at least 8 characters
-                    </Text>
-                ) }
-                { action === 'Sign Up' && !/\d/.test(password) && (
-                    <Text style={ styles.badPassword }>
-                        X at least 1 number
-                    </Text>
-                ) }
-                { action === 'Sign Up' && !/[A-Z]/.test(password) && (
-                    <Text style={ styles.badPassword }>
-                        X at least 1 uppercase letter
-                    </Text>
-                ) }
-                { action === 'Sign Up' && !/[a-z]/.test(password) && (
-                    <Text style={ styles.badPassword }>
-                        X at least 1 lowercase letter
-                    </Text>
-                ) }
+                {
+                    hasSubmittedOnce && (
+                        <>
+                            { action === 'Sign Up' && password.length < 8 && (
+                                <Text style={ styles.badPassword }>
+                                    X at least 8 characters
+                                </Text>
+                            ) }
+            
+                            { action === 'Sign Up' && !/\d/.test(password) && (
+                                <Text style={ styles.badPassword }>
+                                    X at least 1 number
+                                </Text>
+                            ) }
+            
+                            { action === 'Sign Up' && !/[A-Z]/.test(password) && (
+                                <Text style={ styles.badPassword }>
+                                    X at least 1 uppercase letter
+                                </Text>
+                            ) }
+            
+                            { action === 'Sign Up' && !/[a-z]/.test(password) && (
+                                <Text style={ styles.badPassword }>
+                                    X at least 1 lowercase letter
+                                </Text>
+                            ) }
+                        </>
+                    )
+                }
             </View>
-
-            { action === 'Login' && (
-                <Text style={ styles.forgot } onPress={ () => {} }>
-                    Forgot password?
-                </Text>
-            ) }
 
             <View
                 style={ {
