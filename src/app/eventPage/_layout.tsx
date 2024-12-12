@@ -1,8 +1,9 @@
-import globalStyles from '@/globals/globalStyles';
-import { Icon } from '@rneui/themed';
-import { router, Stack } from 'expo-router';
 import { TouchableOpacity, View } from 'react-native';
-import * as Haptics from 'expo-haptics';
+import { router, Stack } from 'expo-router';
+
+import { Icon } from '@rneui/themed';
+
+import globalStyles from '@/globals/globalStyles';
 
 export default function EventPageLayout() {
     return (
@@ -15,17 +16,11 @@ export default function EventPageLayout() {
                 name="index"
                 options={ {
                     headerShadowVisible: false,
-                    title: 'Event',
+                    title: '',
                     headerLeft: () => (
                         <View>
                             <TouchableOpacity
-                                onPress={ () => {
-                                    Haptics.impactAsync(
-                                        Haptics.ImpactFeedbackStyle.Soft,
-                                    );
-
-                                    router.back();
-                                } }
+                                onPress={ () => router.navigate('/') }
                             >
                                 <Icon
                                     name="chevron-left"

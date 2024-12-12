@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: globalStyles.black,
+        height: '10%'
     },
     section: {
         marginVertical: 15,

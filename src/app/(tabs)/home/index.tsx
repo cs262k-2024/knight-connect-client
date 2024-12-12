@@ -244,19 +244,13 @@ export default function Home() {
                                         key={ i }
                                         onPress={
                                             () => {
-                                                // get rid of emojis
-                                                const strippedCategory = c.split(' ')[1].replaceAll(' ', '');
-
-                                                if(filter === c.split(' ')[1].replaceAll(' ', ''))
-                                                    return updateFilter('');
-
-                                                updateFilter(strippedCategory);
+                                                updateFilter(filter === c ? '' : c)
                                             }
                                         }
                                         style={
                                             {
-                                                backgroundColor: filter === c.split(' ')[1].replaceAll(' ', '') ? globalStyles.lightBlue : 'none',
-                                                borderColor: filter === c.split(' ')[1].replaceAll(' ', '') ? 'none' : globalStyles.darkGray,
+                                                backgroundColor: filter === c ? globalStyles.lightBlue : 'transparent',
+                                                borderColor: filter === c ? 'transparent' : globalStyles.darkGray,
                                             }
                                         }
                                     >

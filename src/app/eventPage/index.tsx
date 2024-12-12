@@ -67,6 +67,7 @@ export default function EventPage() {
                             { event.name }
                         </Text>
                     </View>
+                    
                     <View style={ styles.section }>
                         <View style={ styles.row }>
                             <View>
