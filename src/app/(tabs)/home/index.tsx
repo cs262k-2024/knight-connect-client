@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { ScrollView, View, Text, Image, Pressable, Modal, Alert } from 'react-native';
+import { ScrollView, View, Text, Modal, Alert } from 'react-native';
 
-import { router, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -192,21 +192,6 @@ export default function Home() {
                 <View>
                     <View style={ styles.headerContainer }>
                         <Logo fontSize={ 20 } />
-
-                        <Pressable
-                            onPress={
-                                () => router.navigate('/profile')
-                            }
-                        >
-                            <Image
-                                source={ {
-                                    uri: 'https://gratisography.com/wp-content/uploads/2024/01/gratisography-cyber-kitty-800x525.jpg',
-                                } }
-                                width={ 50 }
-                                height={ 50 }
-                                borderRadius={ 100 }
-                            />
-                        </Pressable>
                     </View>
 
                     <View
@@ -243,9 +228,7 @@ export default function Home() {
                                     <Button
                                         key={ i }
                                         onPress={
-                                            () => {
-                                                updateFilter(filter === c ? '' : c)
-                                            }
+                                            () => updateFilter(filter === c ? '' : c)
                                         }
                                         style={
                                             {

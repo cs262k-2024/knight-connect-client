@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { TouchableOpacity, View, Text, Alert, ScrollView, FlatList } from 'react-native';
+import { TouchableOpacity, View, Text, Alert, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { router } from 'expo-router';

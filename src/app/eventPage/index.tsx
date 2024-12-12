@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import {
+    ScrollView,
     View,
     Text,
     Image,
@@ -61,7 +62,7 @@ export default function EventPage() {
                     />
                 ) }
             >
-                <View style={ styles.container }>
+                <ScrollView style={ styles.container }>
                     <View style={ styles.section }>
                         <Text style={ styles.title }>
                             { event.name }
@@ -149,7 +150,7 @@ export default function EventPage() {
                             }) }
                         </View>
                     </View>
-                </View>
+                </ScrollView>
             </ParallaxScrollView>
 
             <View style={ styles.stickyfooter }>
