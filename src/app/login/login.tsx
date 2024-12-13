@@ -18,9 +18,11 @@ import loginStyles from './styles';
 function LoginInput({
     type,
     updateText,
+    updateIncorrect
 }: {
     type: string;
     updateText: (e: string) => void;
+    updateIncorrect: (b: boolean) => void;
 }) {
     const [focused, updateFocused] = useState(false);
 
@@ -39,7 +41,12 @@ function LoginInput({
             secureTextEntry={ type === 'password' }
             onFocus={ () => updateFocused(true) }
             onBlur={ () => updateFocused(false) }
-            onChangeText={ (e) => updateText(e) }
+            onChangeText={
+                (e) => {
+                    updateText(e);
+                    // updateIncorrect(false);
+                }
+            }
         />
     );
 }
@@ -60,6 +67,7 @@ export default function Login({
     const [password, updatePassword] = useState('');
 
     const [hasSubmittedOnce, updateHasSubmittedOnce] = useState(false);
+    const [incorrectUser, updateIncorrect] = useState(false);
 
     async function login() {
         updateHasSubmittedOnce(true);
@@ -80,8 +88,12 @@ export default function Login({
                 })
             });
 
-            if(!response.ok)
-                return Alert.alert('Invalid Password');
+            if(!response.ok) {
+                updateLoading(false);
+                updateIncorrect(true);
+
+                return Alert.alert('User not found. Maybe try another password');
+            }
 
             const json = await response.json();
 
@@ -102,6 +114,8 @@ export default function Login({
                 bio: '',
                 password: password,
                 joined_events: [],
+                friends: [],
+                incoming_requests: []
             });
 
             router.navigate(`/selectInterests?email=${email}`);
@@ -120,12 +134,18 @@ export default function Login({
             >
                 {
                     action !== 'Login' && (
-                        <LoginInput updateText={ updateName } type="name" />
+                        <LoginInput updateIncorrect={ updateIncorrect } updateText={ updateName } type="name" />
                     )
                 }
 
-                <LoginInput updateText={ updateEmail } type="email" />
-                <LoginInput updateText={ updatePassword } type="password" />
+                <LoginInput updateIncorrect={ updateIncorrect } updateText={ updateEmail } type="email" />
+                <LoginInput updateIncorrect={ updateIncorrect } updateText={ updatePassword } type="password" />
+
+                {
+                    incorrectUser && (<Text style={ styles.badPassword }>
+                        X Email Address or Password is Incorrect
+                    </Text>)
+                }
 
                 {
                     hasSubmittedOnce && (
@@ -186,10 +206,14 @@ export default function Login({
 
                 <Text
                     style={ styles.signupLink }
-                    onPress={ () =>
-                        action === 'Login'
-                            ? updateAction('Sign Up')
-                            : updateAction('Login')
+                    onPress={
+                        () => {
+                            updateIncorrect(false);
+
+                            action === 'Login'
+                                ? updateAction('Sign Up')
+                                : updateAction('Login');
+                        }
                     }
                 >
                     { action === 'Login' ? 'Sign Up' : 'Login' }.

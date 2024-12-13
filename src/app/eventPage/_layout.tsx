@@ -10,6 +10,9 @@ export default function EventPageLayout() {
         <Stack
             screenOptions={ {
                 headerShown: true,
+                contentStyle: {
+                    backgroundColor: globalStyles.black,
+                }
             } }
         >
             <Stack.Screen
@@ -20,7 +23,7 @@ export default function EventPageLayout() {
                     headerLeft: () => (
                         <View>
                             <TouchableOpacity
-                                onPress={ () => router.navigate('/') }
+                                onPress={ () => router.navigate('/home') }
                             >
                                 <Icon
                                     name="chevron-left"
@@ -38,7 +41,7 @@ export default function EventPageLayout() {
                     },
                     headerStyle: {
                         backgroundColor: globalStyles.black,
-                    },
+                    }
                 } }
             />
         </Stack>

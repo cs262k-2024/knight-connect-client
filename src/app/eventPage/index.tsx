@@ -5,10 +5,13 @@ import {
     Text,
     Image,
     SafeAreaView,
-    Alert
+    Alert,
+    Pressable
 } from 'react-native';
 
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, router } from 'expo-router';
+import AntDesign from '@expo/vector-icons/AntDesign';
+
 import { Divider, Icon } from '@rneui/base';
 
 import ParallaxScrollView from '@/components/parallaxScrollView';
@@ -27,25 +30,68 @@ import styles from './styles';
 export default function EventPage() {
     const params = useLocalSearchParams();
 
-    const { user } = useContext(UserContext);
+    const { user, updateUser } = useContext(UserContext);
 
     const [event, updateEvent] = useState<CalvinEvent | null>(null);
+
+    const [participants, updateParticipants] = useState<User[]>([]);
+
     const [isLoading, updateLoading] = useState(true);
 
     useEffect(() => {
+        updateLoading(true);
+
         (async function() {
-            updateLoading(true);
             const response = await fetch(`${BACKEND_URL}/getevent/${params.id}/`);
 
-            if(!response.ok)
+            if(!response.ok) {
+                router.back();
                 return Alert.alert('Error');
+            }
 
             const json = await response.json();
 
             updateEvent(json.data);
+
+            const participantResponse = await fetch(`${BACKEND_URL}/participants/${json.data.id}/`);
+            
+            if(!participantResponse.ok) {
+                router.back();
+                return Alert.alert('Error');
+            }
+
+            const participantsJson = await participantResponse.json();
+
+            updateParticipants(participantsJson.data);
             updateLoading(false);
         })();
     }, []);
+
+    async function addFriend(friendId: string) {
+        updateLoading(true);
+
+        const response = await fetch(`${BACKEND_URL}/friendrequest/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id: user!.id,
+                friend_id: friendId,
+            }),
+        });
+
+        if(!response.ok) {
+            updateLoading(false);
+            return Alert.alert('Error');
+        }
+
+        const json = await response.json();
+
+        updateParticipants([...participants, json.data]);
+        updateUser(json.data);
+        updateLoading(false);
+    }
 
     if(isLoading || !event) return <Loading />;
 
@@ -150,6 +196,59 @@ export default function EventPage() {
                             }) }
                         </View>
                     </View>
+
+                    <View style={ styles.lastSection }>
+                        <View>
+                            <Text style={ styles.sectionTitle }>People Attending</Text>
+                        </View>
+                        
+                        <View style={ styles.row }>
+                            { participants.filter(p => p.id !== user!.id).map((p, i) => {
+                                return (
+                                    <Pressable
+                                        onPress={
+                                            () => {
+                                                if(confirm(`Do you want to friend ${ p.name }?`))
+                                                    addFriend(p.id);
+                                            }
+                                        }
+                                    >
+                                        <View
+                                            key={ i }
+                                            style={
+                                                {
+                                                    borderColor: user?.friends.includes(p.id) ? globalStyles.lightBlue : globalStyles.darkGray,
+                                                    borderWidth: 2,
+                                                    borderRadius: 50,
+                                                    margin: 5,
+                                                    paddingLeft: 5,
+                                                    alignSelf: 'center',
+                                                    flexDirection: 'row',
+                                                    alignItems: 'center',
+                                                }
+                                            }
+                                        >
+                                            <AntDesign name="user" size={ 16 } color={ globalStyles.gray } />
+
+                                            <Text style={ styles.interestText }>
+                                                { p.name }
+                                            </Text>
+                                        </View>
+                                    </Pressable>
+                                );
+                            }) }
+
+                            {
+                                participants.length === 0 && (
+                                    <Text style={ styles.interestText }>
+                                        No one has joined yet
+                                    </Text>
+                                )
+                            }
+                        </View>
+                    </View>
+
+                    <View style={ { marginBottom: 100 } } />
                 </ScrollView>
             </ParallaxScrollView>
 
@@ -161,7 +260,10 @@ export default function EventPage() {
                 <Button
                     disabled={ userJoinedEvent(user!, event) }
                     onPress={
-                        () => joinEvent(user!, event)
+                        () => {
+                            joinEvent(user!, event);
+                            router.back();
+                        }
                     }
                 >
                     <Text style={ styles.buttonText }>Join</Text>

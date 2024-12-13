@@ -65,8 +65,11 @@ export default function CreateEvent() {
             })
         });
 
-        if(!response.ok)
+        if(!response.ok) {
+            updateLoading(false);
+            
             return Alert.alert('Error');
+        }
 
         router.navigate('/home?reload=true');
     }
@@ -176,6 +179,8 @@ export default function CreateEvent() {
             </View>
 
             <SafeAreaView style={ styles.listContainer }>
+                <Text style={ styles.label }>Tags</Text>
+
                 <View
                     style={ {
                         flexDirection: 'row',

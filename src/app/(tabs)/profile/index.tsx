@@ -1,19 +1,21 @@
 import { useContext, useEffect, useState, useRef, useCallback } from 'react';
-
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Alert, Pressable, Linking } from 'react-native';
 
 import { Avatar, Divider, Icon } from '@rneui/themed';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 import * as Haptics from 'expo-haptics';
+import { AntDesign } from '@expo/vector-icons';
+
+import Loading from '@/components/loading';
+import InterestsBottomSheetModal from '@/components/selectInterestsBottomSheet';
 
 import { UserContext } from '@/contexts/userContext';
 
 import globalStyles from '@/globals/globalStyles';
+import { BACKEND_URL } from '@/globals/backend';
 
 import styles from './styles';
-
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import InterestsBottomSheetModal from '@/components/selectInterestsBottomSheet';
 
 export default function UserProfile() {
     const bottomSheetRef = useRef<BottomSheetModal>(null);
@@ -30,11 +32,32 @@ export default function UserProfile() {
         user.preferences.length > 3 ? 3 : user.preferences.length,
     );
 
+    const [friends, updateFriends] = useState<User[]>([]);
+    const [isLoading, updateLoading] = useState(false);
+
     useEffect(() => {
         if (!user) return;
+        updateLoading(true);
+
+        (async function() {
+            const response = await fetch(`${BACKEND_URL}/friends/${user.id}/`);
+
+            if(!response.ok) {
+                updateLoading(false);
+                return Alert.alert('Error fetching friends');
+            }
+
+            const json = await response.json();
+
+            updateFriends(json.data);
+            updateLoading(false);
+        })();
+
 
         setNumInterests(user.preferences.length > 3 ? 3 : user.preferences.length);
     }, [user]);
+
+    if(isLoading) return <Loading />;
 
     return (
         <ScrollView style={ styles.container }>
@@ -70,7 +93,7 @@ export default function UserProfile() {
             <View style={ styles.userStatsSection }>
                 <View style={ [{ flexDirection: 'column' }, styles.center] }>
                     <Text style={ styles.caption }>Friends</Text>
-                    <Text style={ styles.title }>24.5k</Text>
+                    <Text style={ styles.title }>{ user.friends.length }</Text>
                 </View>
 
                 <Divider orientation="vertical" />
@@ -94,6 +117,31 @@ export default function UserProfile() {
                 <Text style={ { fontSize: 16, color: globalStyles.gray } }>
                     { user.bio }
                 </Text>
+            </View>
+
+            <View style={ styles.section }>
+                <Text style={ styles.sectionTitle }>Friends ({ user.friends.length })</Text>
+
+                {
+                    friends.map(
+                        (friend) => (
+                            <Pressable
+                                onPress={
+                                    () => Linking.openURL(`mailto:${ friend.email }`)
+                                }
+                            >
+                                <View key={ friend.id } style={ styles.friendContainer }>
+                                    <AntDesign name="user" size={ 24 } color={ globalStyles.gray } />
+                                    
+                                    <Text style={ { color: globalStyles.gray } }>
+                                        { friend.name }
+                                    </Text>
+
+                                </View>
+                            </Pressable>
+                        )
+                    )
+                }
             </View>
 
             <View style={ styles.section }>

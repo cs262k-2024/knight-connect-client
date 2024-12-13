@@ -60,7 +60,11 @@ export default function EditProfilel() {
             }),
         });
 
-        if (!response.ok) return Alert.alert('Error');
+        if (!response.ok) {
+            updateLoading(false);
+            
+            return Alert.alert('Error');
+        }
 
         const json = await response.json();
         updateUser(json.data);

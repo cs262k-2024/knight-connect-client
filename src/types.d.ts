@@ -10,6 +10,9 @@ declare interface User {
 
     password?: string;
     joined_events: string[];
+
+    friends: string[];
+    incoming_requests: string[];
 }
 
 declare interface CalvinEvent {
