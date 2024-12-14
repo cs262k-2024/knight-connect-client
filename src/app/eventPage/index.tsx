@@ -208,13 +208,19 @@ export default function EventPage() {
                                     <Pressable
                                         onPress={
                                             () => {
-                                                if(confirm(`Do you want to friend ${ p.name }?`))
-                                                    addFriend(p.id);
+                                                Alert.alert(`Friend ${ p.name }`, `Do you want to friend ${ p.name }?`, [
+                                                    {
+                                                      text: 'No',
+                                                      onPress: () => {},
+                                                      style: 'cancel',
+                                                    },
+                                                    {text: 'Yes', onPress: () => addFriend(p.id)},
+                                                ]);
                                             }
                                         }
+                                        key={ i }
                                     >
                                         <View
-                                            key={ i }
                                             style={
                                                 {
                                                     borderColor: user?.friends.includes(p.id) ? globalStyles.lightBlue : globalStyles.darkGray,

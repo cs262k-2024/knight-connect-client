@@ -309,8 +309,6 @@ export default function Home() {
                                                         }
 
                                                         const json = await response.json();
-
-                                                        updateUser(json.data);
                                                         
                                                         deleteRequest(n.id);
                                                     }
