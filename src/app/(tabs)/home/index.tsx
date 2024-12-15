@@ -65,8 +65,8 @@ export default function Home() {
 
         const json = await response.json();
 
-        updateNotifications(json.data);
         updateUser(json.data);
+        openNotifs();
 
         router.navigate('/home?reload=true');
     }
