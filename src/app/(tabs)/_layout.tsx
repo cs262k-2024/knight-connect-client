@@ -1,8 +1,19 @@
+/**
+ * @file _layout.tsx
+ * @fileoverview This file contains the TabLayout component which sets up the tab navigation for the application using the `expo-router` Tabs component and AntDesign icons.
+ */
+
 import { Tabs } from 'expo-router';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 import globalStyles from '@/globals/globalStyles';
 
+/**
+ * TabLayout component sets up the tab navigation for the application.
+ * It uses the `expo-router` Tabs component and AntDesign icons for the tab bar.
+ * 
+ * @returns {JSX.Element} The TabLayout component.
+ */
 export default function TabLayout() {
     return (
         <Tabs
