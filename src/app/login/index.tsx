@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file contains the `LoginLanding` component which serves as the landing page for login and sign-up actions.
+ * It uses various custom components such as `TouchableWrapper`, `Divider`, `Button`, and `Logo`.
+ */
+
 import { useState } from 'react';
 import { View, Text } from 'react-native';
 
@@ -11,6 +16,13 @@ import Login from './login';
 import globalStyles from '@/globals/globalStyles';
 import styles from './styles';
 
+/**
+ * `LoginLanding` is a functional component that renders the initial login/sign-up screen.
+ * It allows users to either create a new account or log in.
+ * 
+ * @component
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function LoginLanding() {
     const [action, updateAction] = useState('');
 
