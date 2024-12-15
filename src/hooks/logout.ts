@@ -14,5 +14,5 @@ export function useLogout() {
     return function() {
         updateUser(null);
         router.navigate('/login');
-    }
+    };
 }

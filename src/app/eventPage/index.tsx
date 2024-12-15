@@ -214,11 +214,11 @@ export default function EventPage() {
                                             () => {
                                                 Alert.alert(`Friend ${ p.name }`, `Do you want to friend ${ p.name }?`, [
                                                     {
-                                                      text: 'No',
-                                                      onPress: () => {},
-                                                      style: 'cancel',
+                                                        text: 'No',
+                                                        onPress: () => {},
+                                                        style: 'cancel',
                                                     },
-                                                    {text: 'Yes', onPress: () => addFriend(p.id)},
+                                                    { text: 'Yes', onPress: () => addFriend(p.id) },
                                                 ]);
                                             }
                                         }

@@ -142,9 +142,11 @@ export default function Login({
                 <LoginInput updateIncorrect={ updateIncorrect } updateText={ updatePassword } type="password" />
 
                 {
-                    incorrectUser && (<Text style={ styles.badPassword }>
+                    incorrectUser && (
+                        <Text style={ styles.badPassword }>
                         X Email Address or Password is Incorrect
-                    </Text>)
+                        </Text>
+                    )
                 }
 
                 {

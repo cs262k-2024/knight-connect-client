@@ -66,7 +66,7 @@ export default function Home() {
         const json = await response.json();
 
         updateNotifications(json.data);
-        updateUser(json.data)
+        updateUser(json.data);
         updateLoading(false);
 
         router.navigate('/home?reload=true');
@@ -314,13 +314,13 @@ export default function Home() {
                                                     }
                                                 }
                                             >
-                                                <AntDesign name="check" size={24} color={ globalStyles.gray } />
+                                                <AntDesign name="check" size={ 24 } color={ globalStyles.gray } />
                                             </Pressable>
 
                                             <Pressable
                                                 onPress={ () => deleteRequest(n.id) }
                                             >
-                                                <AntDesign name="close" size={24} color={ globalStyles.gray } />
+                                                <AntDesign name="close" size={ 24 } color={ globalStyles.gray } />
                                             </Pressable>
                                         </View>
                                     </View>
