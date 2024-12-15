@@ -1,6 +1,29 @@
+/**
+ * @file styles.ts
+ * @description This file contains the styles for the Create Event screen in the Knight Connect client application.
+ * It uses React Native's StyleSheet to define various styles for different components used in the screen.
+ */
+
 import { StyleSheet } from 'react-native';
 import globalStyles from '@/globals/globalStyles';
 
+/**
+ * @constant {object} styles
+ * @description A StyleSheet object containing styles for various components in the Create Event screen.
+ * @property {object} container - Style for the main container.
+ * @property {object} labelContainer - Style for the container holding labels.
+ * @property {object} label - Style for the labels.
+ * @property {object} listContainer - Style for the container holding the list.
+ * @property {object} itemContainer - Style for individual item containers.
+ * @property {object} itemSelectedContainer - Style for selected item containers.
+ * @property {object} itemText - Style for the text of items.
+ * @property {object} itemSelectedText - Style for the text of selected items.
+ * @property {object} continueButtonContainer - Style for the container holding the continue button.
+ * @property {object} continueButton - Style for the continue button.
+ * @property {object} buttonText - Style for the text inside buttons.
+ * @property {object} headerText - Style for the header text.
+ * @property {object} credentials - Style for the credentials text.
+ */
 const styles = StyleSheet.create({
     container: {
         height: '100%',
