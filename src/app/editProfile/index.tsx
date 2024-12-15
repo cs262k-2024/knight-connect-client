@@ -1,5 +1,9 @@
-import { useCallback, useContext, useRef, useState } from 'react';
+/**
+ * @fileoverview This file contains the EditProfile component which allows users to edit their profile information such as username, bio, and interests.
+ * It uses various React Native components and hooks to manage state and handle user interactions.
+ */
 
+import { useCallback, useContext, useRef, useState } from 'react';
 import {
     View,
     Text,
@@ -9,26 +13,31 @@ import {
     ScrollView,
     Alert,
 } from 'react-native';
-
 import { router } from 'expo-router';
 import * as Haptics from 'expo-haptics';
-
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { Avatar, Input, Icon } from '@rneui/themed';
-
 import InterestsBottomSheetModal from '@/components/selectInterestsBottomSheet';
 import Loading from '@/components/loading';
-
 import { UserContext } from '@/contexts/userContext';
-
 import globalStyles from '@/globals/globalStyles';
 import { BACKEND_URL } from '@/globals/backend';
-
 import styles from './styles';
 
-export default function EditProfilel() {
+/**
+ * EditProfile component allows users to edit their profile information.
+ * It includes fields for username, bio, and interests.
+ * 
+ * @component
+ * @returns {JSX.Element} The rendered component.
+ */
+export default function EditProfile() {
     const bottomSheetRef = useRef<BottomSheetModal>(null);
 
+    /**
+     * Handles the presentation of the bottom sheet modal for selecting interests.
+     * Uses haptic feedback to enhance user experience.
+     */
     const handlePresentBottomSheet = useCallback(() => {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
         bottomSheetRef.current?.present();
@@ -40,11 +49,17 @@ export default function EditProfilel() {
 
     const [username, updateUsername] = useState(user.name);
     const [bio, updateBio] = useState(user.bio);
-
     const [isLoading, updateLoading] = useState(false);
 
+    /**
+     * Saves the updated user profile information to the backend.
+     * Displays a loading indicator while the request is being processed.
+     * If the request fails, an alert is shown to the user.
+     * 
+     * @async
+     * @function
+     */
     async function save() {
-        // TODO: implement changing password and etc
         if (!user) return;
 
         updateLoading(true);
