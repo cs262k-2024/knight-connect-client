@@ -129,8 +129,9 @@ export default function UserProfile() {
                                 onPress={
                                     () => Linking.openURL(`mailto:${ friend.email }`)
                                 }
+                                key={ friend.id }
                             >
-                                <View key={ friend.id } style={ styles.friendContainer }>
+                                <View style={ styles.friendContainer }>
                                     <AntDesign name="user" size={ 24 } color={ globalStyles.gray } />
                                     
                                     <Text style={ { color: globalStyles.gray } }>

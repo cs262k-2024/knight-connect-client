@@ -67,7 +67,6 @@ export default function Home() {
 
         updateNotifications(json.data);
         updateUser(json.data);
-        updateLoading(false);
 
         router.navigate('/home?reload=true');
     }
