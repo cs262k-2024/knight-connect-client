@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     Alert,
     FlatList,
+    ScrollView
 } from 'react-native';
 
 import { router, useLocalSearchParams } from 'expo-router';
@@ -17,6 +18,8 @@ import {
     BottomSheetView,
     useBottomSheetModal,
 } from '@gorhom/bottom-sheet';
+
+import Loading from '../loading';
 
 import { UserContext } from '@/contexts/userContext';
 
@@ -94,7 +97,7 @@ const InterestsBottomSheetModal = forwardRef<Ref>((_props, ref) => {
         router.navigate('/profile');
     }
 
-    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
+    if(isLoading) return <Loading />;
 
     return (
         <BottomSheetModal
@@ -106,64 +109,69 @@ const InterestsBottomSheetModal = forwardRef<Ref>((_props, ref) => {
             enablePanDownToClose={ true }
             backdropComponent={ renderBackdrop }
         >
-            <BottomSheetView>
+            <ScrollView>
                 <BottomSheetView>
-                    <BottomSheetView style={ styles.container }>
-                        <BottomSheetView>
-                            <Text style={ styles.headerText }>
-                                Update Interests
-                            </Text>
-                        </BottomSheetView>
-                        <BottomSheetView>
-                            <Text style={ styles.credentials }>
-                                Update your interests and get personalized
-                                campus event recommendations
-                            </Text>
+                    <BottomSheetView>
+                        <BottomSheetView style={ styles.container }>
+                            <BottomSheetView>
+                                <Text style={ styles.headerText }>
+                                    Update Interests
+                                </Text>
+                            </BottomSheetView>
+
+                            <BottomSheetView>
+                                <Text style={ styles.credentials }>
+                                    Update your interests and get personalized
+                                    campus event recommendations
+                                </Text>
+                            </BottomSheetView>
                         </BottomSheetView>
                     </BottomSheetView>
-                </BottomSheetView>
-                <BottomSheetView style={ styles.listContainer }>
-                    <FlatList
-                        contentContainerStyle={ {
-                            alignItems: 'center',
-                            gap: 20,
-                        } }
-                        numColumns={ 2 }
-                        data={ CATEGORIES }
-                        renderItem={ ({ item }) => (
-                            <TouchableOpacity
-                                onPress={ () => {
-                                    itemSelect(item);
-                                } }
-                                style={
-                                    userInterests.includes(item)
-                                        ? styles.itemSelectedContainer
-                                        : styles.itemContainer
-                                }
-                            >
-                                <Text
+
+                    <BottomSheetView style={ styles.listContainer }>
+                        <FlatList
+                            contentContainerStyle={ {
+                                alignItems: 'center',
+                                gap: 20,
+                            } }
+                            numColumns={ 2 }
+                            data={ CATEGORIES }
+                            renderItem={ ({ item }) => (
+                                <TouchableOpacity
+                                    onPress={ () => {
+                                        itemSelect(item);
+                                    } }
                                     style={
                                         userInterests.includes(item)
-                                            ? styles.itemSelectedText
-                                            : styles.itemText
+                                            ? styles.itemSelectedContainer
+                                            : styles.itemContainer
                                     }
                                 >
-                                    { item }
-                                </Text>
-                            </TouchableOpacity>
-                        ) }
-                        keyExtractor={ (item) => item }
-                    ></FlatList>
+                                    <Text
+                                        style={
+                                            userInterests.includes(item)
+                                                ? styles.itemSelectedText
+                                                : styles.itemText
+                                        }
+                                    >
+                                        { item }
+                                    </Text>
+                                </TouchableOpacity>
+                            ) }
+                            keyExtractor={ (item) => item }
+                        />
+                    </BottomSheetView>
+
+                    <BottomSheetView style={ styles.continueButtonContainer }>
+                        <TouchableOpacity
+                            style={ styles.continueButton }
+                            onPress={ storePreferences }
+                        >
+                            <Text style={ styles.buttonText }>Update</Text>
+                        </TouchableOpacity>
+                    </BottomSheetView>
                 </BottomSheetView>
-                <BottomSheetView style={ styles.continueButtonContainer }>
-                    <TouchableOpacity
-                        style={ styles.continueButton }
-                        onPress={ storePreferences }
-                    >
-                        <Text style={ styles.buttonText }>Update</Text>
-                    </TouchableOpacity>
-                </BottomSheetView>
-            </BottomSheetView>
+            </ScrollView>
         </BottomSheetModal>
     );
 });
@@ -192,14 +200,14 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 34,
         lineHeight: 36,
-        textAlign: 'left',
+        textAlign: 'center',
     },
     credentials: {
         color: globalStyles.darkGray,
         fontWeight: '500',
         fontSize: 16,
         lineHeight: 21,
-        textAlign: 'left',
+        textAlign: 'center',
     },
 
     itemContainer: {
@@ -236,6 +244,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 30,
+        marginBottom: 10
     },
     continueButton: {
         borderRadius: 50,

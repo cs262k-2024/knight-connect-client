@@ -85,7 +85,7 @@ const addNotificationRecord = async (eventID: string, notificationID: string) =>
 
 // call this function to schedule a notification
 export const scheduleNotification = async (id: string, title: string, body: string, date: Date) => {
-    const notificationID = await Notifications.scheduleNotificationAsync({
+    const notificationID = await (Notifications as any).scheduleNotificationAsync({
         content: {
             title,
             body,
@@ -104,5 +104,5 @@ export const unscheduleNotification = async (id: string) => {
     if (!record) {
         return;
     }
-    await Notifications.cancelScheduledNotificationAsync(record.notificationID);
+    await Notifications.cancelScheduledNotificationAsync((record as any).notificationID);
 };

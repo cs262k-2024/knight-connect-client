@@ -19,8 +19,11 @@ export function userJoinedEvent(user: User, event: CalvinEvent) {
     @param { CalvinEvent object } event: CalvinEvent object
 
     @returns { User object }: Updated user object
+    @returns { void }: Void if user has already joined the event
 */
-export async function joinEvent(user: User, event: CalvinEvent): Promise<User> {
+export async function joinEvent(user: User, event: CalvinEvent): Promise<User | void> {
+    if(userJoinedEvent(user, event)) return;
+
     const response = await fetch(`${BACKEND_URL}/join/`, {
         method: 'POST',
         headers: {

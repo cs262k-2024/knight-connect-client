@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { TouchableOpacity, View, Text, Alert, ScrollView, FlatList } from 'react-native';
+import { TouchableOpacity, View, Text, Alert, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { router } from 'expo-router';
@@ -10,43 +10,13 @@ import { UserContext } from '@/contexts/userContext';
 
 import Input from '@/components/input';
 import Button from '@/components/button';
+import Loading from '@/components/loading';
 
 import { BACKEND_URL } from '@/globals/backend';
 import { CATEGORIES } from '@/globals/constants';
 import globalStyles from '@/globals/globalStyles';
 
 import styles from './styles';
-
-function SelectTagsHeader() {
-    return (
-        <View style={ styles.container }>
-            <View>
-                <Text style={ styles.headerText }>Your Interests</Text>
-            </View>
-
-            <View>
-                <Text style={ styles.credentials }>
-                    Select your interests and get personalized campus event
-                    recommendations
-                </Text>
-            </View>
-        </View>
-    );
-}
-
-function SelectTagsFooter({
-    submit,
-}: {
-    submit: () => void;
-}) {
-    return (
-        <View style={ styles.continueButtonContainer }>
-            <Button style={ styles.continueButton } onPress={ submit }>
-                <Text style={ styles.buttonText }>Continue</Text>
-            </Button>
-        </View>
-    );
-}
 
 export default function CreateEvent() {
     const { user } = useContext(UserContext);
@@ -95,13 +65,16 @@ export default function CreateEvent() {
             })
         });
 
-        if(!response.ok)
+        if(!response.ok) {
+            updateLoading(false);
+            
             return Alert.alert('Error');
+        }
 
         router.navigate('/home?reload=true');
     }
 
-    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
+    if(isLoading) return <Loading />;
 
     return (
         <ScrollView style={ styles.container } contentContainerStyle={ { gap: 20 } }>
@@ -206,6 +179,8 @@ export default function CreateEvent() {
             </View>
 
             <SafeAreaView style={ styles.listContainer }>
+                <Text style={ styles.label }>Tags</Text>
+
                 <View
                     style={ {
                         flexDirection: 'row',

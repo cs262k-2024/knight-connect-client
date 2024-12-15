@@ -72,7 +72,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-    }
+    },
+    friendContainer: {
+        flexDirection: 'row',
+        paddingVertical: 5,
+        alignItems: 'center',
+        gap: 10
+    },
 });
 
 export default styles;

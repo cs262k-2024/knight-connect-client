@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
-import { Text } from 'react-native';
 
 import { UserContext } from '@/contexts/userContext';
 
 import Calendar from '@/components/calendar';
+import Loading from '@/components/loading';
 
 import { BACKEND_URL } from '@/globals/backend';
-import globalStyles from '@/globals/globalStyles';
 
 export default function UserCalendar() {
     const { user } = useContext(UserContext);
@@ -32,7 +31,7 @@ export default function UserCalendar() {
         })();
     }, [user]);
 
-    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
+    if(isLoading) return <Loading />;
 
     return (
         <Calendar

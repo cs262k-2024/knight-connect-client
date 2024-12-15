@@ -1,31 +1,29 @@
-import globalStyles from '@/globals/globalStyles';
-import { Icon } from '@rneui/themed';
-import { router, Stack } from 'expo-router';
 import { TouchableOpacity, View } from 'react-native';
-import * as Haptics from 'expo-haptics';
+import { router, Stack } from 'expo-router';
+
+import { Icon } from '@rneui/themed';
+
+import globalStyles from '@/globals/globalStyles';
 
 export default function EventPageLayout() {
     return (
         <Stack
             screenOptions={ {
                 headerShown: true,
+                contentStyle: {
+                    backgroundColor: globalStyles.black,
+                }
             } }
         >
             <Stack.Screen
                 name="index"
                 options={ {
                     headerShadowVisible: false,
-                    title: 'Event',
+                    title: '',
                     headerLeft: () => (
                         <View>
                             <TouchableOpacity
-                                onPress={ () => {
-                                    Haptics.impactAsync(
-                                        Haptics.ImpactFeedbackStyle.Soft,
-                                    );
-
-                                    router.back();
-                                } }
+                                onPress={ () => router.navigate('/home') }
                             >
                                 <Icon
                                     name="chevron-left"
@@ -43,7 +41,7 @@ export default function EventPageLayout() {
                     },
                     headerStyle: {
                         backgroundColor: globalStyles.black,
-                    },
+                    }
                 } }
             />
         </Stack>

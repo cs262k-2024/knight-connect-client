@@ -1,16 +1,22 @@
 import { useContext, useEffect, useState } from 'react';
 import {
+    ScrollView,
     View,
     Text,
     Image,
     SafeAreaView,
-    Alert
+    Alert,
+    Pressable
 } from 'react-native';
 
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, router } from 'expo-router';
+import AntDesign from '@expo/vector-icons/AntDesign';
+
 import { Divider, Icon } from '@rneui/base';
 
 import ParallaxScrollView from '@/components/parallaxScrollView';
+import Button from '@/components/button';
+import Loading from '@/components/loading';
 
 import { UserContext } from '@/contexts/userContext';
 
@@ -20,35 +26,74 @@ import { BACKEND_URL } from '@/globals/backend';
 import globalStyles from '@/globals/globalStyles';
 
 import styles from './styles';
-import Button from '@/components/button';
 
 export default function EventPage() {
     const params = useLocalSearchParams();
 
-    const { user } = useContext(UserContext);
+    const { user, updateUser } = useContext(UserContext);
 
     const [event, updateEvent] = useState<CalvinEvent | null>(null);
+
+    const [participants, updateParticipants] = useState<User[]>([]);
+
     const [isLoading, updateLoading] = useState(true);
 
     useEffect(() => {
+        updateLoading(true);
+
         (async function() {
-            updateLoading(true);
             const response = await fetch(`${BACKEND_URL}/getevent/${params.id}/`);
 
-            if(!response.ok)
+            if(!response.ok) {
+                router.back();
                 return Alert.alert('Error');
+            }
 
             const json = await response.json();
 
             updateEvent(json.data);
+
+            const participantResponse = await fetch(`${BACKEND_URL}/participants/${json.data.id}/`);
+            
+            if(!participantResponse.ok) {
+                router.back();
+                return Alert.alert('Error');
+            }
+
+            const participantsJson = await participantResponse.json();
+
+            updateParticipants(participantsJson.data);
             updateLoading(false);
         })();
     }, []);
 
-    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
+    async function addFriend(friendId: string) {
+        updateLoading(true);
 
-    if(!event)
-        return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
+        const response = await fetch(`${BACKEND_URL}/friendrequest/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id: user!.id,
+                friend_id: friendId,
+            }),
+        });
+
+        if(!response.ok) {
+            updateLoading(false);
+            return Alert.alert('Error');
+        }
+
+        const json = await response.json();
+
+        updateParticipants([...participants, json.data]);
+        updateUser(json.data);
+        updateLoading(false);
+    }
+
+    if(isLoading || !event) return <Loading />;
 
     return (
         <SafeAreaView style={ styles.container }>
@@ -65,12 +110,13 @@ export default function EventPage() {
                     />
                 ) }
             >
-                <View style={ styles.container }>
+                <ScrollView style={ styles.container }>
                     <View style={ styles.section }>
                         <Text style={ styles.title }>
                             { event.name }
                         </Text>
                     </View>
+                    
                     <View style={ styles.section }>
                         <View style={ styles.row }>
                             <View>
@@ -92,6 +138,7 @@ export default function EventPage() {
                                 </Text>
                             </View>
                         </View>
+
                         <Divider color={ globalStyles.darkGray } />
                         { event.location && (
                             <>
@@ -137,6 +184,7 @@ export default function EventPage() {
                         <View>
                             <Text style={ styles.sectionTitle }>Tags</Text>
                         </View>
+                        
                         <View style={ styles.row }>
                             { event.tags.slice(0, 4).map((interest) => {
                                 return (
@@ -152,7 +200,66 @@ export default function EventPage() {
                             }) }
                         </View>
                     </View>
-                </View>
+
+                    <View style={ styles.lastSection }>
+                        <View>
+                            <Text style={ styles.sectionTitle }>People Attending</Text>
+                        </View>
+                        
+                        <View style={ styles.row }>
+                            { participants.filter(p => p.id !== user!.id).map((p, i) => {
+                                return (
+                                    <Pressable
+                                        onPress={
+                                            () => {
+                                                Alert.alert(`Friend ${ p.name }`, `Do you want to friend ${ p.name }?`, [
+                                                    {
+                                                      text: 'No',
+                                                      onPress: () => {},
+                                                      style: 'cancel',
+                                                    },
+                                                    {text: 'Yes', onPress: () => addFriend(p.id)},
+                                                ]);
+                                            }
+                                        }
+                                        key={ i }
+                                    >
+                                        <View
+                                            style={
+                                                {
+                                                    borderColor: user?.friends.includes(p.id) ? globalStyles.lightBlue : globalStyles.darkGray,
+                                                    borderWidth: 2,
+                                                    borderRadius: 50,
+                                                    margin: 5,
+                                                    paddingLeft: 5,
+                                                    alignSelf: 'center',
+                                                    flexDirection: 'row',
+                                                    alignItems: 'center',
+                                                }
+                                            }
+                                        >
+                                            <AntDesign name="user" size={ 16 } color={ globalStyles.gray } />
+
+                                            <Text style={ styles.interestText }>
+                                                { p.name }
+                                            </Text>
+                                        </View>
+                                    </Pressable>
+                                );
+                            }) }
+
+                            {
+                                participants.length === 0 && (
+                                    <Text style={ styles.interestText }>
+                                        No one has joined yet
+                                    </Text>
+                                )
+                            }
+                        </View>
+                    </View>
+
+                    <View style={ { marginBottom: 100 } } />
+                </ScrollView>
             </ParallaxScrollView>
 
             <View style={ styles.stickyfooter }>
@@ -163,7 +270,10 @@ export default function EventPage() {
                 <Button
                     disabled={ userJoinedEvent(user!, event) }
                     onPress={
-                        () => joinEvent(user!, event)
+                        () => {
+                            joinEvent(user!, event);
+                            router.back();
+                        }
                     }
                 >
                     <Text style={ styles.buttonText }>Join</Text>

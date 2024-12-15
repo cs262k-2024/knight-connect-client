@@ -1,18 +1,23 @@
-import { useState, useEffect } from 'react';
-import { ScrollView, View, Text, Image, Pressable, Modal, Alert } from 'react-native';
+import { useState, useEffect, useContext } from 'react';
+import { Pressable, ScrollView, View, Text, Modal, Alert } from 'react-native';
 
-import { router, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, router } from 'expo-router';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import Feather from '@expo/vector-icons/Feather';
 
 import Input from '@/components/input';
 import Button from '@/components/button';
 import Logo from '@/components/texts/logo';
 import Calendar from '@/components/calendar';
+import Loading from '@/components/loading';
 
 import EventRecommendation from '@/components/eventRecommendation';
 import Event from '@/components/event';
+
+import { UserContext } from '@/contexts/userContext';
+import { useLogout } from '@/hooks/logout';
 
 import { BACKEND_URL } from '@/globals/backend';
 import globalStyles from '@/globals/globalStyles';
@@ -23,6 +28,9 @@ import styles from './styles';
 export default function Home() {
     const params = useLocalSearchParams();
 
+    const { user, updateUser } = useContext(UserContext);
+    const logout = useLogout();
+
     const [isLoading, updateLoading] = useState(false);
 
     const [filter, updateFilter] = useState('');
@@ -30,16 +38,68 @@ export default function Home() {
 
     const [isHelpVisible, toggleHelp] = useState(false);
 
+    const [isNotificationsVisible, toggleNotifications] = useState(false);
+    const [notifications, updateNotifications] = useState<User[] | null>(null);
+
     const [events, updateEvents] = useState<CalvinEvent[]>([]);
     const [page, _updatePage] = useState(0);
+
+    async function deleteRequest(friendId: string) {
+        updateLoading(true);
+
+        const response = await fetch(`${BACKEND_URL}/rejectfriend/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_id: user!.id,
+                friend_id: friendId
+            })
+        });
+
+        if(!response.ok) {
+            updateLoading(false);
+            return Alert.alert('Error deleting request');
+        }
+
+        const json = await response.json();
+
+        updateNotifications(json.data);
+        updateUser(json.data)
+        updateLoading(false);
+
+        router.navigate('/home?reload=true');
+    }
+
+    async function openNotifs() {
+        if(!user) return;
+
+        toggleNotifications(true);
+
+        const response = await fetch(`${BACKEND_URL}/friendrequest/${user.id}/`);
+
+        if(!response.ok) {
+            toggleNotifications(false);
+
+            return Alert.alert('Error fetching notifications');
+        }
+
+        const json = await response.json();
+
+        updateNotifications(json.data);
+    }
 
     useEffect(() => {
         (async function () {
             updateLoading(true);
             const response = await fetch(`${BACKEND_URL}/event/${page}/`);
 
-            if(!response.ok)
+            if(!response.ok) {
+                logout();
+
                 return Alert.alert('Error');
+            }
 
             const json = await response.json();
 
@@ -48,7 +108,7 @@ export default function Home() {
         })();
     }, [params.reload]);
 
-    if(isLoading) return <Text style={ { color: globalStyles.white } }>Loading...</Text>;
+    if(isLoading) return <Loading />;
 
     return (
         <>
@@ -109,7 +169,8 @@ export default function Home() {
                     style={
                         {
                             padding: 20,
-                            height: '100%'
+                            height: '100%',
+                            backgroundColor: globalStyles.veryDarkGray
                         }
                     }
                 >
@@ -186,6 +247,117 @@ export default function Home() {
                 </ScrollView>
             </Modal>
 
+            <Modal
+                style={
+                    {
+                        height: '100%',
+                        width: '100%',
+                        backgroundColor: globalStyles.white
+                    }
+                }
+                onRequestClose={ () => toggleNotifications(false) }
+                animationType="slide"
+                visible={ isNotificationsVisible }
+            >
+                <ScrollView
+                    style={
+                        {
+                            padding: 20,
+                            height: '100%',
+                            backgroundColor: globalStyles.veryDarkGray
+                        }
+                    }
+                    contentContainerStyle={ { display: 'flex', flexDirection: 'column', gap: 20 } }
+                >
+                    <View style={ { marginTop: 30 } } />
+
+                    <Text style={ { color: globalStyles.white, fontSize: 24 } }>Notifications</Text>
+
+                    {
+                        notifications ? (
+                            notifications.map(
+                                (n, i) => (
+                                    <View key={ i } style={ { gap: 20, flexDirection: 'row', justifyContent: 'space-between' } }>
+                                        <View>
+                                            <Text style={ styles.helpTextTitle }>{ n.name }</Text>
+
+                                            <Text style={ styles.helpText }>
+                                                { n.email }
+                                            </Text>
+                                        </View>
+
+                                        <View style={ { flexDirection: 'row', gap: 20 } }>
+                                            <Pressable
+                                                onPress={
+                                                    async () => {
+                                                        updateLoading(true);
+
+                                                        const response = await fetch(`${BACKEND_URL}/friends/`, {
+                                                            method: 'POST',
+                                                            headers: {
+                                                                'Content-Type': 'application/json'
+                                                            },
+                                                            body: JSON.stringify({
+                                                                user_id: user!.id,
+                                                                friend_id: n.id
+                                                            })
+                                                        });
+
+                                                        if(!response.ok) {
+                                                            updateLoading(false);
+                                                            return Alert.alert('Error accepting request');
+                                                        }
+
+                                                        const json = await response.json();
+                                                        
+                                                        deleteRequest(n.id);
+                                                    }
+                                                }
+                                            >
+                                                <AntDesign name="check" size={24} color={ globalStyles.gray } />
+                                            </Pressable>
+
+                                            <Pressable
+                                                onPress={ () => deleteRequest(n.id) }
+                                            >
+                                                <AntDesign name="close" size={24} color={ globalStyles.gray } />
+                                            </Pressable>
+                                        </View>
+                                    </View>
+                                )
+                            )
+                        ) : <Loading />
+                    }
+
+                    {
+                        (notifications && notifications.length === 0) && (
+                            <Text style={ { color: globalStyles.white, fontSize: 16, textAlign: 'center' } }>
+                                No notifications...
+                            </Text>
+                        )
+                    }
+
+                    <Button
+                        onPress={ () => toggleNotifications(false) }
+                        style={ {
+                            backgroundColor: globalStyles.veryDarkGray,
+                            width: '70%',
+                            padding: 10,
+                            borderRadius: 10,
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignSelf: 'center',
+                            marginBottom: 60,
+                        } }
+                    >
+                        <Text style={ { color: globalStyles.white, textAlign: 'center' } }>
+                                Close
+                        </Text>
+                    </Button>
+                </ScrollView>
+            </Modal>
+
             <ScrollView contentContainerStyle={ styles.container }>
                 <View>
                     <View style={ styles.headerContainer }>
@@ -193,17 +365,10 @@ export default function Home() {
 
                         <Pressable
                             onPress={
-                                () => router.navigate('/profile')
+                                () => openNotifs()
                             }
                         >
-                            <Image
-                                source={ {
-                                    uri: 'https://gratisography.com/wp-content/uploads/2024/01/gratisography-cyber-kitty-800x525.jpg',
-                                } }
-                                width={ 50 }
-                                height={ 50 }
-                                borderRadius={ 100 }
-                            />
+                            <Feather name="bell" size={ 24 } color={ globalStyles.gray } />
                         </Pressable>
                     </View>
 
@@ -241,20 +406,12 @@ export default function Home() {
                                     <Button
                                         key={ i }
                                         onPress={
-                                            () => {
-                                                // get rid of emojis
-                                                const strippedCategory = c.split(' ')[1].replaceAll(' ', '');
-
-                                                if(filter === c.split(' ')[1].replaceAll(' ', ''))
-                                                    return updateFilter('');
-
-                                                updateFilter(strippedCategory);
-                                            }
+                                            () => updateFilter(filter === c ? '' : c)
                                         }
                                         style={
                                             {
-                                                backgroundColor: filter === c.split(' ')[1].replaceAll(' ', '') ? globalStyles.lightBlue : 'none',
-                                                borderColor: filter === c.split(' ')[1].replaceAll(' ', '') ? 'none' : globalStyles.darkGray,
+                                                backgroundColor: filter === c ? globalStyles.lightBlue : 'transparent',
+                                                borderColor: filter === c ? 'transparent' : globalStyles.darkGray,
                                             }
                                         }
                                     >
