@@ -1,3 +1,10 @@
+/**
+ * Home component that displays the main home screen of the application.
+ * It includes event recommendations, notifications, and various modals for help and calendar.
+ * 
+ * @file /home/alex/Documents/Projects/calvin/k/knight-connect-client/src/app/(tabs)/home/index.tsx
+ */
+
 import { useState, useEffect, useContext } from 'react';
 import { Pressable, ScrollView, View, Text, Modal, Alert } from 'react-native';
 
@@ -25,6 +32,12 @@ import { CATEGORIES } from '@/globals/constants';
 
 import styles from './styles';
 
+/**
+ * Home component that displays the main home screen of the application.
+ * It includes event recommendations, notifications, and various modals for help and calendar.
+ * 
+ * @returns {JSX.Element} The rendered Home component.
+ */
 export default function Home() {
     const params = useLocalSearchParams();
 
@@ -44,6 +57,12 @@ export default function Home() {
     const [events, updateEvents] = useState<CalvinEvent[]>([]);
     const [page, _updatePage] = useState(0);
 
+    /**
+     * Sends a request to delete a friend request.
+     * 
+     * @param {string} friendId - The ID of the friend to delete.
+     * @returns {Promise<void>} A promise that resolves when the request is complete.
+     */
     async function deleteRequest(friendId: string) {
         updateLoading(true);
 
@@ -71,6 +90,11 @@ export default function Home() {
         router.navigate('/home?reload=true');
     }
 
+    /**
+     * Fetches and displays notifications for the user.
+     * 
+     * @returns {Promise<void>} A promise that resolves when the notifications are fetched.
+     */
     async function openNotifs() {
         if(!user) return;
 
