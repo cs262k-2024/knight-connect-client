@@ -1,3 +1,8 @@
+/**
+ * @file UserProfile component that displays the user's profile information, friends, and interests.
+ * It also allows the user to add new interests through a bottom sheet modal.
+ */
+
 import { useContext, useEffect, useState, useRef, useCallback } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Alert, Pressable, Linking } from 'react-native';
 
@@ -17,13 +22,23 @@ import { BACKEND_URL } from '@/globals/backend';
 
 import styles from './styles';
 
+/**
+ * UserProfile component that displays the user's profile information, friends, and interests.
+ * It also allows the user to add new interests through a bottom sheet modal.
+ *
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function UserProfile() {
     const bottomSheetRef = useRef<BottomSheetModal>(null);
 
+    /**
+     * Handles the press event to present the bottom sheet modal.
+     */
     const handlePresentModalPress = useCallback(() => {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
         bottomSheetRef.current?.present();
     }, []);
+
     const { user } = useContext(UserContext);
 
     if (!user) return;
@@ -39,6 +54,9 @@ export default function UserProfile() {
         if (!user) return;
         updateLoading(true);
 
+        /**
+         * Fetches the user's friends from the backend.
+         */
         (async function() {
             const response = await fetch(`${BACKEND_URL}/friends/${user.id}/`);
 
