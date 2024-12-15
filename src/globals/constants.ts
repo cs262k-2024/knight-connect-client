@@ -1,3 +1,10 @@
+/**
+ * @description This file contains all the constants used in the application.
+ */
+
+/**
+ * @description The categories that an event can belong to.
+ */
 export const CATEGORIES = [
     '🎤 Music',
     '🏫 Education',

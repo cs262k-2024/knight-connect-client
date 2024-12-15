@@ -1,3 +1,6 @@
+/**
+ * Global styles for the application
+ */
 const globalStyles = {
     white: '#FFFFFF',
     lightGray: '#F5F5F5',
