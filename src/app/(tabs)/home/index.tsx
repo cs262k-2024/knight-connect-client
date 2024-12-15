@@ -313,13 +313,13 @@ export default function Home() {
                                                     }
                                                 }
                                             >
-                                                <AntDesign name="check" size={24} color={ globalStyles.gray } />
+                                                <AntDesign name="check" size={ 24 } color={ globalStyles.gray } />
                                             </Pressable>
 
                                             <Pressable
                                                 onPress={ () => deleteRequest(n.id) }
                                             >
-                                                <AntDesign name="close" size={24} color={ globalStyles.gray } />
+                                                <AntDesign name="close" size={ 24 } color={ globalStyles.gray } />
                                             </Pressable>
                                         </View>
                                     </View>
