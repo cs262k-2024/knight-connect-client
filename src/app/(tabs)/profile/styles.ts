@@ -1,3 +1,7 @@
+/**
+ * @file UserProfile component that displays the user's profile information, friends, and interests.
+ */
+
 import { StyleSheet } from 'react-native';
 import globalStyles from '@/globals/globalStyles';
 

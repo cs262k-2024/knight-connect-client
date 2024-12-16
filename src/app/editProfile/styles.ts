@@ -1,5 +1,30 @@
+/**
+ * @file styles.ts
+ * @description This file contains the styles for the Edit Profile screen of the Knight Connect Client app.
+ * It uses React Native's StyleSheet to create a set of styles for various components used in the screen.
+ */
+
 import { StyleSheet } from 'react-native';
 import globalStyles from '@/globals/globalStyles';
+
+/**
+ * @constant {object} styles
+ * @description A collection of styles for the Edit Profile screen components.
+ * @property {object} center - Styles for centering content.
+ * @property {object} container - Styles for the main container.
+ * @property {object} section - Styles for sections within the container.
+ * @property {object} avatarContainer - Styles for the avatar container.
+ * @property {object} sectionTitle - Styles for section titles.
+ * @property {object} caption - Styles for captions.
+ * @property {object} interestContainer - Styles for the interest container.
+ * @property {object} interestText - Styles for the interest text.
+ * @property {object} row - Styles for rows of items.
+ * @property {object} selectInterestsHeader - Styles for the header of the select interests section.
+ * @property {object} topButtonsContainer - Styles for the container of the top buttons.
+ * @property {object} saveText - Styles for the save text.
+ * @property {object} inputContainer - Styles for the input container.
+ * @property {object} input - Styles for the input field.
+ */
 
 const styles = StyleSheet.create({
     center: {

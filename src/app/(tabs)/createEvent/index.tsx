@@ -1,3 +1,9 @@
+/**
+ * @fileoverview This file contains the CreateEvent component which allows users to create and publish events.
+ * The component includes form fields for event name, date, location, description, and tags.
+ * It also handles form submission and communicates with the backend to save the event details.
+ */
+
 import { useContext, useState } from 'react';
 import { TouchableOpacity, View, Text, Alert, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -18,6 +24,13 @@ import globalStyles from '@/globals/globalStyles';
 
 import styles from './styles';
 
+/**
+ * CreateEvent component allows users to create and publish events.
+ * It includes form fields for event name, date, location, description, and tags.
+ * It also handles form submission and communicates with the backend to save the event details.
+ * 
+ * @returns {JSX.Element} The CreateEvent component.
+ */
 export default function CreateEvent() {
     const { user } = useContext(UserContext);
 
@@ -31,6 +44,12 @@ export default function CreateEvent() {
 
     const [date, updateDate] = useState(new Date());
 
+    /**
+     * Handles the date change event from the DateTimePicker.
+     * 
+     * @param {DateTimePickerEvent} _event - The event object from the DateTimePicker.
+     * @param {Date} [selectedDate] - The selected date from the DateTimePicker.
+     */
     function onDateChange(_event: DateTimePickerEvent, selectedDate?: Date) {
         if(!selectedDate) return;
 
@@ -41,6 +60,12 @@ export default function CreateEvent() {
 
     if(!user) return <></>;
 
+    /**
+     * Publishes the event by sending a POST request to the backend.
+     * It includes the event details such as organizer, name, start date, end date, location, description, tags, cover URI, and price.
+     * If the request is successful, it navigates to the home page and reloads the events.
+     * If the request fails, it shows an error alert.
+     */
     async function publish() {
         updateLoading(true);
 

@@ -1,3 +1,11 @@
+/**
+ * @fileoverview This file contains the styles for the event page in the Knight Connect client application.
+ * It uses the StyleSheet API from React Native to create a set of styles that can be applied to various components.
+ * The styles are designed to be consistent with the global styles defined in the application.
+ * 
+ * @module styles
+ */
+
 import { StyleSheet } from 'react-native';
 import globalStyles from '@/globals/globalStyles';
 

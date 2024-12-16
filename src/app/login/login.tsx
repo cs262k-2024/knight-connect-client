@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file contains the Login component and its related subcomponents and functions.
+ * It handles user login and sign-up functionality, including form validation and API requests.
+ */
+
 import { useState, useContext } from 'react';
 import { StyleSheet, View, Text, Alert } from 'react-native';
 
@@ -15,6 +20,15 @@ import { BACKEND_URL } from '@/globals/backend';
 
 import loginStyles from './styles';
 
+/**
+ * LoginInput component renders an input field for login or sign-up forms.
+ * 
+ * @param {Object} props - The properties object.
+ * @param {string} props.type - The type of input (e.g., 'email', 'password', 'name').
+ * @param {function} props.updateText - Function to update the input text state.
+ * @param {function} props.updateIncorrect - Function to update the incorrect state.
+ * @returns {JSX.Element} The rendered input component.
+ */
 function LoginInput({
     type,
     updateText,
@@ -51,6 +65,14 @@ function LoginInput({
     );
 }
 
+/**
+ * Login component handles user login and sign-up functionality.
+ * 
+ * @param {Object} props - The properties object.
+ * @param {string} props.action - The current action ('Login' or 'Sign Up').
+ * @param {function} props.updateAction - Function to update the current action.
+ * @returns {JSX.Element} The rendered login component.
+ */
 export default function Login({
     action,
     updateAction,
@@ -69,6 +91,15 @@ export default function Login({
     const [hasSubmittedOnce, updateHasSubmittedOnce] = useState(false);
     const [incorrectUser, updateIncorrect] = useState(false);
 
+    /**
+     * Handles the login or sign-up process.
+     * Validates input fields and makes API requests to the backend.
+     * Updates user context and navigates to the appropriate screen on success.
+     * 
+     * @async
+     * @function
+     * @returns {Promise<void>} A promise that resolves when the login or sign-up process is complete.
+     */
     async function login() {
         updateHasSubmittedOnce(true);
         if (action === 'Sign Up' && (password.length < 8 || !/\d/.test(password) || !/[A-Z]/.test(password) || !/[a-z]/.test(password))) return Alert.alert('Invalid Password');

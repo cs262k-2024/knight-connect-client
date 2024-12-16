@@ -1,3 +1,7 @@
+/**
+ * @file EventPage component that displays details of an event, including participants, and allows users to join the event or add friends.
+ */
+
 import { useContext, useEffect, useState } from 'react';
 import {
     ScrollView,
@@ -27,6 +31,11 @@ import globalStyles from '@/globals/globalStyles';
 
 import styles from './styles';
 
+/**
+ * EventPage component that fetches and displays event details, participants, and allows users to join the event or add friends.
+ * 
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function EventPage() {
     const params = useLocalSearchParams();
 
@@ -38,6 +47,9 @@ export default function EventPage() {
 
     const [isLoading, updateLoading] = useState(true);
 
+    /**
+     * useEffect hook to fetch event details and participants when the component mounts.
+     */
     useEffect(() => {
         updateLoading(true);
 
@@ -67,6 +79,11 @@ export default function EventPage() {
         })();
     }, []);
 
+    /**
+     * Function to send a friend request to a participant.
+     * 
+     * @param {string} friendId - The ID of the friend to add.
+     */
     async function addFriend(friendId: string) {
         updateLoading(true);
 
