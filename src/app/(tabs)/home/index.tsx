@@ -133,8 +133,8 @@ export default function Home() {
 
     if(isLoading) return <Loading />;
 
-    return (
-        <>
+    if(isCalendarVisible)
+        return (
             <Modal
                 style={
                     {
@@ -175,7 +175,10 @@ export default function Home() {
                     </Text>
                 </Button>
             </Modal>
+        );
 
+    return (
+        <>
             <Modal
                 style={
                     {
