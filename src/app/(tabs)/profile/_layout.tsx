@@ -27,20 +27,17 @@ export default function ProfileLayout() {
                 options={ {
                     headerShadowVisible: false,
                     title: 'Profile',
-                    headerRight: () => (
-                        <View>
+                    header: () => (
+                        <View style={ { backgroundColor: globalStyles.black, alignItems: 'flex-end' } }>
                             <TouchableOpacity
                                 onPress={ () => {
-                                    Haptics.impactAsync(
-                                        Haptics.ImpactFeedbackStyle.Soft,
-                                    );
-
                                     router.navigate('/editProfile');
                                 } }
                             >
                                 <Icon
                                     name="account-edit-outline"
                                     type="material-community"
+                                    size={ 32 }
                                     color={ globalStyles.gray }
                                 />
                             </TouchableOpacity>
