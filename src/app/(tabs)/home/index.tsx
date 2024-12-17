@@ -145,7 +145,6 @@ export default function Home() {
                 onRequestClose={ () => toggleCalendar(false) }
                 animationType="slide"
                 transparent={ true }
-                visible={ isCalendarVisible }
             >
                 <View style={ { marginTop: 30 } } />
                 

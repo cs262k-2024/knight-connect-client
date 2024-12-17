@@ -4,7 +4,7 @@
  * It uses the `expo-router` for navigation and `react-native` for UI components.
  */
 
-import { TouchableOpacity, View } from 'react-native';
+import { Pressable } from 'react-native';
 import { router, Stack } from 'expo-router';
 import { Icon } from '@rneui/themed';
 import globalStyles from '@/globals/globalStyles';
@@ -32,19 +32,23 @@ export default function EventPageLayout() {
                 options={ {
                     headerShadowVisible: false,
                     title: '',
-                    headerLeft: () => (
-                        <View>
-                            <TouchableOpacity
-                                onPress={ () => router.navigate('/home') }
-                            >
-                                <Icon
-                                    name="chevron-left"
-                                    size={ 30 }
-                                    type="material-community"
-                                    color={ globalStyles.gray }
-                                />
-                            </TouchableOpacity>
-                        </View>
+                    header: () => (
+                        <Pressable
+                            onPress={
+                                () => {
+                                    console.log('test');
+                                    router.navigate('/home');
+                                }
+                            }
+                            style={ { width: '100%', alignItems: 'flex-start', paddingBottom: 10 } }
+                        >
+                            <Icon
+                                name="chevron-left"
+                                size={ 40 }
+                                type="material-community"
+                                color={ globalStyles.gray }
+                            />
+                        </Pressable>
                     ),
                     headerTitleStyle: {
                         color: globalStyles.white,
