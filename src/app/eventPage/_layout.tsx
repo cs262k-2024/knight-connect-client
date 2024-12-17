@@ -36,7 +36,6 @@ export default function EventPageLayout() {
                         <Pressable
                             onPress={
                                 () => {
-                                    console.log('test');
                                     router.navigate('/home');
                                 }
                             }
