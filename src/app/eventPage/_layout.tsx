@@ -40,7 +40,7 @@ export default function EventPageLayout() {
                                     router.navigate('/home');
                                 }
                             }
-                            style={ { width: '100%', alignItems: 'flex-start', paddingBottom: 10 } }
+                            style={ { width: '100%', alignItems: 'flex-start', paddingBottom: 10  } }
                         >
                             <Icon
                                 name="chevron-left"
