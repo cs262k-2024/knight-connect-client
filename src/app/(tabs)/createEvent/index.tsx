@@ -5,7 +5,7 @@
  */
 
 import { useContext, useState } from 'react';
-import { TouchableOpacity, View, Text, Alert, ScrollView } from 'react-native';
+import { TouchableOpacity, View, Text, Alert, ScrollView, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { router } from 'expo-router';
@@ -42,7 +42,11 @@ export default function CreateEvent() {
 
     const [tags, updateTags] = useState<string[]>([]);
 
-    const [date, updateDate] = useState(new Date());
+    const [date, updateDate] = useState<Date | null>(null);
+    const [time, updateTime] = useState<Date | null>(null);
+
+    const [isShowDate, updateShowingDate] = useState(false);
+    const [isShowTime, updateShowingTime] = useState(false);
 
     /**
      * Handles the date change event from the DateTimePicker.
@@ -55,7 +59,23 @@ export default function CreateEvent() {
 
         const currentDate = selectedDate;
         
+        updateShowingDate(false);
         updateDate(currentDate);
+    }
+
+    /**
+     * Handles the time change event from the DateTimePicker.
+     * 
+     * @param {DateTimePickerEvent} _event - The event object from the DateTimePicker.
+     * @param {Date} [selectedDate] - The selected date from the DateTimePicker.
+     */
+    function onTimeChange(_event: DateTimePickerEvent, selectedDate?: Date) {
+        if(!selectedDate) return;
+
+        const currentDate = selectedDate;
+        
+        updateShowingTime(false);
+        updateTime(currentDate);
     }
 
     if(!user) return <></>;
@@ -69,6 +89,10 @@ export default function CreateEvent() {
     async function publish() {
         updateLoading(true);
 
+        const fullDate = date!;
+        fullDate.setHours(time!.getHours());
+        fullDate.setMinutes(time!.getMinutes());
+
         const response = await fetch(`${BACKEND_URL}/event/`, {
             method: 'POST',
             headers: {
@@ -77,9 +101,9 @@ export default function CreateEvent() {
             body: JSON.stringify({
                 organizer: user?.id,
                 name: eventName,
-                start_date: date,
+                start_date: fullDate,
                 // TODO
-                end_date: date,
+                end_date: fullDate,
                 location: eventLocation,
                 description: eventDescription,
                 // TODO
@@ -144,17 +168,70 @@ export default function CreateEvent() {
             <View style={ styles.labelContainer }>
                 <Text style={ styles.label }>Date</Text>
 
-                <DateTimePicker
-                    testID="dateTimePicker"
-                    value={ date }
-                    mode="datetime"
-                    onChange={ onDateChange }
-                    style={
-                        {
-                            alignSelf: 'flex-start',
-                        }
+                {
+                    isShowDate && (
+                        <DateTimePicker
+                            value={ date ? date : new Date() }
+                            mode="date"
+                            onChange={ onDateChange }
+                            style={
+                                {   
+                                    alignSelf: 'flex-start',
+                                }
+                            }
+                        />
+                    )
+                }
+
+                {
+                    isShowTime && (
+                        <DateTimePicker
+                            value={ time ? time : new Date() }
+                            mode="time"
+                            onChange={ onTimeChange }
+                            style={
+                                {   
+                                    alignSelf: 'flex-start',
+                                }
+                            }
+                        />
+                    )
+                }
+
+                <View
+                    style={ { gap: 20, width: '50%' } }
+                >
+                    {
+                        !date ? (
+                            <Button
+                                onPress={ () => updateShowingDate(true) }
+                            >
+                                <Text style={ { color: globalStyles.white } }>Pick date</Text>
+                            </Button>
+                        ) : (
+                            <Pressable onPress={ () => updateShowingDate(true) }>
+                                <Text style={ { color: globalStyles.white } }>{ date.getMonth() }/{ date.getFullYear() }/{ date.getDate() }</Text>
+                            </Pressable>
+                        )
                     }
-                />
+
+                    {
+                        !time ? (
+                            <Button
+                                onPress={ () => updateShowingTime(true) }
+                            >
+                                <Text style={ { color: globalStyles.white } }>Pick time</Text>
+                            </Button>
+                        ) : (
+                            <Pressable onPress={ () => updateShowingTime(true) }>
+                                <Text style={ { color: globalStyles.white } }>
+                                    { time.getHours() > 12 ? time.getHours() - 12 : time.getHours() }:{ time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes() }
+                                    { time.getHours() > 12 ? ' PM' : ' AM' }
+                                </Text>
+                            </Pressable>
+                        )
+                    }
+                </View>
             </View>
 
             <View style={ styles.labelContainer }>
